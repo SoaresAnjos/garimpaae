@@ -52,7 +52,7 @@ const Login = () => {
                 <p className="mb-10 font-semibold font-heading">
                   Happy to see you again
                 </p>
-                {error && <ErrorMsg message={error?.message} />}
+                {error && <p className="text-red-500">{error?.message}</p>}
                 <form
                   className="flex flex-wrap -mx-4"
                   onSubmit={onSubmitHandler}
