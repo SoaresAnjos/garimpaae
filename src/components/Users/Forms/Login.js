@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../redux/slices/users/usersSlice";
+import Swal from "sweetalert2";
+import ErrorMsg from "../../ErrorMsg/ErrorMsg";
+import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 
 const Login = () => {
   //dispatch
@@ -23,12 +26,18 @@ const Login = () => {
     dispatch(loginUserAction({ email, password }));
   };
 
-  //select store data
-  const { loading, userAuth } = {};
-  //redirect
-  if (userAuth?.userInfo?.status) {
-    window.location.href = "/admin";
-  }
+  //get data from store
+  const { error, loading, userInfo } = useSelector((state) => {
+    return state?.users?.userAuth;
+  });
+
+  // //redirect
+  // if (userInfo?.userFound?.isAdmin) {
+  //   window.location.href = "/admin";
+  // } else {
+  //   window.location.href = "/customer-profile";
+  // }
+
   return (
     <>
       <section className="py-20 bg-gray-100 overflow-x-hidden">
@@ -43,6 +52,7 @@ const Login = () => {
                 <p className="mb-10 font-semibold font-heading">
                   Happy to see you again
                 </p>
+                {error && <ErrorMsg message={error?.message} />}
                 <form
                   className="flex flex-wrap -mx-4"
                   onSubmit={onSubmitHandler}
@@ -77,9 +87,18 @@ const Login = () => {
                   </div>
 
                   <div className="w-full px-4">
-                    <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">
-                      Login
-                    </button>
+                    {loading ? (
+                      <button
+                        disabled
+                        className="bg-gray-800  text-white font-bold font-heading py-5 px-8 rounded-md uppercase"
+                      >
+                        Loading...
+                      </button>
+                    ) : (
+                      <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">
+                        Login
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>
