@@ -48,7 +48,8 @@ const App = () => {
             </AdminAuthRoute>
           }
         >
-          {/* products */} <Route path="" element={<OrdersList />} />
+          {/* products */}
+          <Route path="" element={<OrdersList />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="manage-products" element={<ManageStocks />} />
           <Route path="products/edit/:id" element={<UpdateProduct />} />

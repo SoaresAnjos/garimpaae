@@ -6,23 +6,41 @@ import makeAnimated from "react-select/animated";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
-import { addProductAction } from "../../../redux/slices/products/productsSlices";
+import { addProductAction } from "../../../redux/slices/products/productsSlice";
+import { fetchCategoriesAction } from "../../../redux/slices/categories/categoriesSlice";
 
 //animated components for react-select
 const animatedComponents = makeAnimated();
 
 export default function AddProduct() {
   const dispatch = useDispatch();
+  //sizes
+  const sizes = ["S", "M", "L", "XL"];
+  const [sizeOption, setSizeOption] = useState([]);
 
-  let categories,
-    sizeOptionsCoverted,
-    handleSizeChange,
-    colorOptionsCoverted,
-    handleColorChangeOption,
-    brands,
-    loading,
-    error,
-    isAdded;
+  const handleSizeChange = (sizes) => {
+    setSizeOption(sizes);
+  };
+
+  const sizeOptionsCoverted = sizes.map((size) => {
+    return {
+      value: size,
+      label: size,
+    };
+  });
+
+  //categories
+  useEffect(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
+
+  //select data from store
+  const { categories, loading, error } = useSelector(
+    (state) => state?.categories
+  );
+  console.log(categories, loading);
+
+  let colorOptionsCoverted, handleColorChangeOption, brands, isAdded;
 
   //---form data---
   const [formData, setFormData] = useState({
@@ -48,28 +66,20 @@ export default function AddProduct() {
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     //reset form data
-    setFormData({
-      productName: "",
-      description: "",
-      category: "",
-      sizes: "",
-      brand: "",
-      colors: "",
-      images: "",
-      price: "",
-      totalQty: "",
-    });
-    dispatch(
-      addProductAction({
-        productName,
-        brand,
-        category,
-        description,
-        totalQty,
-        price,
-      })
-    );
+    // setFormData({
+    //   productName: "",
+    //   description: "",
+    //   category: "",
+    //   sizes: "",
+    //   brand: "",
+    //   colors: "",
+    //   images: "",
+    //   price: "",
+    //   totalQty: "",
+    // });
+    dispatch(addProductAction(formData));
   };
 
   return (
@@ -135,12 +145,8 @@ export default function AddProduct() {
                   className="mt-1  block w-full rounded-md border-gray-300 py-2  pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm border"
                   defaultValue="Canada"
                 >
-                  {/* <option>-- Select Category --</option>
-                  <option value="Clothings">Clothings</option>
-                  <option value="Shoes">Shoes</option>
-                  <option value="Accessories">Accessories</option> */}
                   <option>-- Select Category --</option>
-                  {categories?.map((category) => (
+                  {categories?.data?.map((category) => (
                     <option key={category?._id} value={category?.name}>
                       {category.name}
                     </option>
