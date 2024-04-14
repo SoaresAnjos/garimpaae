@@ -4,14 +4,15 @@ import { loginUserAction } from "../../../redux/slices/users/usersSlice";
 import Swal from "sweetalert2";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 const Login = () => {
   //dispatch
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    email: "admin@gmail.com",
-    password: "12345",
+    email: "admin3@gmail.com",
+    password: "43221",
   });
   //---Destructuring---
   const { email, password } = formData;
@@ -52,7 +53,7 @@ const Login = () => {
                 <p className="mb-10 font-semibold font-heading">
                   Happy to see you again
                 </p>
-                {error && <p className="text-red-500">{error?.message}</p>}
+                {/* {error && <ErrorMsg message={error?.message} />} */}
                 <form
                   className="flex flex-wrap -mx-4"
                   onSubmit={onSubmitHandler}
@@ -88,12 +89,7 @@ const Login = () => {
 
                   <div className="w-full px-4">
                     {loading ? (
-                      <button
-                        disabled
-                        className="bg-gray-800  text-white font-bold font-heading py-5 px-8 rounded-md uppercase"
-                      >
-                        Loading...
-                      </button>
+                      <LoadingComponent />
                     ) : (
                       <button className="bg-blue-800 hover:bg-blue-900 text-white font-bold font-heading py-5 px-8 rounded-md uppercase">
                         Login
