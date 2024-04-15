@@ -7,6 +7,7 @@ import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import { addProductAction } from "../../../redux/slices/products/productsSlice";
 import { fetchCategoriesAction } from "../../../redux/slices/categories/categoriesSlice";
+import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
 
 //animated components for react-select
 const animatedComponents = makeAnimated();
@@ -33,12 +34,20 @@ export default function AddProduct() {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
 
-  //select data from store
+  //select categories data from store
   const { categories, loading, error } = useSelector(
     (state) => state?.categories
   );
 
-  let colorOptionsCoverted, handleColorChangeOption, brands, isAdded;
+  //brands
+  useEffect(() => {
+    dispatch(fetchBrandsAction());
+  }, [dispatch]);
+
+  //select categories data from store
+  const { brands } = useSelector((state) => state?.brands);
+
+  let colorOptionsCoverted, handleColorChangeOption, isAdded;
 
   //---form data---
   const [formData, setFormData] = useState({
@@ -164,7 +173,7 @@ export default function AddProduct() {
                   defaultValue="Canada"
                 >
                   <option>-- Select Brand --</option>
-                  {brands?.map((brand) => (
+                  {brands?.data?.map((brand) => (
                     <option key={brand?._id} value={brand?.name}>
                       {brand.name}
                     </option>
