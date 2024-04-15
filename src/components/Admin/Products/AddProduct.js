@@ -8,12 +8,23 @@ import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import { addProductAction } from "../../../redux/slices/products/productsSlice";
 import { fetchCategoriesAction } from "../../../redux/slices/categories/categoriesSlice";
 import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
+import { fetchColorsAction } from "../../../redux/slices/colors/colorsSlice";
 
 //animated components for react-select
 const animatedComponents = makeAnimated();
 
 export default function AddProduct() {
   const dispatch = useDispatch();
+  //files
+  const [files, setFiles] = useState([]);
+  const [filesError, setFilesError] = useState([]);
+
+  //file handle change
+  const fileHandleChange = (event) => {
+    const newFiles = Array.from(event.target);
+    setFiles(newFiles);
+  };
+
   //sizes
   const sizes = ["S", "M", "L", "XL"];
   const [sizeOption, setSizeOption] = useState([]);
@@ -44,10 +55,31 @@ export default function AddProduct() {
     dispatch(fetchBrandsAction());
   }, [dispatch]);
 
-  //select categories data from store
+  //select brands data from store
   const { brands } = useSelector((state) => state?.brands);
 
-  let colorOptionsCoverted, handleColorChangeOption, isAdded;
+  //colors
+  const [colorOption, setColorOption] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchColorsAction());
+  }, [dispatch]);
+
+  //select colors data from store
+  const { colors } = useSelector((state) => state?.colors);
+
+  let colorOptionsCoverted = colors?.data?.map((color) => {
+    return {
+      value: color.name,
+      label: color.name,
+    };
+  });
+
+  const handleColorChangeOption = (color) => {
+    setColorOption(color);
+  };
+
+  let isAdded;
 
   //---form data---
   const [formData, setFormData] = useState({
@@ -73,7 +105,8 @@ export default function AddProduct() {
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log(files);
+
     //reset form data
     // setFormData({
     //   productName: "",
@@ -235,7 +268,7 @@ export default function AddProduct() {
                           <input
                             name="images"
                             value={formData.images}
-                            onChange={handleOnChange}
+                            onChange={fileHandleChange}
                             type="file"
                           />
                         </label>
