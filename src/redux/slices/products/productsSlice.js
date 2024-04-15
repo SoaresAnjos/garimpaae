@@ -58,7 +58,7 @@ export const addProductAction = createAsyncThunk(
       );
       return res;
     } catch (error) {
-      return rejectWithValue(error?.response?.message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );

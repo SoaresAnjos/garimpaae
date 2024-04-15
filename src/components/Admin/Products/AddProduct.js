@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
@@ -38,7 +37,6 @@ export default function AddProduct() {
   const { categories, loading, error } = useSelector(
     (state) => state?.categories
   );
-  console.log(categories, loading);
 
   let colorOptionsCoverted, handleColorChangeOption, brands, isAdded;
 

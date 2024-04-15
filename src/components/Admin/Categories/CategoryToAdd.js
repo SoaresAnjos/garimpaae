@@ -1,7 +1,19 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function CategoryToAdd() {
   let handleCategory, handleBrand, handleColor, isCategory, isBrand, isColor;
+
+  const [category, setCategory] = useState("");
+
+  const handleChangeCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    console.log(category);
+  };
 
   return (
     <>
@@ -13,7 +25,8 @@ export default function CategoryToAdd() {
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor">
+            stroke="currentColor"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -33,29 +46,37 @@ export default function CategoryToAdd() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form
+              className="space-y-6"
+              action="#"
+              method="POST"
+              onSubmit={handleOnSubmit}
+            >
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700">
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Name
                 </label>
                 <div className="mt-1">
                   <input
-                    disabled={isCategory || isBrand || isColor ? false : true}
+                    //disabled={isCategory || isBrand || isColor ? false : true}
+                    onChange={handleChangeCategory}
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
               <div>
                 <button
-                  disabled={isCategory || isBrand || isColor ? false : true}
+                  //disabled={isCategory || isBrand || isColor ? false : true}
                   type="submit"
                   className={
                     isCategory || isBrand || isColor
                       ? "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       : "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 "
-                  }>
+                  }
+                >
                   Add Item
                 </button>
               </div>
@@ -76,7 +97,8 @@ export default function CategoryToAdd() {
                   <Link
                     onClick={handleBrand}
                     to="/admin/add-brand"
-                    className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                    className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                  >
                     Add Brand
                   </Link>
                 </div>
@@ -86,7 +108,8 @@ export default function CategoryToAdd() {
                     <Link
                       onClick={handleColor}
                       to="/admin/add-color"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                    >
                       Add Color
                     </Link>
                   </div>
@@ -97,7 +120,8 @@ export default function CategoryToAdd() {
                     <Link
                       onClick={handleCategory}
                       to="/admin/add-category"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                    >
                       Add Category
                     </Link>
                   </div>

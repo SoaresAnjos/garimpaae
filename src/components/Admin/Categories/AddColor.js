@@ -1,21 +1,34 @@
 import { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import colorsReducer, {
+  addColorAction,
+} from "../../../redux/slices/colors/colorsSlice";
 
 export default function AddColor() {
+  const dispatch = useDispatch();
+
   //form data
   const [formData, setFormData] = useState({
     name: "",
   });
+
   //onChange
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
   };
 
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    dispatch(addColorAction(formData.name));
   };
+
+  const { loading, error, color } = useSelector((state) => state?.colors);
+
+  console.log(error?.message);
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -26,7 +39,8 @@ export default function AddColor() {
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor">
+            stroke="currentColor"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -40,11 +54,13 @@ export default function AddColor() {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div> {error && error?.message}</div>
             <form className="space-y-6" onSubmit={handleOnSubmit}>
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700">
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Name
                 </label>
                 <div className="mt-1">
@@ -57,14 +73,32 @@ export default function AddColor() {
                 </div>
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Add Product Color
-                </button>
+                {loading ? (
+                  <>
+                    <button
+                      type="submit"
+                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Criando nova cor
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="submit"
+                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Add Product Color
+                    </button>
+                  </>
+                )}
+              </div>
+              <div>
+                {Object.keys(color).length > 0 && (
+                  <h3 className="text-green-600">Cor criada com sucesso!</h3>
+                )}
               </div>
             </form>
-
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -79,7 +113,8 @@ export default function AddColor() {
                 <div>
                   <Link
                     to="/admin/add-brand"
-                    className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                    className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                  >
                     Add Brand
                   </Link>
                 </div>
@@ -88,7 +123,8 @@ export default function AddColor() {
                   <div>
                     <Link
                       to="/admin/add-brand"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                    >
                       Add Color
                     </Link>
                   </div>
@@ -98,7 +134,8 @@ export default function AddColor() {
                   <div>
                     <Link
                       to="/admin/add-category"
-                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
+                      className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                    >
                       Add Category
                     </Link>
                   </div>
