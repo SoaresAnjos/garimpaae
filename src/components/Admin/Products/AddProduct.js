@@ -15,13 +15,14 @@ const animatedComponents = makeAnimated();
 
 export default function AddProduct() {
   const dispatch = useDispatch();
+
   //files
   const [files, setFiles] = useState([]);
   const [filesError, setFilesError] = useState([]);
 
   //file handle change
   const fileHandleChange = (event) => {
-    const newFiles = Array.from(event.target);
+    const newFiles = Array.from(event.target.files);
     setFiles(newFiles);
   };
 
@@ -83,19 +84,17 @@ export default function AddProduct() {
 
   //---form data---
   const [formData, setFormData] = useState({
-    productName: "",
-    description: "",
+    name: "Dunk Low",
+    description: "Lorem ipsum",
     category: "",
     sizes: "",
     brand: "",
     colors: "",
-    images: "",
-    price: "",
-    totalQty: "",
+    price: "200",
+    totalQty: "2",
   });
 
-  const { productName, brand, category, description, totalQty, price } =
-    formData;
+  const { name, brand, category, description, totalQty, price } = formData;
 
   //onChange
   const handleOnChange = (e) => {
@@ -105,11 +104,20 @@ export default function AddProduct() {
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    console.log("Sou file");
     console.log(files);
+    dispatch(
+      addProductAction({
+        ...formData,
+        files,
+        colors: colorOption?.map((color) => color.value),
+        sizes: sizeOption?.map((size) => size.value),
+      })
+    );
 
     //reset form data
     // setFormData({
-    //   productName: "",
+    //   name: "",
     //   description: "",
     //   category: "",
     //   sizes: "",
@@ -119,7 +127,6 @@ export default function AddProduct() {
     //   price: "",
     //   totalQty: "",
     // });
-    dispatch(addProductAction(formData));
   };
 
   return (
@@ -150,6 +157,7 @@ export default function AddProduct() {
                     name="name"
                     value={formData?.name}
                     onChange={handleOnChange}
+                    defaultValue="Nike Dunk"
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
