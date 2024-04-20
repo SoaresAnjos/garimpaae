@@ -5,7 +5,10 @@ import makeAnimated from "react-select/animated";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
-import { addProductAction } from "../../../redux/slices/products/productsSlice";
+import {
+  addProductAction,
+  fecthProductsAction,
+} from "../../../redux/slices/products/productsSlice";
 import { fetchCategoriesAction } from "../../../redux/slices/categories/categoriesSlice";
 import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
 import { fetchColorsAction } from "../../../redux/slices/colors/colorsSlice";
@@ -23,7 +26,20 @@ export default function AddProduct() {
   //file handle change
   const fileHandleChange = (event) => {
     const newFiles = Array.from(event.target.files);
+
+    const newErrs = [];
+    //validation
+    newFiles.forEach((file) => {
+      if (file?.size > 1000000) {
+        newErrs.push(`${file.name} é muito grande`);
+      }
+      if (!file?.type?.startsWith("image/")) {
+        newErrs.push(`${file.name} não é uma imagem `);
+      }
+    });
+
     setFiles(newFiles);
+    setFilesError(newErrs);
   };
 
   //sizes
@@ -80,7 +96,10 @@ export default function AddProduct() {
     setColorOption(color);
   };
 
-  let isAdded;
+  //products
+  useEffect(() => {
+    dispatch(fecthProductsAction());
+  }, [dispatch]);
 
   //---form data---
   const [formData, setFormData] = useState({
@@ -101,11 +120,27 @@ export default function AddProduct() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const {
+    isAdded,
+    loading: loadingProduct,
+    error: errProductCreation,
+  } = useSelector((state) => {
+    return state?.products;
+  });
+
+  console.log("Is added? " + isAdded);
+  console.log("Is loading? " + loadingProduct);
+  console.log("Any error? " + errProductCreation?.message);
+
+  //fetch products
+
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log("Sou file");
-    console.log(files);
+
+    console.log(filesError);
+
+    //dispatch action create product
     dispatch(
       addProductAction({
         ...formData,
@@ -131,7 +166,8 @@ export default function AddProduct() {
 
   return (
     <>
-      {error && <ErrorMsg message={error?.message} />}
+      {/* {errProductCreation && <ErrorMsg message={errProductCreation?.message} />} */}
+
       {isAdded && <SuccessMsg message="Product Added Successfully" />}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -282,7 +318,7 @@ export default function AddProduct() {
                         </label>
                       </div>
                       <p className="text-xs text-gray-500">
-                        PNG, JPG, GIF up to 10MB
+                        PNG, JPG, GIF até 1MB
                       </p>
                     </div>
                   </div>
@@ -339,10 +375,11 @@ export default function AddProduct() {
                 </div>
               </div>
               <div>
-                {loading ? (
+                {loadingProduct ? (
                   <LoadingComponent />
                 ) : (
                   <button
+                    disabled={filesError.length > 0 && true}
                     type="submit"
                     className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
@@ -350,6 +387,14 @@ export default function AddProduct() {
                   </button>
                 )}
               </div>
+              {!loadingProduct && errProductCreation && (
+                <p className="text-red-500">{errProductCreation?.message}</p>
+              )}
+              {filesError.length > 0 && (
+                <p className="text-red-500">
+                  {filesError.map((error) => error)}
+                </p>
+              )}
             </form>
           </div>
         </div>

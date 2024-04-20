@@ -1,7 +1,29 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomeProductTrending = () => {
+  const dispatch = useDispatch();
+
+  //dispatch fetch products
+  useContext(() => {
+    dispatch(fecthProductsAction());
+  }, [dispatch]);
+
+  //get data from store
+  const {
+    products: { products },
+    error,
+    loading,
+  } = useSelector((state) => state?.products);
+
+  console.log(products);
+  console.log(error);
+  console.log(loading);
+
   const trendingProducts = [];
+
   return (
     <>
       <section aria-labelledby="trending-heading">
@@ -9,12 +31,14 @@ const HomeProductTrending = () => {
           <div className="md:flex md:items-center md:justify-between">
             <h2
               id="favorites-heading"
-              className="text-2xl font-bold tracking-tight text-gray-900">
+              className="text-2xl font-bold tracking-tight text-gray-900"
+            >
               Trending Products
             </h2>
             <a
               href="#"
-              className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
+              className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
+            >
               Shop the collection
               <span aria-hidden="true"> &rarr;</span>
             </a>
@@ -25,7 +49,8 @@ const HomeProductTrending = () => {
               <Link
                 to={`/products/${product.id}`}
                 key={product.id}
-                className="group relative">
+                className="group relative"
+              >
                 <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
                   <img
                     src={product.imageSrc}
@@ -50,7 +75,8 @@ const HomeProductTrending = () => {
           <div className="mt-8 text-sm md:hidden">
             <a
               href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500">
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
               Shop the collection
               <span aria-hidden="true"> &rarr;</span>
             </a>

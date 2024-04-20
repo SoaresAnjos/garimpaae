@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
+import { fetchBrandsAction } from "../brands/brandsSlice";
 
 //initial state
 const initialState = {
@@ -74,11 +75,25 @@ export const addProductAction = createAsyncThunk(
   }
 );
 
+//fetch all products
+export const fecthProductsAction = createAsyncThunk(
+  "products/fetch-all",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${baseURL}/products`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //products slice
 const productsSlice = createSlice({
   name: "products",
   initialState,
   extraReducers: (builder) => {
+    //create product
     builder.addCase(addProductAction.pending, (state) => {
       state.loading = true;
     });
@@ -92,6 +107,18 @@ const productsSlice = createSlice({
       state.loading = false;
       state.product = null;
       state.isAdded = false;
+    });
+    //fetch products
+    builder.addCase(fecthProductsAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchBrandsAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+    });
+    builder.addCase(fecthProductsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
   },
 });
