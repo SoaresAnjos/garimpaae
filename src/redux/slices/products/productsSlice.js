@@ -108,16 +108,17 @@ const productsSlice = createSlice({
       state.product = null;
       state.isAdded = false;
     });
-    //fetch products
+    //fetch all
     builder.addCase(fecthProductsAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchBrandsAction.fulfilled, (state, action) => {
+    builder.addCase(fecthProductsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.products = action.payload;
     });
     builder.addCase(fecthProductsAction.rejected, (state, action) => {
       state.loading = false;
+      state.products = null;
       state.error = action.payload;
     });
   },

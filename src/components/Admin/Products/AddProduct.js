@@ -132,8 +132,6 @@ export default function AddProduct() {
   console.log("Is loading? " + loadingProduct);
   console.log("Any error? " + errProductCreation?.message);
 
-  //fetch products
-
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();

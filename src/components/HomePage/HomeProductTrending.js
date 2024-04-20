@@ -1,28 +1,23 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const HomeProductTrending = () => {
+  //instace dispatch
   const dispatch = useDispatch();
 
   //dispatch fetch products
-  useContext(() => {
+  useEffect(() => {
     dispatch(fecthProductsAction());
   }, [dispatch]);
 
   //get data from store
   const {
-    products: { products },
+    products: { data },
     error,
     loading,
   } = useSelector((state) => state?.products);
-
-  console.log(products);
-  console.log(error);
-  console.log(loading);
-
-  const trendingProducts = [];
 
   return (
     <>
@@ -33,19 +28,19 @@ const HomeProductTrending = () => {
               id="favorites-heading"
               className="text-2xl font-bold tracking-tight text-gray-900"
             >
-              Trending Products
+              Top produtos
             </h2>
             <a
               href="#"
               className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
             >
-              Shop the collection
+              Descubra a coleção
               <span aria-hidden="true"> &rarr;</span>
             </a>
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-            {trendingProducts?.map((product) => (
+            {data?.map((product) => (
               <Link
                 to={`/products/${product.id}`}
                 key={product.id}

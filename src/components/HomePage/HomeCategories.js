@@ -1,8 +1,22 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
 
 const HomeCategories = () => {
   const categoriesToShow = [];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
+
+  const {
+    categories: { data },
+    error,
+    loading,
+  } = useSelector((state) => state?.categories);
 
   return (
     <>
@@ -10,11 +24,12 @@ const HomeCategories = () => {
         <div className="-my-2">
           <div className="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
             <div className="min-w-screen-xl absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
-              {categoriesToShow?.map((category) => (
+              {data?.map((category) => (
                 <Link
                   key={category.name}
                   to={`/products-filters?category=${category.name}`}
-                  className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                  className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                >
                   <span aria-hidden="true" className="absolute inset-0">
                     <img
                       src={category.image}
