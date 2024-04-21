@@ -6,6 +6,7 @@ import {
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
 import { fetchBrandsAction } from "../brands/brandsSlice";
+import { act } from "react-dom/test-utils";
 
 //initial state
 const initialState = {
@@ -81,6 +82,20 @@ export const fecthProductsAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`${baseURL}/products`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+//fetch a single product
+export const fetchProductAtion = createAsyncThunk(
+  "product/details",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${baseURL}/products/${id}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -120,6 +135,20 @@ const productsSlice = createSlice({
       state.loading = false;
       state.products = null;
       state.error = action.payload;
+    });
+
+    //fetch single
+    builder.addCase(fetchProductAtion.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductAtion.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    });
+    builder.addCase(fetchProductAtion.rejected, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+      state.product = null;
     });
   },
 });
