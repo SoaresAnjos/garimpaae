@@ -128,15 +128,9 @@ export default function AddProduct() {
     return state?.products;
   });
 
-  console.log("Is added? " + isAdded);
-  console.log("Is loading? " + loadingProduct);
-  console.log("Any error? " + errProductCreation?.message);
-
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
-
-    console.log(filesError);
 
     //dispatch action create product
     dispatch(

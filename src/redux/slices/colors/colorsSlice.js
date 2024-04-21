@@ -38,7 +38,7 @@ export const fetchColorsAction = createAsyncThunk(
 //create color action
 export const addColorAction = createAsyncThunk(
   "color/create",
-  async (name, { rejectWithValue, getState, dispatch }) => {
+  async (name, { rejectWithValue, getState }) => {
     try {
       //http request
       //token
