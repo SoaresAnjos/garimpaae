@@ -15,6 +15,12 @@ import {
   PlusIcon,
 } from "@heroicons/react/20/solid";
 import Products from "./Products";
+import { useParams, useSearchParams } from "react-router-dom";
+import baseURL from "../../../utils/baseURL";
+import { useDispatch, useSelector } from "react-redux";
+import { fecthProductsAction } from "../../../redux/slices/products/productsSlice";
+import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
+import { fetchColorsAction } from "../../../redux/slices/colors/colorsSlice";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -55,33 +61,56 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const sizeCategories = [
-  "XXS",
-  "XS",
-  "S",
-  "M",
-  "L",
-  "XL",
-  "XXL",
-  "XXXL",
-  "XXXXL",
-];
+const sizeCategories = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
 export default function ProductsFilters() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  const [params, setParams] = useSearchParams();
+  const category = params.get("category");
+
+  //filters
+  const [color, setColor] = useState("");
+  const [price, setPrice] = useState("");
+  const [brand, setBrand] = useState("");
+  const [size, setSize] = useState("");
+
+  //build up url
+  let productUrl = `${baseURL}/products`;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      fecthProductsAction({
+        url: productUrl,
+      })
+    );
+  }, [dispatch]);
+
+  //  const { products, loading, error } = useSelector((state) => state?.products);
+
+  //brands
+  useEffect(() => {
+    dispatch(fetchBrandsAction());
+  }, [dispatch]);
+
+  const { brands } = useSelector((state) => state?.brands);
+  let brandsData = brands.data;
+
+  //colors
+  useEffect(() => {
+    dispatch(fetchColorsAction());
+  }, [dispatch]);
+  const { colors } = useSelector((state) => state?.colors);
+  let colorsData = colors.data;
+
+  let products;
   let colorsLoading;
   let colorsError;
-  let colors;
-  let setPrice;
-  let brands;
-  let setSize;
-  let setColor;
-  let setBrand;
   let productsLoading;
   let productsError;
-  let products;
 
   return (
     <div className="bg-white">
@@ -91,7 +120,8 @@ export default function ProductsFilters() {
           <Dialog
             as="div"
             className="relative z-40 lg:hidden"
-            onClose={setMobileMenuOpen}>
+            onClose={setMobileMenuOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -99,7 +129,8 @@ export default function ProductsFilters() {
               enterTo="opacity-100"
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
-              leaveTo="opacity-0">
+              leaveTo="opacity-0"
+            >
               <div className="fixed inset-0 bg-black bg-opacity-25" />
             </Transition.Child>
 
@@ -111,13 +142,15 @@ export default function ProductsFilters() {
                 enterTo="translate-x-0"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full">
+                leaveTo="-translate-x-full"
+              >
                 <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
                   <div className="flex px-4 pt-5 pb-2">
                     <button
                       type="button"
                       className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-                      onClick={() => setMobileMenuOpen(false)}>
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
@@ -135,7 +168,8 @@ export default function ProductsFilters() {
           <Dialog
             as="div"
             className="relative z-40 lg:hidden"
-            onClose={setMobileFiltersOpen}>
+            onClose={setMobileFiltersOpen}
+          >
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -143,7 +177,8 @@ export default function ProductsFilters() {
               enterTo="opacity-100"
               leave="transition-opacity ease-linear duration-300"
               leaveFrom="opacity-100"
-              leaveTo="opacity-0">
+              leaveTo="opacity-0"
+            >
               <div className="fixed inset-0 bg-black bg-opacity-25" />
             </Transition.Child>
 
@@ -155,16 +190,18 @@ export default function ProductsFilters() {
                 enterTo="translate-x-0"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="translate-x-0"
-                leaveTo="translate-x-full">
+                leaveTo="translate-x-full"
+              >
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
                     <h2 className="text-lg font-medium text-gray-900">
-                      Filters
+                      Filtros
                     </h2>
                     <button
                       type="button"
                       className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-                      onClick={() => setMobileFiltersOpen(false)}>
+                      onClick={() => setMobileFiltersOpen(false)}
+                    >
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
@@ -176,13 +213,14 @@ export default function ProductsFilters() {
                     <Disclosure
                       as="div"
                       key="disclosure"
-                      className="border-t border-gray-200 px-4 py-6">
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
                             <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                               <span className="font-medium text-gray-900">
-                                Choose Color
+                                Cor
                               </span>
                               <span className="ml-6 flex items-center">
                                 {open ? (
@@ -210,7 +248,7 @@ export default function ProductsFilters() {
                               ) : (
                                 <RadioGroup onChange={setColor}>
                                   <div className="flex items-start  flex-row flex-wrap">
-                                    {colors?.map((color) => (
+                                    {colorsData?.map((color) => (
                                       <RadioGroup.Option
                                         key={color?._id}
                                         value={color}
@@ -222,7 +260,8 @@ export default function ProductsFilters() {
                                             !active && checked ? "ring-2" : "",
                                             " relative  rounded-full flex  flex-col items-center justify-center cursor-pointer focus:outline-none m-2"
                                           )
-                                        }>
+                                        }
+                                      >
                                         <span
                                           style={{
                                             backgroundColor: color?.name,
@@ -245,7 +284,8 @@ export default function ProductsFilters() {
                     <Disclosure
                       as="div"
                       key="disclosure"
-                      className="border-t border-gray-200 px-4 py-6">
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
@@ -273,7 +313,8 @@ export default function ProductsFilters() {
                               {allPrice?.map((price) => (
                                 <div
                                   key={Math.random()}
-                                  className="flex items-center">
+                                  className="flex items-center"
+                                >
                                   <input
                                     onClick={() => setPrice(price?.amount)}
                                     name="price"
@@ -296,7 +337,8 @@ export default function ProductsFilters() {
                     <Disclosure
                       as="div"
                       key="disclosure"
-                      className="border-t border-gray-200 px-4 py-6">
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
@@ -321,10 +363,11 @@ export default function ProductsFilters() {
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-2">
-                              {brands?.map((brand) => (
+                              {brandsData?.map((brand) => (
                                 <div
                                   key={brand?._id}
-                                  className="flex items-center">
+                                  className="flex items-center"
+                                >
                                   <input
                                     onClick={() => setBrand(brand?.name)}
                                     name="brand"
@@ -347,7 +390,8 @@ export default function ProductsFilters() {
                     <Disclosure
                       as="div"
                       key="disclosure"
-                      className="border-t border-gray-200 px-4 py-6">
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
@@ -402,7 +446,7 @@ export default function ProductsFilters() {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              Product Filters
+              Filtros
             </h1>
             {/* sort */}
             <div className="flex items-center">
@@ -425,7 +469,8 @@ export default function ProductsFilters() {
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
                   leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95">
+                  leaveTo="transform opacity-0 scale-95"
+                >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
@@ -439,7 +484,8 @@ export default function ProductsFilters() {
                                   : "text-gray-500",
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm"
-                              )}>
+                              )}
+                            >
                               {option.name}
                             </a>
                           )}
@@ -453,7 +499,8 @@ export default function ProductsFilters() {
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}>
+                onClick={() => setMobileFiltersOpen(true)}
+              >
                 <span className="sr-only">Filters</span>
                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -468,20 +515,19 @@ export default function ProductsFilters() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Desktop  Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+                <h3 className="sr-only">Categorias</h3>
 
                 {/* colors categories Desktop section */}
                 <Disclosure
                   as="div"
                   key="disclosure"
-                  className="border-t border-gray-200 px-4 py-6">
+                  className="border-t border-gray-200 px-4 py-6"
+                >
                   {({ open }) => (
                     <>
                       <h3 className="-mx-2 -my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                          <span className="font-medium text-gray-900">
-                            Colors Categories
-                          </span>
+                          <span className="font-medium text-gray-900">Cor</span>
                           <span className="ml-6 flex items-center">
                             {open ? (
                               <MinusIcon
@@ -508,7 +554,7 @@ export default function ProductsFilters() {
                           ) : (
                             <RadioGroup onChange={setColor}>
                               <div className="flex items-start  flex-row flex-wrap">
-                                {colors?.map((color) => (
+                                {colorsData?.map((color) => (
                                   <RadioGroup.Option
                                     key={color?.id}
                                     value={color}
@@ -520,7 +566,8 @@ export default function ProductsFilters() {
                                         !active && checked ? "ring-2" : "",
                                         " relative  rounded-full flex  flex-col items-center justify-center cursor-pointer focus:outline-none m-2"
                                       )
-                                    }>
+                                    }
+                                  >
                                     <span
                                       style={{ backgroundColor: color?.name }}
                                       aria-hidden="true"
@@ -542,13 +589,14 @@ export default function ProductsFilters() {
                 <Disclosure
                   as="div"
                   key="disclosure"
-                  className="border-t border-gray-200 px-4 py-6">
+                  className="border-t border-gray-200 px-4 py-6"
+                >
                   {({ open }) => (
                     <>
                       <h3 className="-mx-2 -my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                           <span className="font-medium text-gray-900">
-                            Price
+                            Preço
                           </span>
                           <span className="ml-6 flex items-center">
                             {open ? (
@@ -591,13 +639,14 @@ export default function ProductsFilters() {
                 <Disclosure
                   as="div"
                   key="disclosure"
-                  className="border-t border-gray-200 px-4 py-6">
+                  className="border-t border-gray-200 px-4 py-6"
+                >
                   {({ open }) => (
                     <>
                       <h3 className="-mx-2 -my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                           <span className="font-medium text-gray-900">
-                            Brand
+                            Marca
                           </span>
                           <span className="ml-6 flex items-center">
                             {open ? (
@@ -616,7 +665,7 @@ export default function ProductsFilters() {
                       </h3>
                       <Disclosure.Panel className="pt-6">
                         <div className="space-y-2">
-                          {brands?.map((brand) => (
+                          {brandsData?.map((brand) => (
                             <div key={brand?._id} className="flex items-center">
                               <input
                                 onClick={() => setBrand(brand?.name)}
@@ -640,13 +689,14 @@ export default function ProductsFilters() {
                 <Disclosure
                   as="div"
                   key="disclosure"
-                  className="border-t border-gray-200 px-4 py-6">
+                  className="border-t border-gray-200 px-4 py-6"
+                >
                   {({ open }) => (
                     <>
                       <h3 className="-mx-2 -my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                           <span className="font-medium text-gray-900">
-                            Size
+                            Tamanho
                           </span>
                           <span className="ml-6 flex items-center">
                             {open ? (

@@ -9,9 +9,23 @@ import {
 import { Link } from "react-router-dom";
 import baseURL from "../../utils/baseURL";
 import logo from "./logo3.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
 
 export default function Navbar() {
-  const categoriesToDisplay = [];
+  const dispatch = useDispatch();
+
+  useState(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
+
+  const {
+    categories: { data },
+    loading,
+    error,
+  } = useSelector((state) => state?.categories);
+
+  //console.log(data);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -74,7 +88,7 @@ export default function Navbar() {
                       </a>
                     </div>
                   ))} */}
-                  {categoriesToDisplay?.length <= 0 ? (
+                  {data?.length <= 0 ? (
                     <>
                       <Link
                         to={`${baseURL}/products?category=clothing`}
@@ -98,7 +112,7 @@ export default function Navbar() {
                       </Link>
                     </>
                   ) : (
-                    categoriesToDisplay?.map((category) => {
+                    data?.map((category) => {
                       return (
                         <>
                           <Link
@@ -197,7 +211,7 @@ export default function Navbar() {
                     {/*  menus links*/}
                     <Popover.Group className="ml-8">
                       <div className="flex h-full justify-center space-x-8">
-                        {categoriesToDisplay?.length <= 0 ? (
+                        {data?.length <= 0 ? (
                           <>
                             <a
                               href={`${baseURL}/products?category=clothing`}
@@ -221,7 +235,7 @@ export default function Navbar() {
                             </a>
                           </>
                         ) : (
-                          categoriesToDisplay?.map((category) => {
+                          data?.map((category) => {
                             return (
                               <>
                                 <Link

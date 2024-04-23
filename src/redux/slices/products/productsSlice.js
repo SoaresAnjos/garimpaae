@@ -79,10 +79,10 @@ export const addProductAction = createAsyncThunk(
 //fetch all products
 export const fecthProductsAction = createAsyncThunk(
   "products/fetch-all",
-  async (payload, { rejectWithValue }) => {
+  async ({ url }, { rejectWithValue }) => {
+    console.log(url);
     try {
-      const { data } = await axios.get(`${baseURL}/products`);
-      console.log(data);
+      const { data } = await axios.get(`${url}`);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);

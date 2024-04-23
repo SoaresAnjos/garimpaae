@@ -28,7 +28,7 @@ export default function CategoryToAdd() {
       setFileErr(`${newFile?.name} is too large`);
     }
     if (!newFile?.type?.startsWith("image/")) {
-      setFileErr(`${newFile?.name} is not an image`);
+      setFileErr(`${newFile?.name} não é uma imagem do tipo png ou jpeg`);
     }
 
     setFile(newFile);
@@ -47,6 +47,7 @@ export default function CategoryToAdd() {
   return (
     <>
       {error && <ErrorComponent message={error?.message} />}
+      {fileError && <ErrorComponent message={fileError} />}
       {isAdded && <SuccessMsg message="Category added successfully" />}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">

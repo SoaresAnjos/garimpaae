@@ -102,11 +102,11 @@ const categorySlice = createSlice({
     });
 
     //Reset err
-    builder.addCase(resetErrAction.pending, (state, action) => {
+    builder.addCase(resetErrAction.pending, (state) => {
       state.error = null;
     });
     //Reset success
-    builder.addCase(resetSuccessAction.pending, (state, action) => {
+    builder.addCase(resetSuccessAction.pending, (state) => {
       state.isAdded = false;
     });
   },
