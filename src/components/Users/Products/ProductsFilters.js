@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../../redux/slices/products/productsSlice";
 import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
 import { fetchColorsAction } from "../../../redux/slices/colors/colorsSlice";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
+import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -76,8 +78,30 @@ export default function ProductsFilters() {
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
 
+  console.log(color);
+
   //build up url
-  let productUrl = `${baseURL}/products`;
+  let productUrl = `${baseURL}/products?category`;
+
+  if (category) {
+    productUrl = `${baseURL}/products?category=${category}`;
+  }
+
+  if (brand) {
+    productUrl = `${productUrl}&brand=${brand}`;
+  }
+
+  if (size) {
+    productUrl = `${productUrl}&size=${size}`;
+  }
+
+  if (color) {
+    productUrl = `${productUrl}&color=${color.name}`;
+  }
+
+  if (price) {
+    productUrl = `${productUrl}&price=${price}`;
+  }
 
   const dispatch = useDispatch();
 
@@ -87,9 +111,11 @@ export default function ProductsFilters() {
         url: productUrl,
       })
     );
-  }, [dispatch]);
+  }, [dispatch, category, brand, size, color, price]);
 
-  //  const { products, loading, error } = useSelector((state) => state?.products);
+  const { products, loading, error } = useSelector((state) => state?.products);
+
+  console.log(products);
 
   //brands
   useEffect(() => {
@@ -106,11 +132,17 @@ export default function ProductsFilters() {
   const { colors } = useSelector((state) => state?.colors);
   let colorsData = colors.data;
 
-  let products;
   let colorsLoading;
   let colorsError;
   let productsLoading;
   let productsError;
+
+  function clearFilter() {
+    setSize("");
+    setColor("");
+    setBrand("");
+    setPrice("");
+  }
 
   return (
     <div className="bg-white">
@@ -733,16 +765,17 @@ export default function ProductsFilters() {
                     </>
                   )}
                 </Disclosure>
+                <button onClick={clearFilter}>Limpar filtro</button>
                 {/*  end product size categories section */}
               </form>
 
               {/* Product grid */}
-              {productsLoading ? (
-                <h2 className="text-xl">Loading...</h2>
-              ) : productsError ? (
-                <h2 className="text-red-500">{productsError}</h2>
+              {loading ? (
+                <LoadingComponent />
+              ) : error ? (
+                <ErrorMsg message={error?.message} />
               ) : (
-                <Products products={products} />
+                <Products products={products?.data} />
               )}
             </div>
           </section>

@@ -13,11 +13,7 @@ const HomeProductTrending = () => {
   }, [dispatch]);
 
   //get data from store
-  const {
-    products: { data },
-    error,
-    loading,
-  } = useSelector((state) => state?.products);
+  const { products, error, loading } = useSelector((state) => state?.products);
 
   return (
     <>
@@ -41,10 +37,8 @@ const HomeProductTrending = () => {
 
           {
             <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-              {data &&
-                data !== null &&
-                data.length > 0 &&
-                data?.map((product) => (
+              {products?.data?.length > 0 &&
+                products?.data?.map((product) => (
                   <Link
                     to={`/products/${product?.id}`}
                     key={product.id}
