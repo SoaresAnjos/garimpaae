@@ -8,6 +8,11 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductAtion } from "../../../redux/slices/products/productsSlice";
+import {
+  addOrderAction,
+  getCartItemsAction,
+} from "../../../redux/slices/cart/cartSlice";
+import Swal from "sweetalert2";
 
 const product = {
   name: "Basic Tee",
@@ -75,14 +80,59 @@ export default function Product() {
     error,
   } = useSelector((state) => state?.products);
 
-  console.log(data);
+  //get cart
+  useEffect(() => {
+    dispatch(getCartItemsAction());
+  }, []);
+
+  const { cartItems } = useSelector((state) => state?.cart);
+
+  console.log(cartItems);
 
   //Add to cart handler
-  const addToCartHandler = (item) => {};
+  const addToCartHandler = () => {
+    if (selectedSize === "") {
+      return Swal.fire({
+        icon: "error",
+        title: "Selecione um tamanho",
+        text: "para poder prosseguir com o checkout",
+      });
+    }
+
+    // if (selectedColor === "") {
+    //   return Swal.fire({
+    //     icon: "error",
+    //     title: "Selecione uma cor",
+    //     text: "para poder prosseguir com o checkout",
+    //   });
+    // }
+
+    const itemFound = cartItems.find((item) => item?._id === data?._id);
+    if (itemFound) {
+      console.log("item achado");
+    }
+
+    dispatch(
+      addOrderAction({
+        _id: data?._id,
+        name: data?.name,
+        qty: data?.qty,
+        price: data?.price,
+        description: data?.description,
+        color: selectedColor,
+        size: selectedSize,
+      })
+    );
+    return Swal.fire({
+      icon: "success",
+      title: "produto adicionado ao carrinho",
+      text: "Uhuu",
+    });
+  };
 
   let productColor;
   let productSize;
-  let cartItems = [];
+  //let cartItems = [];
 
   return (
     <div className="bg-white">
@@ -243,7 +293,7 @@ export default function Product() {
               </button>
               {/* proceed to check */}
 
-              {cartItems.length > 0 && (
+              {cartItems?.length > 0 && (
                 <Link
                   to="/shopping-cart"
                   className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-green-800 py-3 px-8 text-base font-medium text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
