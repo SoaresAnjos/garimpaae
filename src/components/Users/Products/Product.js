@@ -128,6 +128,8 @@ export default function Product() {
         color: selectedColor,
         size: selectedSize,
         image: data?.images[0],
+        totalPrice: data?.price,
+        qtyLeft: data?.qtyLeft,
       })
     );
     return Swal.fire({

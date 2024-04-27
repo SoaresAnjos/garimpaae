@@ -12,10 +12,9 @@ const initialState = {
 
 //add product to cart
 export const addOrderAction = createAsyncThunk("cart/add", async (cartItem) => {
-  const cartItems = localStorage.getItem("cartItem")
-    ? JSON.parse(localStorage.getItem("cartItem"))
+  const cartItems = localStorage.getItem("cartItems")
+    ? JSON.parse(localStorage.getItem("cartItems"))
     : [];
-
   //push to storage
   cartItems.push(cartItem);
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -29,7 +28,7 @@ export const getCartItemsAction = createAsyncThunk("cart/get", async () => {
   return cartItems;
 });
 
-//get products from cart
+//change products from cart
 export const changeCartQtyAction = createAsyncThunk(
   "cart/change-qty",
   async ({ productId, qty }) => {
@@ -54,15 +53,11 @@ export const changeCartQtyAction = createAsyncThunk(
 export const removeItemCartAction = createAsyncThunk(
   "cart/remove",
   async (productId) => {
-    const cartItems = localStorage.getItem("cartItem")
-      ? JSON.parse(localStorage.getItem("cartItem"))
+    const cartItems = localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
       : [];
-
-    const newCartItems = cartItems?.filter((item) => {
-      return item?._id?.toString() !== productId.toString();
-    });
-
-    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+    const newItems = cartItems?.filter((item) => item?._id !== productId);
+    localStorage.setItem("cartItems", JSON.stringify(newItems));
   }
 );
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   CheckIcon,
   ClockIcon,
@@ -33,6 +33,11 @@ export default function ShoppingCart() {
     dispatch(removeItemCartAction(productId));
     dispatch(getCartItemsAction());
   };
+
+  //calculate total price
+  const sumTotalPrice = cartItems?.reduce((acc, curr) => {
+    return acc + curr?.totalPrice;
+  }, 0);
 
   let calculateTotalDiscountedPrice;
   let error;
@@ -115,8 +120,13 @@ export default function ShoppingCart() {
                               {x + 1}
                             </option>
                           ))} */}
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
+                          {[...Array(product?.qtyLeft).keys()].map((option) => {
+                            return (
+                              <option key={option} value={option + 1}>
+                                {option + 1}
+                              </option>
+                            );
+                          })}
                         </select>
                         {/* remove */}
                         <div className="absolute top-0 right-0">
@@ -149,7 +159,7 @@ export default function ShoppingCart() {
               id="summary-heading"
               className="text-lg font-medium text-gray-900"
             >
-              Order summary
+              R$ {sumTotalPrice},00
             </h2>
 
             <dl className="mt-6 space-y-4">
@@ -210,8 +220,9 @@ export default function ShoppingCart() {
             <div className="mt-6">
               <Link
                 //  pass data to checkout page
-                to={{
-                  pathname: "/order-payment",
+                to="/order-payment"
+                state={{
+                  sumTotalPrice,
                 }}
                 className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
               >
