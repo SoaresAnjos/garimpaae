@@ -87,7 +87,9 @@ export default function Product() {
 
   const { cartItems } = useSelector((state) => state?.cart);
 
-  console.log(cartItems);
+  const productInCart = cartItems?.find(
+    (item) => item?._id?.toString() === data?._id?.toString()
+  );
 
   //Add to cart handler
   const addToCartHandler = () => {
@@ -107,9 +109,13 @@ export default function Product() {
     //   });
     // }
 
-    const itemFound = cartItems.find((item) => item?._id === data?._id);
-    if (itemFound) {
-      console.log("item achado");
+    //check if product is in cart
+    if (productInCart) {
+      return Swal.fire({
+        icon: "error",
+        title: "Produto já adicionado ao carrinho",
+        text: "",
+      });
     }
 
     dispatch(
@@ -121,6 +127,7 @@ export default function Product() {
         description: data?.description,
         color: selectedColor,
         size: selectedSize,
+        image: data?.images[0],
       })
     );
     return Swal.fire({
