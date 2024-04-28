@@ -5,6 +5,7 @@ import { getCartItemsAction } from "../../../redux/slices/cart/cartSlice";
 import { useLocation } from "react-router-dom";
 import { placeOrderAction } from "../../../redux/slices/orders/ordersSlice";
 import { getUserProfileAction } from "../../../redux/slices/users/usersSlice";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 export default function OrderPayment() {
   //get data from location
@@ -31,7 +32,7 @@ export default function OrderPayment() {
     dispatch(getUserProfileAction());
   }, [dispatch]);
 
-  const { loading, error, profile } = useSelector((state) => state?.users);
+  const { profile } = useSelector((state) => state?.users);
   const userShippingAddress = profile?.data?.shippingAddress;
 
   //place order action
@@ -44,6 +45,10 @@ export default function OrderPayment() {
       })
     );
   };
+
+  const { loading: orderLoading, error: orderErr } = useSelector(
+    (state) => state?.orders
+  );
 
   return (
     <div className="bg-gray-50">
@@ -118,12 +123,18 @@ export default function OrderPayment() {
                 </dl>
 
                 <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                  <button
-                    onClick={placeOrderHandler}
-                    className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                  >
-                    Confirm Payment - R$ {sumTotalPrice}
-                  </button>
+                  {orderLoading ? (
+                    <LoadingComponent />
+                  ) : (
+                    <button
+                      onClick={placeOrderHandler}
+                      className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                    >
+                      Confirm Payment - R$ {sumTotalPrice}
+                    </button>
+                  )}
+
+                  <>{orderErr && <p>{orderErr?.message}</p>}</>
                 </div>
               </div>
             </div>
