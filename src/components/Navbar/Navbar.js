@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -11,6 +11,7 @@ import baseURL from "../../utils/baseURL";
 import logo from "./logo3.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
+import { getCartItemsAction } from "../../redux/slices/cart/cartSlice";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -24,9 +25,6 @@ export default function Navbar() {
     loading,
     error,
   } = useSelector((state) => state?.categories);
-
-  //console.log(data);
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   //get user from localStorage
@@ -34,7 +32,10 @@ export default function Navbar() {
   const isLoggedIn = user?.token ? true : false;
 
   //get cart items from local storage
-  let cartItemsFromLocalStorage;
+  const cartItemsFromLocalStorage = JSON.parse(
+    localStorage.getItem("cartItems")
+  );
+
   return (
     <div className="bg-white">
       {/* Mobile menu */}
