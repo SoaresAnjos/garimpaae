@@ -76,6 +76,64 @@ export const addProductAction = createAsyncThunk(
   }
 );
 
+//create product action
+export const updateProductAction = createAsyncThunk(
+  "products/update",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const {
+        id,
+        name,
+        description,
+        category,
+        sizes,
+        brand,
+        colors,
+        price,
+        totalQty,
+        //files,
+      } = payload;
+      //http request
+
+      //token
+      const token = getState().users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // //formData
+      // const formData = new FormData();
+      // formData.append("name", name);
+      // formData.append("brand", brand);
+      // formData.append("category", category);
+      // formData.append("description", description);
+      // formData.append("totalQty", totalQty);
+      // formData.append("price", price);
+
+      // sizes?.forEach((size) => {
+      //   formData.append("sizes", size);
+      // });
+      // colors?.forEach((color) => {
+      //   formData.append("color", color);
+      // });
+      // files?.forEach((file) => {
+      //   formData.append("files", file);
+      // });
+
+      const { data } = await axios.put(
+        `${baseURL}/products/update/${id}`,
+        { name, description, category, sizes, brand, colors, price, totalQty },
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //fetch all products
 export const fecthProductsAction = createAsyncThunk(
   "products/fetch-all",
@@ -144,6 +202,21 @@ const productsSlice = createSlice({
       state.loading = false;
       state.product = null;
       state.isAdded = false;
+    });
+    //update product
+    builder.addCase(updateProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isUpdated = true;
+      state.product = action.payload;
+    });
+    builder.addCase(updateProductAction.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+      state.product = null;
+      state.isUpdated = false;
     });
     //fetch all
     builder.addCase(fecthProductsAction.pending, (state) => {
