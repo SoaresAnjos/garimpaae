@@ -1,4 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
 import OrdersStats from "./OrdersStatistics";
+import { useState } from "react";
+import { fetchOderAction } from "../../../redux/slices/orders/ordersSlice";
 
 const people = [
   {
@@ -10,7 +13,21 @@ const people = [
   // More people...
 ];
 
+
+
 export default function OrdersList() {
+  
+const dispatch = useDispatch();
+
+useState(()=>{
+  dispatch(fetchOderAction())
+}, []);
+
+const {orders: {data: orders}, error, loading} = useSelector(state => state?.orders);
+
+console.log(orders);
+
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center"></div>
@@ -37,7 +54,7 @@ export default function OrdersList() {
               <th
                 scope="col"
                 className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">
-                Oder Date
+                Data do pedido
               </th>
               <th
                 scope="col"
@@ -61,35 +78,41 @@ export default function OrdersList() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {people.map((person) => (
-              <tr key={person.email}>
+            {orders?.map((order) => (
+              <tr key={order?._id}>
                 <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                  {person.name}
+                  {order?._id}
                   <dl className="font-normal lg:hidden">
                     <dt className="sr-only">Title</dt>
                     <dd className="mt-1 truncate text-gray-700">
-                      {person.title}
+            
                     </dd>
                     <dt className="sr-only sm:hidden">Email</dt>
                     <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                      {person.email}
+                      {order.email}
                     </dd>
                   </dl>
                 </td>
                 <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                  {person.title}
+                  {order?.createdAt}
                 </td>
                 <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                  {person.email}
+                  {order.createdAt}
                 </td>
                 <td className="px-3 py-4 text-sm text-gray-500">
-                  {person.role}
+                  {order.status}
                 </td>
-                <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                <td className="px-3 py-4 text-sm text-gray-500">
+                  {order.status}
+                </td>
+                <td className="px-3 py-4 text-sm text-gray-500">
+                  R$ {order.totalPrice}
+                </td>
+                {/* <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                   <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                    Edit<span className="sr-only">, {person.name}</span>
+                    Edit<span className="sr-only">, {order.name}</span>
                   </a>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

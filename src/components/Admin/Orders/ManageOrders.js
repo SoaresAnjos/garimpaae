@@ -2,10 +2,21 @@ import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import UpdateOrders from "./UpdateOrders";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchOrdersAction } from "../../../redux/slices/orders/ordersSlice";
 
 export default function ManageOrders() {
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(fetchOrdersAction())
+  }, [dispatch]);
+
+  
   //get orders
-  let loading, error, allOrders;
+  const {loading, error, orders: {data: orders}} = useSelector(state => state?.orders);
+
 
   return (
     <>
@@ -31,7 +42,7 @@ export default function ManageOrders() {
                 ) : error ? (
                   <h2>{error}</h2>
                 ) : (
-                  allOrders?.map((order) => (
+                  orders?.map((order) => (
                     <div
                       key={order.number}
                       className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
