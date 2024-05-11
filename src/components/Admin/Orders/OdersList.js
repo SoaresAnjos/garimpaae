@@ -4,6 +4,7 @@ import { useState } from "react";
 import { fetchOrdersAction } from "../../../redux/slices/orders/ordersSlice";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import NoDataFound from "../../NoDataFound/NoDataFound";
+import { Link } from "react-router-dom";
 
 export default function OrdersList() {
   
@@ -98,9 +99,10 @@ const {orders: {data: orders}, error, loading} = useSelector(state => state?.ord
                 </td>
               
                 <td className="px-3 py-4 text-sm text-gray-500">
-                   <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                  <Link to={`/admin/orders/${order?._id}`}>
+                  
                     Editar<span className="sr-only">, {order.name}</span>
-                  </a>
+                  </Link>
                 </td>
                 
                 {/* <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

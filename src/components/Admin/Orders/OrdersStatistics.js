@@ -14,9 +14,7 @@ export default function OrdersStats() {
 
   const obj = stats?.data;
 
-  const statistics = Object.values(obj[0])
-
-  console.log(statistics);
+  const statistics = obj ? Object.values(obj[0]) : 0
 
   return (
     <div>
