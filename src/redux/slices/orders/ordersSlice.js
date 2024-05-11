@@ -80,7 +80,7 @@ export const OrdersStatsAction = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`${baseURL}/orders/sales/stats`, config);
+      const { data } = await axios.get(`${baseURL}/orders/stats`, config);
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -89,7 +89,7 @@ export const OrdersStatsAction = createAsyncThunk(
 );
 
 //fetch product action
-export const fetchOderAction = createAsyncThunk(
+export const fetchOrderAction = createAsyncThunk(
   "orders/details",
   async (productId, { rejectWithValue, getState, dispatch }) => {
     try {
@@ -184,7 +184,7 @@ const ordersSlice = createSlice({
       state.stats = null;
       state.error = action.payload;
     });
-    //stats
+    //update
     builder.addCase(updateOrderAction.pending, (state) => {
       state.loading = true;
     });
@@ -198,14 +198,14 @@ const ordersSlice = createSlice({
       state.error = action.payload;
     });
     //fetch single
-    builder.addCase(fetchOderAction.pending, (state) => {
+    builder.addCase(fetchOrderAction.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchOderAction.fulfilled, (state, action) => {
+    builder.addCase(fetchOrderAction.fulfilled, (state, action) => {
       state.loading = false;
       state.order = action.payload;
     });
-    builder.addCase(fetchOderAction.rejected, (state, action) => {
+    builder.addCase(fetchOrderAction.rejected, (state, action) => {
       state.loading = false;
       state.order = null;
       state.error = action.payload;
