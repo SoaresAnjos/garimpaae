@@ -13,31 +13,32 @@ import baseURL from "../../../utils/baseURL";
 export default function ManageStocks() {
   const dispatch = useDispatch();
 
-  
   useEffect(() => {
     dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
   }, [dispatch]);
 
-  const {
-    products,
-    loading,
-    error,
-    isDeleted,
-  } = useSelector((state) => state?.products);
+  const { products, loading, error, isDeleted } = useSelector(
+    (state) => state?.products
+  );
 
   let [productsData, setProductData] = useState([]);
 
-  useEffect(()=> {
-    if(products) {
-      setProductData(products.data)
+  useEffect(() => {
+    if (products) {
+      setProductData(products.data);
     }
   }, [products]);
 
-
-
   //delete product handler
   const deleteProductHandler = (id) => {
-    dispatch(deleteProductAtion(id));
+    dispatch(deleteProductAtion(id))
+      .then(() => {
+        dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
+      })
+      .catch((error) => {
+        // Handle error if necessary
+        console.error("Error deleting category:", error);
+      });
   };
 
   return (

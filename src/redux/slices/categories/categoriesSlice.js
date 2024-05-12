@@ -35,6 +35,30 @@ export const fetchCategoriesAction = createAsyncThunk(
   }
 );
 
+//fetch categories
+export const deleteCategoryAction = createAsyncThunk(
+  "category/delete",
+  async (category, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      //http request
+      const { data } = await axios.delete(
+        `${baseURL}/categories/delete/${category}`,
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //create category action
 export const addCategoryAction = createAsyncThunk(
   "category/create",
@@ -84,6 +108,22 @@ const categorySlice = createSlice({
       state.loading = false;
       state.category = null;
       state.isAdded = false;
+    });
+
+    //delete
+    builder.addCase(deleteCategoryAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteCategoryAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isDeleted = true;
+      state.category = action.payload;
+    });
+    builder.addCase(deleteCategoryAction.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+      state.category = null;
+      state.isDeleted = false;
     });
 
     //fetch all
