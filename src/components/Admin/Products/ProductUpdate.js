@@ -102,6 +102,26 @@ export default function ProductUpdate() {
     totalQty: product?.data?.totalQty,
   });
 
+  // Efeito para atualizar o estado do formulário quando os dados do produto estiverem disponíveis
+  useEffect(() => {
+    // Verifica se os dados do produto estão disponíveis
+    if (product) {
+      // Atualiza o estado do formulário com os dados do produto
+      setFormData({
+        name: product.name || "",
+        description: product.description || "",
+        category: product.category || "",
+        sizes: product.sizes || [],
+        brand: product.brand || "",
+        colors: product.colors || [],
+        price: product.price || 0,
+        totalQty: product.totalQty || 0,
+      });
+    }
+  }, [product]); // Executa sempre que os dados do produto mudarem
+
+  const { name, brand, category, description, totalQty, price } = formData;
+
   //onChange
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

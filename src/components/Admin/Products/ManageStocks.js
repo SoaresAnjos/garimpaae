@@ -3,7 +3,7 @@ import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import NoDataFound from "../../NoDataFound/NoDataFound";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteProductAtion,
   fecthProductsAction,
@@ -13,16 +13,27 @@ import baseURL from "../../../utils/baseURL";
 export default function ManageStocks() {
   const dispatch = useDispatch();
 
+  
+  useEffect(() => {
+    dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
+  }, [dispatch]);
+
   const {
-    products: { data: products },
+    products,
     loading,
     error,
     isDeleted,
   } = useSelector((state) => state?.products);
 
-  useEffect(() => {
-    dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
-  }, [dispatch]);
+  let [productsData, setProductData] = useState([]);
+
+  useEffect(()=> {
+    if(products) {
+      setProductData(products.data)
+    }
+  }, [products]);
+
+
 
   //delete product handler
   const deleteProductHandler = (id) => {
@@ -34,7 +45,7 @@ export default function ManageStocks() {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">
-            Lista de produtos [{products?.length}]{" "}
+            Lista de produtos [{productsData?.length}]{" "}
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             Confira a lista de produtos na sua conta
@@ -119,7 +130,7 @@ export default function ManageStocks() {
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {/* loop here */}
-                    {products?.map((product) => (
+                    {productsData?.map((product) => (
                       <tr key={product._id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">

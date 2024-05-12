@@ -1,4 +1,21 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { OrdersStatsAction } from "../../../redux/slices/orders/ordersSlice";
+
 export default function OrdersStats() {
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(OrdersStatsAction())
+  }, [dispatch]);
+
+  const {stats, loading, error} = useSelector(state => state?.orders);
+
+  const obj = stats?.data;
+
+  const statistics = obj ? Object.values(obj[0]) : 0
+
   return (
     <div>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -20,20 +37,20 @@ export default function OrdersStats() {
               </svg>
             </div>
             <p className="ml-16 truncate text-sm font-medium text-gray-500">
-              Order Pending
+              Menor pedido
             </p>
           </dt>
           <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
-            <p className="text-2xl font-semibold text-gray-900">300</p>
+            <p className="text-2xl font-semibold text-gray-900">R$ {statistics[1]}</p>
 
             <div className="absolute inset-x-0 bottom-0 bg-pink-900 px-4 py-4 sm:px-6">
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
                   View all
-                </a>
+                </a> */}
               </div>
             </div>
           </dd>
@@ -56,20 +73,20 @@ export default function OrdersStats() {
               </svg>
             </div>
             <p className="ml-16 truncate text-sm font-medium text-gray-500">
-              Order Cancel
+              Pedido maior
             </p>
           </dt>
           <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
-            <p className="text-2xl font-semibold text-gray-900">300</p>
+            <p className="text-2xl font-semibold text-gray-900">R$ {statistics[2]}</p>
 
             <div className="absolute inset-x-0 bottom-0 bg-pink-900 px-4 py-4 sm:px-6">
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
                   View all
-                </a>
+                </a> */}
               </div>
             </div>
           </dd>
@@ -92,20 +109,20 @@ export default function OrdersStats() {
               </svg>
             </div>
             <p className="ml-16 truncate text-sm font-medium text-gray-500">
-              Order Process
+             Total de vendas
             </p>
           </dt>
           <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
-            <p className="text-2xl font-semibold text-gray-900">300</p>
+            <p className="text-2xl font-semibold text-gray-900">{statistics[3]}</p>
 
             <div className="absolute inset-x-0 bottom-0 bg-pink-900 px-4 py-4 sm:px-6">
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
                   View all
-                </a>
+                </a> */}
               </div>
             </div>
           </dd>
@@ -128,20 +145,20 @@ export default function OrdersStats() {
               </svg>
             </div>
             <p className="ml-16 truncate text-sm font-medium text-gray-500">
-              Total Income
+              Média de vendas
             </p>
           </dt>
           <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
-            <p className="text-2xl font-semibold text-gray-900">300</p>
+            <p className="text-2xl font-semibold text-gray-900">{new Number(statistics[4]).toFixed(2)}</p>
 
             <div className="absolute inset-x-0 bottom-0 bg-pink-900 px-4 py-4 sm:px-6">
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500">
                   {" "}
                   View all
-                </a>
+                </a> */}
               </div>
             </div>
           </dd>
