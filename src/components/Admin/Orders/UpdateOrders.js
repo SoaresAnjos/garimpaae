@@ -1,12 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { updateOrderAction } from "../../../redux/slices/orders/ordersSlice";
+import { useParams } from "react-router-dom";
+import baseURL from "../../../utils/baseURL";
 
-const UpdateOrders = ({ id }) => {
+const UpdateOrders = () => {
   const [order, setOrder] = React.useState({
     status: "pending",
   });
 
-  const onChange = (e) => {};
+  const dispatch = useDispatch();
+
+  const { id } = useParams();
+
+  const onChange = (e) => {
+    dispatch(updateOrderAction({ status: e.target.value, id }));
+    window.location.href = `/admin`;
+  };
 
   return (
     <div className="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
@@ -14,7 +24,8 @@ const UpdateOrders = ({ id }) => {
         <div>
           <label
             htmlFor="location"
-            className="block text-sm font-medium text-gray-700">
+            className="block text-sm font-medium text-gray-700"
+          >
             Update Order
           </label>
           <select
@@ -23,7 +34,8 @@ const UpdateOrders = ({ id }) => {
             onChange={onChange}
             value={order.status}
             className="mt-1 block w-full rounded-md border-2 border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            defaultValue="Canada">
+            defaultValue="Canada"
+          >
             <option value="pending">Pending</option>
             <option value="processing">Processing</option>
             <option value="shipped">Shipped</option>

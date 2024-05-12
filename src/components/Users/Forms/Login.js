@@ -25,19 +25,22 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(loginUserAction({ email, password }));
+
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(user);
+
+    // //redirect
+    // if (user?.userFound?.isAdmin) {
+    //   window.location.href = "/admin";
+    // } else {
+    //   window.location.href = "/";
+    // }
   };
 
   //get data from store
   const { error, loading, userInfo } = useSelector((state) => {
     return state?.users?.userAuth;
   });
-
-  // //redirect
-  // if (userInfo?.userFound?.isAdmin) {
-  //   window.location.href = "/admin";
-  // } else {
-  //   window.location.href = "/customer-profile";
-  // }
 
   return (
     <>
