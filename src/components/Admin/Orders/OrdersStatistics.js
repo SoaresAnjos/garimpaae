@@ -163,7 +163,7 @@ export default function OrdersStats() {
           </dt>
           <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
             <p className="text-2xl font-semibold text-gray-900">
-              {statistics[4].toFixed(2)}
+              {statistics[4]}
             </p>
 
             <div className="absolute inset-x-0 bottom-0 bg-pink-900 px-4 py-4 sm:px-6">
