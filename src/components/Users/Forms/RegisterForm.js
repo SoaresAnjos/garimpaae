@@ -28,7 +28,7 @@ const RegisterForm = () => {
   };
 
   //select store data
-  const { user, error, loading } = useSelector((state) => {
+  const { error, loading } = useSelector((state) => {
     return state?.users;
   });
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
-import { act } from "react-dom/test-utils";
+//import { act } from "react-dom/test-utils";
 import { resetErrAction } from "../globalActions/globalActions";
 
 //initial state

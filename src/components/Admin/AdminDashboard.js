@@ -1,21 +1,13 @@
 import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { Link, Outlet } from "react-router-dom";
 import {
   Bars3CenterLeftIcon,
-  BellIcon,
-  ClockIcon,
   CogIcon,
-  CreditCardIcon,
-  DocumentChartBarIcon,
-  HomeIcon,
   QuestionMarkCircleIcon,
   ScaleIcon,
-  ShieldCheckIcon,
-  UserGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import logo from "../Navbar/logo3.png";
 const ordersLinks = [
   {
     name: "Dashboard",

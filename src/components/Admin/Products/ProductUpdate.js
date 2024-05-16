@@ -48,11 +48,7 @@ export default function ProductUpdate() {
   }, [dispatch]);
 
   //select categories data from store
-  const {
-    categories,
-    loading: loadingCategory,
-    error: errorCategory,
-  } = useSelector((state) => state?.categories);
+  const { categories } = useSelector((state) => state?.categories);
 
   //brands
   useEffect(() => {
@@ -120,7 +116,7 @@ export default function ProductUpdate() {
     }
   }, [product]); // Executa sempre que os dados do produto mudarem
 
-  const { name, brand, category, description, totalQty, price } = formData;
+  //const { name, brand, category, description, totalQty, price } = formData;
 
   //onChange
   const handleOnChange = (e) => {

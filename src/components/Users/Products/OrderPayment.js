@@ -16,17 +16,17 @@ export default function OrderPayment() {
 
   useEffect(() => {
     dispatch(getCartItemsAction());
-  }, []);
+  }, [dispatch]);
 
   //---get cart items from store---
   const { cartItems } = useSelector((state) => state?.cart);
 
-  const calculateTotalDiscountedPrice = () => {};
+  //const calculateTotalDiscountedPrice = () => {};
 
   //create order submit handler
-  const createOrderSubmitHandler = (e) => {
-    e.preventDefault();
-  };
+  //  // const createOrderSubmitHandler = (e) => {
+  //     e.preventDefault();
+  //   };
 
   useEffect(() => {
     dispatch(getUserProfileAction());
@@ -74,7 +74,7 @@ export default function OrderPayment() {
 
               <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                 <h3 className="sr-only">Items in your cart</h3>
-                <ul role="list" className="divide-y divide-gray-200">
+                <ul className="divide-y divide-gray-200">
                   {cartItems?.map((product) => (
                     <li key={product._id} className="flex py-6 px-4 sm:px-6">
                       <div className="flex-shrink-0">

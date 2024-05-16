@@ -5,8 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
-import { fetchBrandsAction } from "../brands/brandsSlice";
-import { act } from "react-dom/test-utils";
 
 //initial state
 const initialState = {

@@ -12,8 +12,6 @@ const AllCategories = () => {
 
   const {
     categories: { data },
-    error,
-    loading,
   } = useSelector((state) => state?.categories);
 
   return (

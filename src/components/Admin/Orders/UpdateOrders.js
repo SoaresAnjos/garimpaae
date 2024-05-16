@@ -2,10 +2,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { updateOrderAction } from "../../../redux/slices/orders/ordersSlice";
 import { useParams } from "react-router-dom";
-import baseURL from "../../../utils/baseURL";
 
 const UpdateOrders = () => {
-  const [order, setOrder] = React.useState({
+  const [order] = React.useState({
     status: "pending",
   });
 

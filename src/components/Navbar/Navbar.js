@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { Dialog, Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   ShoppingCartIcon,
@@ -11,7 +11,6 @@ import baseURL from "../../utils/baseURL";
 import logo from "./logo3.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
-import { getCartItemsAction } from "../../redux/slices/cart/cartSlice";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -22,8 +21,6 @@ export default function Navbar() {
 
   const {
     categories: { data },
-    loading,
-    error,
   } = useSelector((state) => state?.categories);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

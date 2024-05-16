@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../redux/slices/users/usersSlice";
-import Swal from "sweetalert2";
-import ErrorMsg from "../../ErrorMsg/ErrorMsg";
-import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 const Login = () => {
@@ -38,7 +35,7 @@ const Login = () => {
   };
 
   //get data from store
-  const { error, loading, userInfo } = useSelector((state) => {
+  const { loading } = useSelector((state) => {
     return state?.users?.userAuth;
   });
 

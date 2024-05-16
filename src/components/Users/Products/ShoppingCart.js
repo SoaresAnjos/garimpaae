@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -39,7 +34,7 @@ export default function ShoppingCart() {
     return acc + curr?.totalPrice;
   }, 0);
 
-  let calculateTotalDiscountedPrice;
+  //let calculateTotalDiscountedPrice;
   let error;
   let couponFound;
   let applyCouponSubmit;
@@ -59,10 +54,7 @@ export default function ShoppingCart() {
               Items in your shopping cart
             </h2>
 
-            <ul
-              role="list"
-              className="divide-y divide-gray-200 border-t border-b border-gray-200"
-            >
+            <ul className="divide-y divide-gray-200 border-t border-b border-gray-200">
               {cartItems?.map((product) => (
                 <li key={product._id} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">

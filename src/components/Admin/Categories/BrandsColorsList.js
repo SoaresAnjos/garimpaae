@@ -22,33 +22,39 @@ export default function BrandsColorsList() {
             <tr>
               <th
                 scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+              >
                 Order ID
               </th>
               <th
                 scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+              >
                 Payment Method
               </th>
               <th
                 scope="col"
-                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">
+                className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
                 Oder Date
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Delivery Date
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Status
               </th>
 
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 Total
               </th>
               {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -82,9 +88,9 @@ export default function BrandsColorsList() {
                   {person.role}
                 </td>
                 <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                  {/* <a href="#" className="text-indigo-600 hover:text-indigo-900">
                     Edit<span className="sr-only">, {person.name}</span>
-                  </a>
+                  </a> */}
                 </td>
               </tr>
             ))}

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getCartItemsAction } from "../../../redux/slices/cart/cartSlice";
 import { getUserProfileAction } from "../../../redux/slices/users/usersSlice";
 
 export default function ThanksForOrdering() {
-  const location = useLocation();
+  //const location = useLocation();
   //const { sumTotalPrice } = location.state;
   //console.log(sumTotalPrice);
 
@@ -13,7 +13,7 @@ export default function ThanksForOrdering() {
 
   useEffect(() => {
     dispatch(getCartItemsAction());
-  }, []);
+  }, [dispatch]);
 
   //---get cart items from store---
   const { cartItems } = useSelector((state) => state?.cart);
@@ -32,9 +32,9 @@ export default function ThanksForOrdering() {
     dispatch(getUserProfileAction());
   }, [dispatch]);
 
-  const { loading, error, profile } = useSelector((state) => state?.users);
+  //const { profile } = useSelector((state) => state?.users);
 
-  const userShippingAddress = profile?.data?.shippingAddress;
+  // const userShippingAddress = profile?.data?.shippingAddress;
 
   // const async userShippingAddressValues = async () => {
   //   return await Object.values(userShippingAddress);
@@ -73,10 +73,7 @@ export default function ThanksForOrdering() {
                 <dd className="mt-2 text-indigo-600">51547878755545848512</dd>
               </dl> */}
 
-              <ul
-                role="list"
-                className="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
-              >
+              <ul className="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
                 {cartItems.map((product) => (
                   <li key={product.id} className="flex space-x-6 py-6">
                     <img

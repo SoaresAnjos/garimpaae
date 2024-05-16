@@ -58,10 +58,7 @@ export default function Example() {
         <div className="flex flex-col border-b border-gray-200 lg:border-0">
           <nav aria-label="Offers" className="order-last lg:order-first">
             <div className="mx-auto max-w-7xl lg:px-8">
-              <ul
-                role="list"
-                className="grid grid-cols-1 divide-y divide-gray-200 lg:grid-cols-3 lg:divide-y-0 lg:divide-x"
-              >
+              <ul className="grid grid-cols-1 divide-y divide-gray-200 lg:grid-cols-3 lg:divide-y-0 lg:divide-x">
                 {offers.map((offer) => (
                   <li key={offer.name} className="flex flex-col">
                     <a
@@ -96,7 +93,7 @@ export default function Example() {
                     </p>
                     <div className="mt-6">
                       <a
-                        href="#"
+                        href="www.google.com"
                         className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 font-medium text-white hover:bg-indigo-700"
                       >
                         Shop Productivity
@@ -134,7 +131,7 @@ export default function Example() {
                 Get your favorite items while they're in stock.
               </p>
               <a
-                href="#"
+                href="/"
                 className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto"
               >
                 Get access to our one-time sale

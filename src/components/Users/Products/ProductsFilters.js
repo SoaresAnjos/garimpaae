@@ -15,7 +15,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/20/solid";
 import Products from "./Products";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import baseURL from "../../../utils/baseURL";
 import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../../redux/slices/products/productsSlice";
@@ -69,7 +69,7 @@ export default function ProductsFilters() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const category = params.get("category");
 
   //filters
@@ -109,7 +109,7 @@ export default function ProductsFilters() {
         url: productUrl,
       })
     );
-  }, [dispatch, category, brand, size, color, price]);
+  }, [dispatch, category, brand, size, color, price, productUrl]);
 
   const { products, loading, error } = useSelector((state) => state?.products);
 
@@ -130,8 +130,8 @@ export default function ProductsFilters() {
 
   let colorsLoading;
   let colorsError;
-  let productsLoading;
-  let productsError;
+  //let productsLoading;
+  //let productsError;
 
   function clearFilter() {
     setSize("");

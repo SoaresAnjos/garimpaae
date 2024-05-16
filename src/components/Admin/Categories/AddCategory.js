@@ -34,9 +34,7 @@ export default function CategoryToAdd() {
     setFile(newFile);
   };
 
-  const { loading, error, category, isAdded } = useSelector(
-    (state) => state?.categories
-  );
+  const { loading, error, isAdded } = useSelector((state) => state?.categories);
 
   //onSubmit
   const handleOnSubmit = (e) => {

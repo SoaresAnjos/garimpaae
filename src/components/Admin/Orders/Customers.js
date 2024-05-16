@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import OrdersStats from "./OrdersStatistics";
 import { fetchOrdersAction } from "../../../redux/slices/orders/ordersSlice";
 import { useEffect } from "react";
 
@@ -7,9 +6,9 @@ export default function Customers() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrdersAction());
-  }, []);
+  }, [dispatch]);
 
-  const { orders, loading, error } = useSelector((state) => state?.orders);
+  const { orders } = useSelector((state) => state?.orders);
 
   const users = orders?.data?.map((order) => order?.user);
 

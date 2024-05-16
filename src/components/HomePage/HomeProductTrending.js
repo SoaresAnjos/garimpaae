@@ -13,7 +13,7 @@ const HomeProductTrending = () => {
   }, [dispatch]);
 
   //get data from store
-  const { products, error, loading } = useSelector((state) => state?.products);
+  const { products } = useSelector((state) => state?.products);
 
   return (
     <>
@@ -27,7 +27,7 @@ const HomeProductTrending = () => {
               Top produtos
             </h2>
             <a
-              href="#"
+              href="/"
               className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
             >
               Descubra a coleção
@@ -70,7 +70,7 @@ const HomeProductTrending = () => {
 
           <div className="mt-8 text-sm md:hidden">
             <a
-              href="#"
+              href="/"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Shop the collection

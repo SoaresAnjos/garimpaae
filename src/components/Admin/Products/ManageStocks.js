@@ -17,9 +17,7 @@ export default function ManageStocks() {
     dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
   }, [dispatch]);
 
-  const { products, loading, error, isDeleted } = useSelector(
-    (state) => state?.products
-  );
+  const { products, loading, error } = useSelector((state) => state?.products);
 
   let [productsData, setProductData] = useState([]);
 

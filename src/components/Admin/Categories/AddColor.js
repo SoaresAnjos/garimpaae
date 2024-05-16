@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import colorsReducer, {
-  addColorAction,
-} from "../../../redux/slices/colors/colorsSlice";
+import { addColorAction } from "../../../redux/slices/colors/colorsSlice";
 
 export default function AddColor() {
   const dispatch = useDispatch();

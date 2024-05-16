@@ -1,4 +1,4 @@
-import { Menu, Transition } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import UpdateOrders from "./UpdateOrders";
@@ -9,14 +9,16 @@ import { fetchOrdersAction } from "../../../redux/slices/orders/ordersSlice";
 export default function ManageOrders() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(fetchOrdersAction())
+  useEffect(() => {
+    dispatch(fetchOrdersAction());
   }, [dispatch]);
 
-  
   //get orders
-  const {loading, error, orders: {data: orders}} = useSelector(state => state?.orders);
-
+  const {
+    loading,
+    error,
+    orders: { data: orders },
+  } = useSelector((state) => state?.orders);
 
   return (
     <>
@@ -45,7 +47,8 @@ export default function ManageOrders() {
                   orders?.map((order) => (
                     <div
                       key={order.number}
-                      className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                      className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border"
+                    >
                       <div className="flex items-center border-b border-gray-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
                         <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                           <div>
@@ -78,7 +81,8 @@ export default function ManageOrders() {
 
                         <Menu
                           as="div"
-                          className="relative flex justify-end lg:hidden">
+                          className="relative flex justify-end lg:hidden"
+                        >
                           <div className="flex items-center">
                             <Menu.Button className="-m-2 flex items-center p-2 text-gray-400 hover:text-gray-500">
                               <EllipsisVerticalIcon
@@ -101,7 +105,7 @@ export default function ManageOrders() {
 
                       {/* Products */}
 
-                      <ul role="list" className="divide-y divide-gray-200">
+                      <ul className="divide-y divide-gray-200">
                         {order?.orderItems?.map((product) => (
                           <li key={product?.id} className="p-4 sm:p-6">
                             <div className="flex items-center sm:items-start">
@@ -143,12 +147,14 @@ export default function ManageOrders() {
                                   fill="none"
                                   stroke="currentColor"
                                   viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg">
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
                                   <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  ></path>
                                 </svg>
                                 <p className="ml-2 text-sm font-medium text-gray-500">
                                   Payment Status: {order.paymentStatus}

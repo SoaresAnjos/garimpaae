@@ -14,35 +14,6 @@ import {
 } from "../../../redux/slices/cart/cartSlice";
 import Swal from "sweetalert2";
 
-const product = {
-  name: "Basic Tee",
-  price: "$35",
-  href: "#",
-  breadcrumbs: [
-    { id: 1, name: "Women", href: "#" },
-    { id: 2, name: "Clothing", href: "#" },
-  ],
-
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: false },
-  ],
-  description: `
-    <p>The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit. They are hand cut and sewn locally, with a special dye technique that gives each tee it's own look.</p>
-    <p>Looking to stock your closet? The Basic tee also comes in a 3-pack or 5-pack at a bundle discount.</p>
-  `,
-  details: [
-    "Only the best materials",
-    "Ethically and locally made",
-    "Pre-washed and pre-shrunk",
-    "Machine wash cold with similar colors",
-  ],
-};
-
 const policies = [
   {
     name: "International delivery",
@@ -72,18 +43,16 @@ export default function Product() {
   //get single product data
   useEffect(() => {
     dispatch(fetchProductAtion(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   const {
     product: { data },
-    loading,
-    error,
   } = useSelector((state) => state?.products);
 
   //get cart
   useEffect(() => {
     dispatch(getCartItemsAction());
-  }, []);
+  }, [dispatch]);
 
   const { cartItems } = useSelector((state) => state?.cart);
 
@@ -139,8 +108,6 @@ export default function Product() {
     });
   };
 
-  let productColor;
-  let productSize;
   //let cartItems = [];
 
   return (
@@ -184,7 +151,7 @@ export default function Product() {
                 ></div>
                 <div className="ml-4 flex">
                   <a
-                    href="#"
+                    href="/"
                     className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     {data?.totalReviews} total reviews

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import {
@@ -63,9 +62,7 @@ export default function AddProduct() {
   }, [dispatch]);
 
   //select categories data from store
-  const { categories, loading, error } = useSelector(
-    (state) => state?.categories
-  );
+  const { categories } = useSelector((state) => state?.categories);
 
   //brands
   useEffect(() => {
@@ -113,7 +110,7 @@ export default function AddProduct() {
     totalQty: "2",
   });
 
-  const { name, brand, category, description, totalQty, price } = formData;
+  //const { name, brand, category, description, totalQty, price } = formData;
 
   //onChange
   const handleOnChange = (e) => {

@@ -8,10 +8,8 @@ import AddProduct from "./components/Admin/Products/AddProduct";
 import RegisterForm from "./components/Users/Forms/RegisterForm";
 import HomePage from "./components/HomePage/HomePage";
 import Navbar from "./components/Navbar/Navbar";
-import OrderHistory from "./components/Admin/Orders/ManageOrders";
 import OrderPayment from "./components/Users/Products/OrderPayment";
 import ManageCategories from "./components/Admin/Categories/ManageCategories";
-import UpdateProduct from "./components/Admin/Products/UpdateProduct";
 import ManageStocks from "./components/Admin/Products/ManageStocks";
 import CategoryToAdd from "./components/Admin/Categories/CategoryToAdd";
 import AddCategory from "./components/Admin/Categories/AddCategory";
@@ -29,7 +27,6 @@ import OrdersList from "./components/Admin/Orders/OdersList";
 import ManageOrders from "./components/Admin/Orders/ManageOrders";
 import Customers from "./components/Admin/Orders/Customers";
 import BrandsColorsList from "./components/Admin/Categories/BrandsColorsList";
-import AuthRoute from "./components/AuthRoute/AuthRoute";
 import AdminAuthRoute from "./components/AuthRoute/AdminAuthRoute";
 import ThanksForOrdering from "./components/Users/Products/ThanksForOrdering";
 import ProductUpdate from "./components/Admin/Products/ProductUpdate";
@@ -73,7 +70,6 @@ const App = () => {
           {/* Orders */}
           <Route path="manage-orders" element={<ManageOrders />} />
           <Route path="orders/:id" element={<UpdateOrders />} />
-
           <Route path="order-payment" element={<OrderPayment />} />
           <Route path="customers" element={<Customers />} />
         </Route>

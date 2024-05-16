@@ -21,7 +21,7 @@ export default function AddBrand() {
     dispatch(createBrandAction(formData.name));
   };
 
-  const { loading, error, brands } = useSelector((state) => state?.brands);
+  const { brands } = useSelector((state) => state?.brands);
 
   return (
     <>
