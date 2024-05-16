@@ -1,0 +1,6 @@
+{
+  "extends": ["react-app", "react-app/jest", "plugin:react-hooks/recommended"],
+  "rules": {
+    // Aqui você pode adicionar ou substituir regras do ESLint conforme necessário
+  }
+}
