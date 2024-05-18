@@ -11,6 +11,7 @@ import baseURL from "../../utils/baseURL";
 import logo from "./logo3.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
+import { logoutUserAction } from "../../redux/slices/users/usersSlice";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -32,6 +33,11 @@ export default function Navbar() {
   const cartItemsFromLocalStorage = JSON.parse(
     localStorage.getItem("cartItems")
   );
+
+  let logoutHandler = () => {
+    dispatch(logoutUserAction());
+    window.location.href = "/login";
+  };
 
   return (
     <div className="bg-white">
@@ -128,25 +134,32 @@ export default function Navbar() {
 
                 {/* mobile links register/login */}
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  {!isLoggedIn && (
-                    <>
-                      <div className="flow-root">
-                        <Link
-                          to="/register"
-                          className="-m-2 block p-2 font-medium text-gray-900"
+                  {isLoggedIn && (
+                    <div className="flex">
+                      <Link
+                        to="/customer-profile"
+                        className="-m-2 p-2 mr-2 text-gray-400 hover:text-gray-500"
+                      >
+                        <UserIcon className="h-6 w-6" aria-hidden="true" />
+                      </Link>
+                      {/* logout */}
+                      <button onClick={logoutHandler}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6 text-gray-500"
                         >
-                          Create an account
-                        </Link>
-                      </div>
-                      <div className="flow-root">
-                        <Link
-                          to="/login"
-                          className="-m-2 block p-2 font-medium text-gray-900"
-                        >
-                          Sign in
-                        </Link>
-                      </div>
-                    </>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   )}
                 </div>
 
@@ -276,19 +289,34 @@ export default function Navbar() {
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
                         {isLoggedIn && (
-                          <>
-                            <div className="flex">
-                              <Link
-                                to="/customer-profile"
-                                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                          <div className="flex">
+                            <Link
+                              to="/customer-profile"
+                              className="-m-2 p-2 mr-2 text-gray-400 hover:text-gray-500"
+                            >
+                              <UserIcon
+                                className="h-6 w-6"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                            {/* logout */}
+                            <button onClick={logoutHandler}>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6 text-gray-500"
                               >
-                                <UserIcon
-                                  className="h-6 w-6"
-                                  aria-hidden="true"
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                                 />
-                              </Link>
-                            </div>
-                          </>
+                              </svg>
+                            </button>
+                          </div>
                         )}
                       </div>
 

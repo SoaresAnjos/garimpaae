@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../redux/slices/users/usersSlice";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
@@ -22,22 +22,19 @@ const Login = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(loginUserAction({ email, password }));
-
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(user);
-
-    // //redirect
-    // if (user?.userFound?.isAdmin) {
-    //   window.location.href = "/admin";
-    // } else {
-    //   window.location.href = "/";
-    // }
   };
 
   //get data from store
-  const { loading } = useSelector((state) => {
+  const { loading, userInfo } = useSelector((state) => {
     return state?.users?.userAuth;
   });
+
+  useEffect(() => {
+    //redirect
+    if (userInfo?.userFound) {
+      window.location.href = "/";
+    }
+  }, [userInfo]);
 
   return (
     <>

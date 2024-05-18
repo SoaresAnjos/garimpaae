@@ -39,6 +39,13 @@ export const loginUserAction = createAsyncThunk(
   }
 );
 
+//logout action
+export const logoutUserAction = createAsyncThunk("users/logout", () => {
+  //delete user in localstorage
+  localStorage.removeItem("userInfo");
+  return true;
+});
+
 //register action
 export const registrationUserAction = createAsyncThunk(
   "users/register",
@@ -145,6 +152,11 @@ const usersSlice = createSlice({
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.userAuth.error = action.payload;
       state.userAuth.loading = false;
+    });
+
+    //logout
+    builder.addCase(logoutUserAction.fulfilled, (state, action) => {
+      state.userAuth.userInfo = null;
     });
 
     //register
