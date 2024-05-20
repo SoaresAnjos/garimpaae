@@ -29,18 +29,24 @@ export default function FeaturedProductHome() {
       container
       spacing={1}
       sx={{
-        paddingLeft: "2rem",
         backgroundColor: "background.default",
         height: {
           xs: "auto", // Definindo a altura para ocupar toda a viewport em dispositivos móveis
           sm: "auto",
-          md: "auto", // Altura menor para telas maiores
-          lg: "auto",
-          xl: "auto",
+          md: "60vh", // Altura menor para telas maiores
+          lg: " 60vh",
+          xl: "60vh",
         },
         display: "flex", // Usando flexbox para alinhar verticalmente os itens
         justifyContent: "center",
         alignItems: "center",
+        paddingLeft: {
+          xs: 0,
+          sm: 0,
+          md: "3rem",
+          lg: "3rem",
+          xl: "3rem",
+        },
       }}
     >
       <Grid
@@ -54,8 +60,15 @@ export default function FeaturedProductHome() {
           flexDirection: "column",
           gap: 1,
           justifyContent: "center",
-          alignItems: "flex-start",
+          alignItems: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+            lg: "flex-start",
+            xl: "flex-start",
+          },
           order: { xs: 2, sm: 2, md: 1, lg: 1, xl: 1 },
+          height: "40vh",
         }}
       >
         <Typography variant="h1">Nike Dunk Low 6</Typography>
@@ -98,12 +111,11 @@ export default function FeaturedProductHome() {
                 ? productsList?.data[0]?.name
                 : null
             }
-            style={
-              {
-                // maxWidth: "100%",
-                // maxHeight: "100%",
-              }
-            }
+            style={{
+              width: "800px",
+              height: "400px",
+              objectFit: "cover",
+            }}
           />
         </div>
       </Grid>
