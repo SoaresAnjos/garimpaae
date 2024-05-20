@@ -56,7 +56,7 @@ const perks = [
       "We’ve pledged 1% of sales to the preservation and restoration of the natural environment.",
   },
 ];
-export default function Example() {
+export default function HomePage() {
   let [productsList, setprodutcts] = useState(null);
 
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export default function Example() {
 
   return (
     <div className="bg-white">
-      {/* <FeaturedProductHome /> */}
+      {loading === null ? <LoadingComponent /> : <FeaturedProductHome />}
       <main>
         {/* Hero */}
         <div className="flex flex-col border-b border-gray-200 lg:border-0">
@@ -102,57 +102,6 @@ export default function Example() {
               </ul>
             </div>
           </nav>
-
-          {loading === null ? (
-            <LoadingComponent />
-          ) : (
-            <div className="relative">
-              <div
-                aria-hidden="true"
-                className="absolute hidden h-full w-1/2 bg-gray-100 lg:block"
-              />
-              <div className="relative bg-gray-100 lg:bg-transparent flex flex-col-reverse lg:flex-col">
-                <div className="relative bg-gray-100 lg:bg-transparent lg:order-first">
-                  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
-                    <div className="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
-                      <div className="lg:pr-16">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
-                          Nike Dunk Low 6
-                        </h1>
-                        <p className="mt-4 text-xl text-gray-600">
-                          Uma nova forma de de fechar seu look com o mais novo
-                          da Nike
-                        </p>
-                        <div className="mt-6">
-                          <a
-                            href="www.google.com"
-                            className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 font-medium text-white hover:bg-indigo-700"
-                          >
-                            Comprar agora
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="h-64 w-full sm:h-94 lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-1/2">
-                  <img
-                    src={
-                      productsList && productsList?.data
-                        ? productsList?.data[0]?.images[0]
-                        : null
-                    }
-                    alt={
-                      productsList && productsList?.data
-                        ? productsList?.data[0]?.name
-                        : null
-                    }
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="relative overflow-hidden">

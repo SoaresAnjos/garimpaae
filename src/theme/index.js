@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 
-export const theme = createTheme({
+const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -26,10 +26,10 @@ export const theme = createTheme({
           style: {
             backgroundColor: "#00468c",
             color: "white",
-            borderRadius: 0,
+            borderRadius: "2rem",
             fontWeight: "none",
             "&:hover": {
-              backgroundColor: "#00468c",
+              backgroundColor: "fff",
             },
             textTransform: "capitalize",
             "@media (min-width:0px)": {
@@ -43,6 +43,31 @@ export const theme = createTheme({
             },
             "@media (min-width:1200px)": {
               fontSize: "28px",
+            },
+          },
+        },
+        {
+          props: { variant: "primary" },
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            borderRadius: 4,
+            fontWeight: "none",
+            "&:hover": {
+              backgroundColor: "fff",
+            },
+            textTransform: "capitalize",
+            "@media (min-width:0px)": {
+              fontSize: "1rem",
+            },
+            "@media (min-width:600px)": {
+              fontSize: "1rem",
+            },
+            "@media (min-width:900px)": {
+              fontSize: "1rem",
+            },
+            "@media (min-width:1200px)": {
+              fontSize: "1rem",
             },
           },
         },
@@ -304,3 +329,5 @@ export const theme = createTheme({
     },
   },
 });
+
+export default theme;
