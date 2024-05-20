@@ -1,29 +1,55 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import ErrorComponent from "../../ErrorMsg/ErrorMsg";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCategoriesAction,
+  updateCategoryAction,
+} from "../../../redux/slices/categories/categoriesSlice";
 
 export default function UpdateCategory() {
-  //---form data---
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
+
+  const { categories, loading, error, isUpdated } = useSelector(
+    (state) => state?.categories
+  );
+
+  const categoriesArray = categories?.data;
+  const category = categoriesArray?.find(
+    (category) => category?._id.toString() === id.toString()
+  );
+  const categoryName = category ? category.name : "";
+
   const [formData, setFormData] = useState({
-    // name: categoryName,
+    name: categoryName,
   });
-  //---onChange---
+
+  useEffect(() => {
+    if (categoryName) {
+      setFormData({ name: categoryName });
+    }
+  }, [categoryName]);
+
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  let loading, error, isUpdated;
-
-  //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateCategoryAction(formData.name));
   };
+
   return (
     <>
       {error && <ErrorComponent message={error?.message} />}
-      {isUpdated && <SuccessMsg message="Category updated successfully" />}
+      {/* {isUpdated && <SuccessMsg message="Category updated successfully" />} */}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <svg

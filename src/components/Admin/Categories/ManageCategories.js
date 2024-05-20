@@ -84,12 +84,7 @@ export default function ManageCategories() {
                       >
                         Produtos
                       </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Added By
-                      </th>
+
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -134,11 +129,7 @@ export default function ManageCategories() {
                             {category?.products?.length}
                           </div>
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            {category?.user?.fullname}
-                          </span>
-                        </td>
+
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {new Date(category?.createdAt).toLocaleDateString()}
                         </td>

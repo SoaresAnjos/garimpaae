@@ -1,22 +1,28 @@
 import { Link } from "react-router-dom";
 import HomeCategories from "./HomeCategories";
 import HomeProductTrending from "./HomeProductTrending";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
+import baseURL from "../../utils/baseURL";
+import LoadingComponent from "../LoadingComp/LoadingComponent";
+import FeaturedProductHome from "./FeaturedProduct";
 
 const offers = [
   {
-    name: "Download the app",
-    description: "Get an exclusive $5 off code",
-    href: "#",
+    name: "Produtos exclusivos",
+    description: "nas marcas mais fortes",
+    href: "/products-filters",
   },
   {
-    name: "Return when you're ready",
-    description: "60 days of free returns",
-    href: "#",
+    name: "Entrega para todo o Brasil",
+    description: "com até 20 dias para retorno",
+    href: "/products-filters",
   },
   {
-    name: "Sign up for our newsletter",
-    description: "15% off your first order",
-    href: "#",
+    name: "Primeira vez com a gente?",
+    description: "15% OFF na primeira compra",
+    href: "/products-filters",
   },
 ];
 
@@ -51,8 +57,29 @@ const perks = [
   },
 ];
 export default function Example() {
+  let [productsList, setprodutcts] = useState(null);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
+  }, [dispatch]);
+
+  const { products, error, loading } = useSelector((state) => state?.products);
+
+  useEffect(() => {
+    if (products !== null) {
+      setprodutcts(products);
+    }
+  }, [products]);
+
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <div className="bg-white">
+      {/* <FeaturedProductHome /> */}
       <main>
         {/* Hero */}
         <div className="flex flex-col border-b border-gray-200 lg:border-0">
@@ -76,41 +103,56 @@ export default function Example() {
             </div>
           </nav>
 
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="absolute hidden h-full w-1/2 bg-gray-100 lg:block"
-            />
-            <div className="relative bg-gray-100 lg:bg-transparent">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
-                <div className="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
-                  <div className="lg:pr-16">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
-                      Shop with confidence
-                    </h1>
-                    <p className="mt-4 text-xl text-gray-600">
-                      New products are added every week. Check back often to see
-                    </p>
-                    <div className="mt-6">
-                      <a
-                        href="www.google.com"
-                        className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 font-medium text-white hover:bg-indigo-700"
-                      >
-                        Shop Productivity
-                      </a>
+          {loading === null ? (
+            <LoadingComponent />
+          ) : (
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute hidden h-full w-1/2 bg-gray-100 lg:block"
+              />
+              <div className="relative bg-gray-100 lg:bg-transparent flex flex-col-reverse lg:flex-col">
+                <div className="relative bg-gray-100 lg:bg-transparent lg:order-first">
+                  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
+                    <div className="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
+                      <div className="lg:pr-16">
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
+                          Nike Dunk Low 6
+                        </h1>
+                        <p className="mt-4 text-xl text-gray-600">
+                          Uma nova forma de de fechar seu look com o mais novo
+                          da Nike
+                        </p>
+                        <div className="mt-6">
+                          <a
+                            href="www.google.com"
+                            className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 font-medium text-white hover:bg-indigo-700"
+                          >
+                            Comprar agora
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="h-64 w-full sm:h-94 lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-1/2">
+                  <img
+                    src={
+                      productsList && productsList?.data
+                        ? productsList?.data[0]?.images[0]
+                        : null
+                    }
+                    alt={
+                      productsList && productsList?.data
+                        ? productsList?.data[0]?.name
+                        : null
+                    }
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
               </div>
             </div>
-            <div className="h-48 w-full sm:h-64 lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-1/2">
-              <img
-                src="https://tailwindui.com/img/ecommerce-images/home-page-02-hero-half-width.jpg"
-                alt=""
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="relative overflow-hidden">
