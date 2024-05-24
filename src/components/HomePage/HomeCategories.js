@@ -1,55 +1,109 @@
-import React, { useEffect } from "react";
+import { Container, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
+import LoadingComponent from "../LoadingComp/LoadingComponent";
 
-const HomeCategories = () => {
+export default function CategoriesSection() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
 
-  const {
-    categories: { data },
-  } = useSelector((state) => state?.categories);
+  const [listCategories, setListCategories] = useState([]);
+
+  const { categories, loading, error } = useSelector(
+    (state) => state?.categories
+  );
+
+  useEffect(() => {
+    if (categories) {
+      setListCategories(categories?.data);
+    }
+  }, [categories]);
 
   return (
     <>
-      <div className="mt-4 flow-root">
-        <div className="-my-2">
-          <div className="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
-            <div className="min-w-screen-xl absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
-              {data &&
-                data.length > 0 &&
-                data?.map((category) => (
+      <Container sx={{ marginY: "4rem" }}>
+        {loading && <LoadingComponent />}
+        <Typography variant="h1">Nossas categorias</Typography>
+      </Container>
+      <Container>
+        <Grid container spacing={1} sx={{ alignItems: "center" }}>
+          {error && <p>{error?.message}</p>}
+          {listCategories &&
+            listCategories.map((category) => {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={4}
+                  lg={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    height: "50vh",
+                    position: "relative",
+                  }}
+                >
                   <Link
-                    key={category.name}
-                    to={`/products-filters?category=${category.name}`}
-                    className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                    to={`/products-filters?category=${category?.name}`}
+                    style={{ width: "100vw", height: "50vh" }}
                   >
-                    <span aria-hidden="true" className="absolute inset-0">
-                      <img
-                        src={category.image}
-                        alt=""
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
-                    />
-                    <span className="relative mt-auto text-center text-xl font-bold text-white">
-                      {category.name} ({category.products.length})
-                    </span>
+                    <div
+                      style={{
+                        backgroundImage: `url(${category.image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          background: "rgba(0, 0, 0, 0.7)",
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          color: "white",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            "&:hover": {
+                              transform: "scale(1.2)",
+                              background: "rgba(0, 0, 0, 0.9)",
+                            },
+                          }}
+                        >
+                          <Typography
+                            variant="h1"
+                            sx={{
+                              color: "white",
+                            }}
+                          >
+                            {category?.name.toUpperCase()}
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
                   </Link>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
+                </Grid>
+              );
+            })}
+        </Grid>
+      </Container>
     </>
   );
-};
-
-export default HomeCategories;
+}

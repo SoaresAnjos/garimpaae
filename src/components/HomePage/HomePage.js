@@ -79,7 +79,6 @@ export default function HomePage() {
 
   return (
     <div className="bg-white">
-      {loading === null ? <LoadingComponent /> : <FeaturedProductHome />}
       <main>
         {/* Hero */}
         <div className="flex flex-col border-b border-gray-200 lg:border-0">
@@ -103,6 +102,8 @@ export default function HomePage() {
             </div>
           </nav>
         </div>
+        {/* Featured Product */}
+        {loading === null ? <LoadingComponent /> : <FeaturedProductHome />}
 
         <div className="relative overflow-hidden">
           {/* Sale */}
@@ -115,17 +116,17 @@ export default function HomePage() {
                 id="sale-heading"
                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
               >
-                Get 25% off during our one-time sale
+                Descubra a nova vibe
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-xl text-gray-600">
-                Most of our products are limited releases that won't come back.
-                Get your favorite items while they're in stock.
+                Chegou a próxima geração de produtos hypes que vão fazer você se
+                apaixonar
               </p>
               <a
                 href="/"
                 className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto"
               >
-                Get access to our one-time sale
+                Descubra agora
               </a>
             </div>
           </section>
@@ -133,28 +134,10 @@ export default function HomePage() {
       </main>
       <main>
         {/* Category section */}
-        <section
-          aria-labelledby="category-heading"
-          className="pt-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8"
-        >
-          <div className="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
-            <h2
-              id="category-heading"
-              className="text-2xl font-bold tracking-tight text-gray-900"
-            >
-              Shop by Category
-            </h2>
-            <Link
-              to="/all-categories"
-              className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
-            >
-              Browse all categories
-              <span aria-hidden="true"> &rarr;</span>
-            </Link>
-          </div>
-          {/* home categories */}
+        <section aria-labelledby="category-heading" className="home_categories">
           <HomeCategories />
         </section>
+
         {/* Home trending trending */}
         <HomeProductTrending />
 

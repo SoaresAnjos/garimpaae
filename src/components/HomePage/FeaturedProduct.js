@@ -13,7 +13,7 @@ export default function FeaturedProductHome() {
     dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
   }, [dispatch]);
 
-  const { products, error, loading } = useSelector((state) => state?.products);
+  const { products, error } = useSelector((state) => state?.products);
 
   useEffect(() => {
     if (products !== null) {
@@ -47,6 +47,8 @@ export default function FeaturedProductHome() {
           lg: "3rem",
           xl: "3rem",
         },
+        marginTop: "1rem",
+        padding: 0,
       }}
     >
       <Grid
@@ -97,7 +99,7 @@ export default function FeaturedProductHome() {
             alignItems: "center",
             justifyContent: "center",
             width: "100%",
-            height: "100%",
+            height: "110%",
           }}
         >
           <img
@@ -112,8 +114,8 @@ export default function FeaturedProductHome() {
                 : null
             }
             style={{
-              width: "800px",
-              height: "400px",
+              width: "900px",
+              height: "500px",
               objectFit: "cover",
             }}
           />
