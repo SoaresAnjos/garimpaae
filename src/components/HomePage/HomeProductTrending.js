@@ -1,86 +1,125 @@
-import { useEffect } from "react";
+// ProductCarousel.js
+import React, { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa os estilos do carrossel
+import { CardMedia, Typography, Grid, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
 
-const HomeProductTrending = () => {
-  //instace dispatch
+const products = [
+  {
+    id: 1,
+    name: "Produto 1",
+    description: "Descrição do Produto 1",
+    image: "https://via.placeholder.com/300",
+    price: "R$ 100,00",
+  },
+  {
+    id: 2,
+    name: "Produto 2",
+    description: "Descrição do Produto 2",
+    image: "https://via.placeholder.com/300",
+    price: "R$ 200,00",
+  },
+  {
+    id: 3,
+    name: "Produto 3",
+    description: "Descrição do Produto 3",
+    image: "https://via.placeholder.com/300",
+    price: "R$ 300,00",
+  },
+  {
+    id: 4,
+    name: "Produto 4",
+    description: "Descrição do Produto 4",
+    image: "https://via.placeholder.com/300",
+    price: "R$ 400,00",
+  },
+  // Adicione mais produtos conforme necessário
+];
+
+// Função para agrupar produtos em conjuntos de três
+const chunkArray = (arr, size) => {
+  const results = [];
+  while (arr.length) {
+    results.push(arr.splice(0, size));
+  }
+  return results;
+};
+
+const ProductCarousel = () => {
   const dispatch = useDispatch();
 
-  //dispatch fetch products
   useEffect(() => {
     dispatch(fecthProductsAction());
   }, [dispatch]);
 
-  //get data from store
+  const [listProducts, setListProducts] = useState([]);
+
   const { products } = useSelector((state) => state?.products);
+
+  useEffect(() => {
+    if (products) {
+      setListProducts(products?.data);
+    }
+  }, [products]);
+
+  console.log(listProducts);
+
+  const productChunks = listProducts ? chunkArray([...listProducts], 3) : [];
 
   return (
     <>
-      <section aria-labelledby="trending-heading">
-        <div className="mx-auto max-w-7xl py-24 px-4 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
-          <div className="md:flex md:items-center md:justify-between">
-            <h2
-              id="favorites-heading"
-              className="text-2xl font-bold tracking-tight text-gray-900"
-            >
-              Top produtos
-            </h2>
-            <a
-              href="/"
-              className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
-            >
-              Descubra a coleção
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
-          </div>
+      <Container sx={{ marginTop: "4rem", marginBottom: "2rem" }}>
+        <Typography variant="h1">Sneakers</Typography>
+      </Container>
+      <Container container space={2}>
+        <Carousel
+          showArrows={true}
+          showThumbs={false}
+          showStatus={false}
+          infiniteLoop={true}
+        >
+          {productChunks.map((chunk, index) => {
+            return (
+              <Grid container spacing={2} key={index}>
+                {chunk?.map((product) => {
+                  return (
+                    <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                      <Link to="/">
+                        <CardMedia
+                          sx={{ height: 340 }}
+                          image={product?.images[0]}
+                          title="green iguana"
+                        />
+                      </Link>
 
-          {
-            <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-              {products?.data?.length > 0 &&
-                products?.data?.map((product) => (
-                  <Link
-                    to={`/products/${product?.id}`}
-                    key={product.id}
-                    className="group relative"
-                  >
-                    <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
-                      <img
-                        src={product?.images[0]}
-                        alt={product?.images[0]}
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </div>
-                    <h3 className="mt-4 text-sm text-gray-700">
-                      <a href={product?.href}>
-                        <span className="absolute inset-0" />
-                        {product?.name}
-                      </a>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {product?.color}
-                    </p>
-                    <p className="mt-1 text-sm font-medium text-gray-900">
-                      {product?.price}
-                    </p>
-                  </Link>
-                ))}
-            </div>
-          }
-
-          <div className="mt-8 text-sm md:hidden">
-            <a
-              href="/"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              Shop the collection
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
-          </div>
-        </div>
-      </section>
+                      <Box sx={{ marginY: "2rem" }}>
+                        <Link to="/">
+                          <Typography variant="h4" sx={{ textAlign: "start" }}>
+                            {product?.name}
+                          </Typography>
+                          <Typography
+                            sx={{ textAlign: "start", marginTop: "1rem" }}
+                          >
+                            {product?.description}
+                          </Typography>
+                          <Typography sx={{ textAlign: "start" }}>
+                            R$ {product?.price}
+                          </Typography>
+                        </Link>
+                      </Box>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            );
+          })}
+        </Carousel>
+      </Container>
     </>
   );
 };
 
-export default HomeProductTrending;
+export default ProductCarousel;

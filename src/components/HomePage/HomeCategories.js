@@ -83,7 +83,7 @@ export default function CategoriesSection() {
                           style={{
                             "&:hover": {
                               transform: "scale(1.2)",
-                              background: "rgba(0, 0, 0, 0.9)",
+                              background: "rgba(0, 0, 0, 0.1)",
                             },
                           }}
                         >

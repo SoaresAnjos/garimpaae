@@ -142,7 +142,7 @@ export default function HomePage() {
         <HomeProductTrending />
 
         {/* info */}
-        <section
+        {/* <section
           aria-labelledby="perks-heading"
           className="border-t border-gray-200 bg-gray-50"
         >
@@ -178,7 +178,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   );
