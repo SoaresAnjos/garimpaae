@@ -173,10 +173,10 @@ export default function Navbar() {
       <header className="relative z-10">
         <nav aria-label="Top">
           {/* Top navigation  desktop*/}
-          <div className="bg-gray-900">
+          <div className="bg-stone-950">
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
               <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">
-                Get free delivery on orders over $100
+                Frete grátis a partir de R$ 500
               </p>
 
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
@@ -202,19 +202,18 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="bg-white">
+          <div className="bg-yellow-400">
             <div className="border-b border-gray-200">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex lg:items-center">
                     <Link to="/">
-                      <span className="sr-only">Garimpa Aê</span>
-                      <img
-                        className="h-32 pt-2 w-auto"
-                        src={logo}
-                        alt="i-novotek logo"
-                      />
+                      <span
+                        style={{ textTransform: "upperCase", fontWeight: 800 }}
+                      >
+                        Garimpa Aê
+                      </span>
                     </Link>
                   </div>
 
