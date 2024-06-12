@@ -16,7 +16,7 @@ const chunkArray = (arr, size) => {
   return results;
 };
 
-const ProductCarousel = () => {
+const HomeCaps = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ProductCarousel = () => {
   useEffect(() => {
     if (products && Array.isArray(products.data)) {
       const filteredProducts = products.data.filter(
-        (product) => product.category === "men"
+        (product) => product.category === "bonés"
       );
       if (filteredProducts.length > 0) {
         setListProducts(filteredProducts);
@@ -42,9 +42,11 @@ const ProductCarousel = () => {
 
   return (
     <>
-      <Container sx={{ marginTop: "4rem", marginBottom: "2rem" }}>
-        <Typography variant="h1">Sneakers</Typography>
-      </Container>
+      {productChunks && (
+        <Container sx={{ marginTop: "4rem", marginBottom: "2rem" }}>
+          <Typography variant="h1">Bonés</Typography>
+        </Container>
+      )}
       <Container container space={2}>
         <Carousel
           showArrows={true}
@@ -93,4 +95,4 @@ const ProductCarousel = () => {
   );
 };
 
-export default ProductCarousel;
+export default HomeCaps;

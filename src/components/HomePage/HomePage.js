@@ -7,6 +7,8 @@ import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
 import baseURL from "../../utils/baseURL";
 import LoadingComponent from "../LoadingComp/LoadingComponent";
 import FeaturedProductHome from "./FeaturedProduct";
+import HomeCaps from "./HomeCaps";
+import HomeCloths from "./HomeCloths";
 
 const offers = [
   {
@@ -138,8 +140,14 @@ export default function HomePage() {
           <HomeCategories />
         </section>
 
-        {/* Home trending trending */}
+        {/* Home sneakers */}
         <HomeProductTrending />
+
+        {/* Home caps */}
+        <HomeCaps />
+
+        {/* Home cloths */}
+        <HomeCloths />
 
         {/* info */}
         {/* <section
