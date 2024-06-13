@@ -42,7 +42,7 @@ const HomeCloths = () => {
 
   return (
     <>
-      {productChunks > 0 && (
+      {productChunks && (
         <Container sx={{ marginTop: "4rem", marginBottom: "2rem" }}>
           <Typography variant="h1">Roupas</Typography>
         </Container>
@@ -69,7 +69,7 @@ const HomeCloths = () => {
                       </Link>
 
                       <Box sx={{ marginY: "2rem" }}>
-                        <Link to="/">
+                        <Link to={`/products/${product?.id}`}>
                           <Typography variant="h4" sx={{ textAlign: "start" }}>
                             {product?.name}
                           </Typography>

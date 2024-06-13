@@ -9,6 +9,8 @@ import LoadingComponent from "../LoadingComp/LoadingComponent";
 import FeaturedProductHome from "./FeaturedProduct";
 import HomeCaps from "./HomeCaps";
 import HomeCloths from "./HomeCloths";
+import { CardMedia, Typography, Grid, Container, Box } from "@mui/material";
+import Footer from "./Footer";
 
 const offers = [
   {
@@ -109,29 +111,41 @@ export default function HomePage() {
 
         <div className="relative overflow-hidden">
           {/* Sale */}
-          <section
-            aria-labelledby="sale-heading"
-            className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8"
+
+          <Container
+            maxWidth="xl"
+            sx={{
+              backgroundColor: "background.default",
+              height: "60vh",
+              paddingBottom: "3rem",
+            }}
           >
-            <div className="mx-auto max-w-2xl lg:max-w-none">
-              <h2
-                id="sale-heading"
-                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+            <Container fixed sx={{}}>
+              <section
+                aria-labelledby="sale-heading"
+                className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8"
               >
-                Descubra a nova vibe
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-xl text-gray-600">
-                Chegou a próxima geração de produtos hypes que vão fazer você se
-                apaixonar
-              </p>
-              <a
-                href="/"
-                className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto"
-              >
-                Descubra agora
-              </a>
-            </div>
-          </section>
+                <div className="mx-auto max-w-2xl lg:max-w-none">
+                  <h2
+                    id="sale-heading"
+                    className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+                  >
+                    Descubra a nova vibe
+                  </h2>
+                  <p className="mx-auto mt-4 max-w-xl text-xl text-gray-600">
+                    Chegou a próxima geração de produtos hypes que vão fazer
+                    você se apaixonar
+                  </p>
+                  <a
+                    href="/products-filters"
+                    className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 py-3 px-8 font-medium text-white hover:bg-gray-800 sm:w-auto"
+                  >
+                    Descubra agora
+                  </a>
+                </div>
+              </section>
+            </Container>
+          </Container>
         </div>
       </main>
       <main>
@@ -188,6 +202,7 @@ export default function HomePage() {
           </div>
         </section> */}
       </main>
+      <Footer />
     </div>
   );
 }

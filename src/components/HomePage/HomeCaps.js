@@ -60,7 +60,7 @@ const HomeCaps = () => {
                 {chunk?.map((product) => {
                   return (
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                      <Link to="/">
+                      <Link to={`/products/${product?.id}`}>
                         <CardMedia
                           sx={{ height: 340 }}
                           image={product?.images[0]}
@@ -69,7 +69,7 @@ const HomeCaps = () => {
                       </Link>
 
                       <Box sx={{ marginY: "2rem" }}>
-                        <Link to="/">
+                        <Link to={`/products/${product?.id}`}>
                           <Typography variant="h4" sx={{ textAlign: "start" }}>
                             {product?.name}
                           </Typography>

@@ -6,6 +6,7 @@
     "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
+    "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@reduxjs/toolkit": "^1.9.1",

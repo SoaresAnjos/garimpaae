@@ -29,7 +29,7 @@ const theme = createTheme({
             borderRadius: "2rem",
             fontWeight: "none",
             "&:hover": {
-              backgroundColor: "fff",
+              backgroundColor: "#e5e619",
             },
             textTransform: "capitalize",
             "@media (min-width:0px)": {
@@ -54,7 +54,7 @@ const theme = createTheme({
             borderRadius: 4,
             fontWeight: "none",
             "&:hover": {
-              backgroundColor: "fff",
+              backgroundColor: "#e5e619",
             },
             textTransform: "capitalize",
             "@media (min-width:0px)": {
@@ -195,9 +195,9 @@ const theme = createTheme({
       contrastText: "white",
     },
     secondary: {
-      main: "#f7bb3d",
-      dark: "#cd5138",
-      light: "#CCE6E8",
+      main: "#ecec53",
+      dark: "#e5e619",
+      light: "#ffff00",
     },
     background: {
       default: "#ededed",

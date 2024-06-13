@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { Button } from "@mui/material";
 import {
   Dialog,
   Disclosure,
@@ -23,6 +24,7 @@ import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
 import { fetchColorsAction } from "../../../redux/slices/colors/colorsSlice";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
+import Footer from "../../HomePage/Footer";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -761,7 +763,11 @@ export default function ProductsFilters() {
                     </>
                   )}
                 </Disclosure>
-                <button onClick={clearFilter}>Limpar filtro</button>
+
+                <Button variant="primary" onClick={clearFilter}>
+                  Limpar filtro
+                </Button>
+
                 {/*  end product size categories section */}
               </form>
 
@@ -777,6 +783,7 @@ export default function ProductsFilters() {
           </section>
         </main>
       </div>
+      <Footer />
     </div>
   );
 }

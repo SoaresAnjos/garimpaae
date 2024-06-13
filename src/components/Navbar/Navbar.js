@@ -12,6 +12,7 @@ import logo from "./logo3.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
 import { logoutUserAction } from "../../redux/slices/users/usersSlice";
+import { Container } from "@mui/material";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -170,187 +171,201 @@ export default function Navbar() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative z-10">
+      <header className="relative z-1">
         <nav aria-label="Top">
           {/* Top navigation  desktop*/}
-          <div className="bg-stone-950">
-            <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-              <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">
-                Frete grátis a partir de R$ 500
-              </p>
+          <Container maxWidth="xl" sx={{ backgroundColor: "black" }}>
+            <Container maxWidth="xl">
+              <div>
+                <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                  <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">
+                    Frete grátis a partir de R$ 500
+                  </p>
 
-              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                {!isLoggedIn && (
-                  <>
-                    <Link
-                      to="/register"
-                      className="text-sm font-medium text-white hover:text-gray-100"
-                    >
-                      Create an account
-                    </Link>
-                    <span className="h-6 w-px bg-gray-600" aria-hidden="true" />
-                    <Link
-                      to="/login"
-                      className="text-sm font-medium text-white hover:text-gray-100"
-                    >
-                      Sign in
-                    </Link>
-                  </>
-                )}
+                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                    {!isLoggedIn && (
+                      <>
+                        <Link
+                          to="/register"
+                          className="text-sm font-medium text-white hover:text-gray-100"
+                        >
+                          Crie uma conta
+                        </Link>
+                        <span
+                          className="h-6 w-px bg-gray-600"
+                          aria-hidden="true"
+                        />
+                        <Link
+                          to="/login"
+                          className="text-sm font-medium text-white hover:text-gray-100"
+                        >
+                          Login
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </Container>
+          </Container>
 
           {/* Desktop Navigation */}
-          <div className="bg-yellow-400">
-            <div className="border-b border-gray-200">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                  {/* Logo (lg+) */}
-                  <div className="hidden lg:flex lg:items-center">
-                    <Link to="/">
-                      <span
-                        style={{ textTransform: "upperCase", fontWeight: 800 }}
-                      >
-                        Garimpa Aê
-                      </span>
-                    </Link>
-                  </div>
+          <Container maxWidth="xl" sx={{ backgroundColor: "secondary.light" }}>
+            <Container maxWidth="xl">
+              <div className="">
+                <div className="border-b border-gray-200">
+                  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex h-16 items-center justify-between">
+                      {/* Logo (lg+) */}
+                      <div className="hidden lg:flex lg:items-center">
+                        <Link to="/">
+                          <span
+                            style={{
+                              textTransform: "upperCase",
+                              fontWeight: 800,
+                            }}
+                          >
+                            Garimpa Aê
+                          </span>
+                        </Link>
+                      </div>
 
-                  <div className="hidden h-full lg:flex">
-                    {/*  menus links*/}
-                    <Popover.Group className="ml-8">
-                      <div className="flex h-full justify-center space-x-8">
-                        {data?.length <= 0 ? (
-                          <>
-                            <a
-                              href={`${baseURL}/products?category=clothing`}
-                              className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                            >
-                              Clothing...
-                            </a>
-
-                            <a
-                              href="/"
-                              className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                            >
-                              Men
-                            </a>
-
-                            <a
-                              href="/"
-                              className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                            >
-                              Women
-                            </a>
-                          </>
-                        ) : (
-                          data?.map((category) => {
-                            return (
+                      <div className="hidden h-full lg:flex">
+                        {/*  menus links*/}
+                        <Popover.Group className="ml-8">
+                          <div className="flex h-full justify-center space-x-8">
+                            {data?.length <= 0 ? (
                               <>
-                                <Link
-                                  key={category?._id}
-                                  to={`/products-filters?category=${category?.name}`}
+                                <a
+                                  href={`${baseURL}/products?category=clothing`}
                                   className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                                 >
-                                  {category?.name}
-                                </Link>
+                                  Clothing...
+                                </a>
+
+                                <a
+                                  href="/"
+                                  className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                >
+                                  Men
+                                </a>
+
+                                <a
+                                  href="/"
+                                  className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                >
+                                  Women
+                                </a>
                               </>
-                            );
-                          })
-                        )}
-                      </div>
-                    </Popover.Group>
-                  </div>
-
-                  {/* Mobile Naviagtion */}
-                  <div className="flex flex-1 items-center lg:hidden">
-                    <button
-                      type="button"
-                      className="-ml-2 rounded-md bg-white p-2 text-gray-400"
-                      onClick={() => setMobileMenuOpen(true)}
-                    >
-                      <span className="sr-only">Open menu</span>
-                      <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-                  {/* logo */}
-                  <Link to="/" className="lg:hidden">
-                    <img
-                      className="h-32 mt-2 w-auto"
-                      src={logo}
-                      alt="garimpa ae logo"
-                    />
-                  </Link>
-
-                  {/* login profile icon mobile */}
-                  <div className="flex flex-1 items-center justify-end">
-                    <div className="flex items-center lg:ml-8">
-                      <div className="flex space-x-8">
-                        {isLoggedIn && (
-                          <div className="flex">
-                            <Link
-                              to="/customer-profile"
-                              className="-m-2 p-2 mr-2 text-gray-400 hover:text-gray-500"
-                            >
-                              <UserIcon
-                                className="h-6 w-6"
-                                aria-hidden="true"
-                              />
-                            </Link>
-                            {/* logout */}
-                            <button onClick={logoutHandler}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6 text-gray-500"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                                />
-                              </svg>
-                            </button>
+                            ) : (
+                              data?.map((category) => {
+                                return (
+                                  <>
+                                    <Link
+                                      key={category?._id}
+                                      to={`/products-filters?category=${category?.name}`}
+                                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                    >
+                                      {category?.name}
+                                    </Link>
+                                  </>
+                                );
+                              })
+                            )}
                           </div>
-                        )}
+                        </Popover.Group>
                       </div>
 
-                      <span
-                        className="mx-4 h-6 w-px bg-gray-200 lg:mx-6"
-                        aria-hidden="true"
-                      />
+                      {/* Mobile Naviagtion */}
+                      <div className="flex flex-1 items-center lg:hidden">
+                        <button
+                          type="button"
+                          className="-ml-2 rounded-md bg-white p-2 text-gray-400"
+                          onClick={() => setMobileMenuOpen(true)}
+                        >
+                          <span className="sr-only">Open menu</span>
+                          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                      {/* logo */}
+                      <Link to="/" className="lg:hidden">
+                        <img
+                          className="h-32 mt-2 w-auto"
+                          src={logo}
+                          alt="garimpa ae logo"
+                        />
+                      </Link>
 
-                      {/* login shopping cart mobile */}
-                      {isLoggedIn && (
-                        <>
-                          <div className="flow-root">
-                            <Link
-                              to="/shopping-cart"
-                              className="group -m-2 flex items-center p-2"
-                            >
-                              <ShoppingCartIcon
-                                className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                aria-hidden="true"
-                              />
-                              <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                                {cartItemsFromLocalStorage?.length > 0
-                                  ? cartItemsFromLocalStorage.length
-                                  : 0}
-                              </span>
-                            </Link>
+                      {/* login profile icon mobile */}
+                      <div className="flex flex-1 items-center justify-end">
+                        <div className="flex items-center lg:ml-8">
+                          <div className="flex space-x-8">
+                            {isLoggedIn && (
+                              <div className="flex">
+                                <Link
+                                  to="/customer-profile"
+                                  className="-m-2 p-2 mr-2 text-gray-400 hover:text-gray-500"
+                                >
+                                  <UserIcon
+                                    className="h-6 w-6"
+                                    aria-hidden="true"
+                                  />
+                                </Link>
+                                {/* logout */}
+                                <button onClick={logoutHandler}>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-6 h-6 text-gray-500"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            )}
                           </div>
-                        </>
-                      )}
+
+                          <span
+                            className="mx-4 h-6 w-px bg-gray-200 lg:mx-6"
+                            aria-hidden="true"
+                          />
+
+                          {/* login shopping cart mobile */}
+                          {isLoggedIn && (
+                            <>
+                              <div className="flow-root">
+                                <Link
+                                  to="/shopping-cart"
+                                  className="group -m-2 flex items-center p-2"
+                                >
+                                  <ShoppingCartIcon
+                                    className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                                    {cartItemsFromLocalStorage?.length > 0
+                                      ? cartItemsFromLocalStorage.length
+                                      : 0}
+                                  </span>
+                                </Link>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </Container>
+          </Container>
         </nav>
       </header>
     </div>

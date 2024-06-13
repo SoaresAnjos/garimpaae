@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
@@ -24,103 +24,93 @@ export default function FeaturedProductHome() {
   if (error) {
     console.log(error);
   }
+
   return (
-    <Grid
-      container
-      spacing={1}
-      sx={{
-        backgroundColor: "background.default",
-        height: {
-          xs: "auto", // Definindo a altura para ocupar toda a viewport em dispositivos móveis
-          sm: "auto",
-          md: "60vh", // Altura menor para telas maiores
-          lg: " 60vh",
-          xl: "60vh",
-        },
-        display: "flex", // Usando flexbox para alinhar verticalmente os itens
-        justifyContent: "center",
-        alignItems: "center",
-        paddingLeft: {
-          xs: 0,
-          sm: 0,
-          md: "3rem",
-          lg: "3rem",
-          xl: "3rem",
-        },
-        marginTop: "1rem",
-        padding: 0,
-      }}
-    >
+    <Container maxWidth="lg" sx={{ paddingRight: 0 }}>
       <Grid
-        item
-        xs={12}
-        sm={12}
-        md={6}
-        lg={6}
+        container
+        spacing={1}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 1,
-          justifyContent: "center",
-          alignItems: {
-            xs: "center",
-            sm: "center",
-            md: "flex-start",
-            lg: "flex-start",
-            xl: "flex-start",
+          backgroundColor: "withe",
+          height: {
+            xs: "auto", // Definindo a altura para ocupar toda a viewport em dispositivos móveis
+            sm: "auto",
+            md: "auto", // Altura menor para telas maiores
+            lg: " auto",
+            xl: "auto",
           },
-          order: { xs: 2, sm: 2, md: 1, lg: 1, xl: 1 },
-          height: "40vh",
+          display: "flex", // Usando flexbox para alinhar verticalmente os itens
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "1rem",
+          padding: 0,
         }}
       >
-        <Typography variant="h1">Nike Dunk Low 6</Typography>
-        <Typography variant="body1">
-          Uma nova forma de fechar seu look com o mais novo da Nike
-        </Typography>
-        <Button variant="primary" sx={{ marginTop: "1rem" }}>
-          Comprar agora
-        </Button>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={6}
-        lg={6}
-        sx={{
-          textAlign: "center",
-          position: "relative",
-          order: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 },
-        }}
-      >
-        <div
-          style={{
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          sx={{
             display: "flex",
-            alignItems: "center",
+            flexDirection: "column",
+            gap: 1,
             justifyContent: "center",
-            width: "100%",
-            height: "110%",
+            alignItems: {
+              xs: "center",
+              sm: "center",
+              md: "flex-start",
+              lg: "flex-start",
+              xl: "flex-start",
+            },
+            order: { xs: 2, sm: 2, md: 1, lg: 1, xl: 1 },
+            height: "40vh",
           }}
         >
-          <img
-            src={
-              productsList && productsList?.data
-                ? productsList?.data[0]?.images[0]
-                : null
-            }
-            alt={
-              productsList && productsList?.data
-                ? productsList?.data[0]?.name
-                : null
-            }
-            style={{
-              width: "900px",
-              height: "500px",
-              objectFit: "cover",
+          <Typography variant="h1">Nike Dunk Low 6</Typography>
+          <Typography variant="body1">
+            Uma nova forma de fechar seu look com o mais novo da Nike
+          </Typography>
+          <Button
+            variant="primary"
+            sx={{
+              marginTop: "1rem",
+              paddingY: "0.5rem",
+              backgroundColor: "secondary.light",
+              color: "black",
+              fontWeight: 600,
+              textTransform: "uppercase",
             }}
-          />
-        </div>
+            href={`/products/${
+              productsList?.data ? productsList?.data[0]?.id : null
+            }`}
+          >
+            Comprar agora
+          </Button>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          sx={{
+            height: "30rem",
+            textAlign: "center",
+            padding: 0,
+            margin: 0,
+            position: "relative",
+            order: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 },
+            backgroundImage:
+              productsList && productsList?.data
+                ? `url(${productsList?.data[0]?.images[0]})`
+                : "none",
+            backgroundSize: "cover", // ajusta o tamanho da imagem
+            backgroundPosition: "center", // centraliza a imagem
+          }}
+        ></Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }
