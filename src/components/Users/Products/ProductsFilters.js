@@ -27,11 +27,8 @@ import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import Footer from "../../HomePage/Footer";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Preço: menor para maior", href: "#", current: false },
+  { name: "Preço: maior para menor", href: "#", current: false },
 ];
 
 const allPrice = [
@@ -114,6 +111,28 @@ export default function ProductsFilters() {
   }, [dispatch, category, brand, size, color, price, productUrl]);
 
   const { products, loading, error } = useSelector((state) => state?.products);
+
+  const [sortedProducts, setSortedProducts] = useState(products);
+
+  const [sortActive, setSortActive] = useState(false);
+
+  const handleSortOption = (e) => {
+    if (e.target.name === "Preço: maior para menor") {
+      let orderedProductsDesc = products?.data
+        ?.slice()
+        .sort((a, b) => b.price - a.price);
+      setSortedProducts(orderedProductsDesc);
+      setSortActive(true);
+    }
+
+    if (e.target.name === "Preço: menor para maior") {
+      let orderedProductsAsc = products?.data
+        ?.slice()
+        .sort((a, b) => a.price - b.price);
+      setSortedProducts(orderedProductsAsc);
+      setSortActive(true);
+    }
+  };
 
   //brands
   useEffect(() => {
@@ -508,6 +527,8 @@ export default function ProductsFilters() {
                           {({ active }) => (
                             <a
                               href={option.href}
+                              onClick={handleSortOption}
+                              name={option.name}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -777,7 +798,9 @@ export default function ProductsFilters() {
               ) : error ? (
                 <ErrorMsg message={error?.message} />
               ) : (
-                <Products products={products?.data} />
+                <Products
+                  products={sortActive ? sortedProducts : products?.data}
+                />
               )}
             </div>
           </section>
