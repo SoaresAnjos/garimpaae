@@ -8,6 +8,10 @@ import {
   ScaleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { logoutUserAction } from "../../redux/slices/users/usersSlice";
+import { Button } from "@mui/material";
+
 const ordersLinks = [
   {
     name: "Dashboard",
@@ -160,6 +164,13 @@ const brandsLinks = [
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
+  let logoutHandler = () => {
+    dispatch(logoutUserAction());
+    window.location.href = "/login";
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -227,10 +238,10 @@ export default function AdminDashboard() {
                           <Link
                             key={item.name}
                             to={item.href}
-                            className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                            className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-cyan-200"
                           >
                             <item.icon
-                              className="mr-4 h-6 w-6 text-cyan-200"
+                              className="mr-4 h-6 w-6 text-black-2000"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -253,7 +264,7 @@ export default function AdminDashboard() {
                           aria-current={item.current ? "page" : undefined}
                         >
                           <item.icon
-                            className="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200"
+                            className="mr-4 h-6 w-6 flex-shrink-0 text-black-2000"
                             aria-hidden="true"
                           />
                           {item.name}
@@ -269,7 +280,7 @@ export default function AdminDashboard() {
                             className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
                           >
                             <item.icon
-                              className="mr-4 h-6 w-6 text-cyan-200"
+                              className="mr-4 h-6 w-6 text-black-2000"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -287,7 +298,7 @@ export default function AdminDashboard() {
                             className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
                           >
                             <item.icon
-                              className="mr-4 h-6 w-6 text-cyan-200"
+                              className="mr-4 h-6 w-6 text-black-2000"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -305,7 +316,7 @@ export default function AdminDashboard() {
                             className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
                           >
                             <item.icon
-                              className="mr-4 h-6 w-6 text-cyan-200"
+                              className="mr-4 h-6 w-6 text-black-2000"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -323,7 +334,7 @@ export default function AdminDashboard() {
                             className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
                           >
                             <item.icon
-                              className="mr-4 h-6 w-6 text-cyan-200"
+                              className="mr-4 h-6 w-6 text-black-200"
                               aria-hidden="true"
                             />
                             {item.name}
@@ -345,7 +356,7 @@ export default function AdminDashboard() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-grow flex-col overflow-y-auto bg-cyan-900 pt-5 pb-4">
+          <div className="flex flex-grow flex-col overflow-y-auto bg-yellow-300 pt-5 pb-4">
             <nav
               className="mt-5 flex flex-1 flex-col divide-y divide-cyan-800 overflow-y-auto"
               aria-label="Sidebar"
@@ -357,10 +368,10 @@ export default function AdminDashboard() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-black-200 hover:bg-yellow-500 hover:text-black-200"
                     >
                       <item.icon
-                        className="mr-4 h-6 w-6 text-cyan-200"
+                        className="mr-4 h-6 w-6 text-black-200"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -376,14 +387,14 @@ export default function AdminDashboard() {
                     to={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-cyan-800 text-white"
-                        : "text-cyan-100 hover:text-white hover:bg-cyan-600",
+                        ? "bg-cyan-800 text-black-200"
+                        : "text-black-200 hover:text-black hover:bg-yellow-500",
                       "group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md"
                     )}
                     aria-current={item.current ? "page" : undefined}
                   >
                     <item.icon
-                      className="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200"
+                      className="mr-4 h-6 w-6 flex-shrink-0 text-black-200"
                       aria-hidden="true"
                     />
                     {item.name}
@@ -396,10 +407,10 @@ export default function AdminDashboard() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-black-200 hover:bg-yellow-500 hover:text-white"
                     >
                       <item.icon
-                        className="mr-4 h-6 w-6 text-cyan-200"
+                        className="mr-4 h-6 w-6 text-black-2000"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -414,10 +425,10 @@ export default function AdminDashboard() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6  text-black-200  hover:bg-yellow-500 hover:text-white"
                     >
                       <item.icon
-                        className="mr-4 h-6 w-6 text-cyan-200"
+                        className="mr-4 h-6 w-6 text-black-2000"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -432,10 +443,10 @@ export default function AdminDashboard() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6  text-black-200 hover:bg-yellow-500 hover:text-white"
                     >
                       <item.icon
-                        className="mr-4 h-6 w-6 text-cyan-200"
+                        className="mr-4 h-6 w-6 text-black-2000"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -450,15 +461,23 @@ export default function AdminDashboard() {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
+                      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6  text-black-200  hover:bg-yellow-500 hover:text-white"
                     >
                       <item.icon
-                        className="mr-4 h-6 w-6 text-cyan-200"
+                        className="mr-4 h-6 w-6 text-black-2000"
                         aria-hidden="true"
                       />
                       {item.name}
                     </Link>
                   ))}
+                </div>
+              </div>
+              {/* brands links desktop */}
+              <div className="mt-3 pt-3">
+                <div className="space-y-1 px-2">
+                  <Button onClick={logoutHandler} variant="primary">
+                    Encerrar sessão
+                  </Button>
                 </div>
               </div>
             </nav>
