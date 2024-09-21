@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
-import { createBrandAction } from "../../../redux/slices/brands/brandsSlice";
+import {
+  createBrandAction,
+  resetBrandAdded,
+} from "../../../redux/slices/brands/brandsSlice";
+import SuccessMsg from "../../SuccessMsg/SuccessMsg";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 export default function AddBrand() {
   const dispatch = useDispatch();
@@ -21,10 +26,22 @@ export default function AddBrand() {
     dispatch(createBrandAction(formData.name));
   };
 
-  const { brands } = useSelector((state) => state?.brands);
+  const { loading, error, isAdded } = useSelector((state) => state?.brands);
+
+  //useEffect para resetar isAdded
+  useEffect(() => {
+    if (isAdded) {
+      // Reseta isAdded após 3 segundos
+      setTimeout(() => {
+        dispatch(resetBrandAdded());
+      }, 2000);
+    }
+  }, [isAdded, dispatch]);
 
   return (
     <>
+      {isAdded && <SuccessMsg message="Marca adicionada com sucesso" />}
+
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <svg
@@ -43,7 +60,7 @@ export default function AddBrand() {
           </svg>
 
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Add Product Brand
+            Adicionar marca
           </h2>
         </div>
 
@@ -55,7 +72,7 @@ export default function AddBrand() {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Name
+                  Nome
                 </label>
                 <div className="mt-1">
                   <input
@@ -71,12 +88,10 @@ export default function AddBrand() {
                   type="submit"
                   className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Add Product Brand
+                  Adicionar marca
                 </button>
-                {Object.keys(brands).length > 0 && (
-                  <h3 className="text-green-600">Marca criada com sucesso!</h3>
-                )}
               </div>
+              <div>{loading && <LoadingComponent />}</div>
             </form>
 
             <div className="mt-6">
@@ -95,7 +110,7 @@ export default function AddBrand() {
                     to="/admin/add-brand"
                     className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                   >
-                    Add Brand
+                    Marca
                   </Link>
                 </div>
 
@@ -105,7 +120,7 @@ export default function AddBrand() {
                       to="/admin/add-color"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      Add Color
+                      Cor
                     </Link>
                   </div>
                 </div>
@@ -116,7 +131,7 @@ export default function AddBrand() {
                       to="/admin/add-category"
                       className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                     >
-                      Add Category
+                      Categoria
                     </Link>
                   </div>
                 </div>

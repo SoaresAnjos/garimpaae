@@ -22,6 +22,8 @@ const initialState = {
 export const createBrandAction = createAsyncThunk(
   "brand/create",
   async (name, { rejectWithValue, getState }) => {
+    console.log(name);
+
     try {
       const token = getState().users?.userAuth?.userInfo?.token;
 
@@ -32,6 +34,8 @@ export const createBrandAction = createAsyncThunk(
       };
 
       const { data } = await axios.post(`${baseURL}/brands`, { name }, config);
+      console.log(data);
+
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -52,6 +56,11 @@ export const fetchBrandsAction = createAsyncThunk(
   }
 );
 
+// Action para resetar o estado de isAdded
+export const resetBrandAdded = createAsyncThunk("brands/resetAdded", () => {
+  return false;
+});
+
 //create slice
 const brandsSlice = createSlice({
   name: "brands",
@@ -70,6 +79,11 @@ const brandsSlice = createSlice({
       state.error = state.payload;
       state.loading = false;
       state.brand = null;
+      state.isAdded = false;
+    });
+
+    // Reset isAdded
+    builder.addCase(resetBrandAdded.fulfilled, (state) => {
       state.isAdded = false;
     });
 

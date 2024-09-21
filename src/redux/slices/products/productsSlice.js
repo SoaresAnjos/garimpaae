@@ -181,6 +181,11 @@ export const deleteProductAtion = createAsyncThunk(
   }
 );
 
+// Action para resetar o estado de isAdded
+export const resetProductAdded = createAsyncThunk("products/resetAdded", () => {
+  return false;
+});
+
 //products slice
 const productsSlice = createSlice({
   name: "products",
@@ -199,6 +204,10 @@ const productsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
       state.product = null;
+      state.isAdded = false;
+    });
+    // Reset isAdded
+    builder.addCase(resetProductAdded.fulfilled, (state) => {
       state.isAdded = false;
     });
     //update product

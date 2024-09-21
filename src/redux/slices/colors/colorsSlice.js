@@ -58,12 +58,19 @@ export const addColorAction = createAsyncThunk(
         config
       );
 
+      console.log(data);
+
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
     }
   }
 );
+
+// Action para resetar o estado de isAdded
+export const resetColorAdded = createAsyncThunk("colors/resetAdded", () => {
+  return false;
+});
 
 //colors slice
 const colorsSlice = createSlice({
@@ -83,6 +90,11 @@ const colorsSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
       state.color = null;
+      state.isAdded = false;
+    });
+
+    // Reset isAdded
+    builder.addCase(resetColorAdded.fulfilled, (state) => {
       state.isAdded = false;
     });
 

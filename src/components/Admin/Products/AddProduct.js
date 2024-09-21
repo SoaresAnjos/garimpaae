@@ -7,6 +7,7 @@ import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 import {
   addProductAction,
   fecthProductsAction,
+  resetProductAdded,
 } from "../../../redux/slices/products/productsSlice";
 import { fetchCategoriesAction } from "../../../redux/slices/categories/categoriesSlice";
 import { fetchBrandsAction } from "../../../redux/slices/brands/brandsSlice";
@@ -125,6 +126,16 @@ export default function AddProduct() {
     return state?.products;
   });
 
+  //useEffect para resetar isAdded
+  useEffect(() => {
+    if (isAdded) {
+      // Reseta isAdded após 3 segundos
+      setTimeout(() => {
+        dispatch(resetProductAdded());
+      }, 3000);
+    }
+  }, [isAdded, dispatch]);
+
   //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -157,7 +168,7 @@ export default function AddProduct() {
     <>
       {/* {errProductCreation && <ErrorMsg message={errProductCreation?.message} />} */}
 
-      {isAdded && <SuccessMsg message="Product Added Successfully" />}
+      {isAdded && <SuccessMsg message="Produto adicionado com sucesso" />}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -218,7 +229,7 @@ export default function AddProduct() {
                   className="mt-1  block w-full rounded-md border-gray-300 py-2  pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm border"
                   defaultValue="Canada"
                 >
-                  <option>-- Select Category --</option>
+                  <option>-- Selecione a categoria --</option>
                   {categories?.data?.map((category) => (
                     <option key={category?._id} value={category?.name}>
                       {category.name}
@@ -229,7 +240,7 @@ export default function AddProduct() {
               {/* Select Brand */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Select Brand
+                  Selecione a marca
                 </label>
                 <select
                   name="brand"
@@ -250,7 +261,7 @@ export default function AddProduct() {
               {/* Select Color */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Select Color
+                  Selecione a cor
                 </label>
                 <Select
                   components={animatedComponents}
@@ -273,7 +284,7 @@ export default function AddProduct() {
                   htmlFor="cover-photo"
                   className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                 >
-                  Upload Images
+                  Subir imagens
                 </label>
                 <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <div className="flex max-w-lg justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
@@ -317,7 +328,7 @@ export default function AddProduct() {
               {/* price */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Price
+                  Preço
                 </label>
                 <div className="mt-1">
                   <input
@@ -333,7 +344,7 @@ export default function AddProduct() {
               {/* Quantity */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Total Quantity
+                  Quantidade
                 </label>
                 <div className="mt-1">
                   <input
@@ -351,7 +362,7 @@ export default function AddProduct() {
                   htmlFor="comment"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Add Product Description
+                  Descrição
                 </label>
                 <div className="mt-1">
                   <textarea

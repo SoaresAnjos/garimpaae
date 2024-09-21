@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 const SuccessMsg = ({ message }) => {
   Swal.fire({
     icon: "success",
-    title: "Good job!",
+    title: "Bom trabalho",
     text: message,
   });
 };

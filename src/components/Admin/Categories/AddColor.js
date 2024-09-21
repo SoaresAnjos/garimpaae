@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addColorAction } from "../../../redux/slices/colors/colorsSlice";
+import {
+  addColorAction,
+  resetColorAdded,
+} from "../../../redux/slices/colors/colorsSlice";
+import SuccessMsg from "../../SuccessMsg/SuccessMsg";
+import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 export default function AddColor() {
   const dispatch = useDispatch();
@@ -23,12 +28,22 @@ export default function AddColor() {
     dispatch(addColorAction(formData.name));
   };
 
-  const { loading, error, color } = useSelector((state) => state?.colors);
+  const { loading, error, isAdded } = useSelector((state) => state?.colors);
 
-  console.log(error?.message);
+  //useEffect para resetar isAdded
+  useEffect(() => {
+    if (isAdded) {
+      // Reseta isAdded após 3 segundos
+      setTimeout(() => {
+        dispatch(resetColorAdded());
+      }, 2000);
+    }
+  }, [isAdded, dispatch]);
 
   return (
     <>
+      {isAdded && <SuccessMsg message="Cor adicionada com sucesso" />}
+
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <svg
@@ -46,7 +61,7 @@ export default function AddColor() {
             />
           </svg>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Add Product Color
+            Adicionar cor
           </h2>
         </div>
 
@@ -59,7 +74,7 @@ export default function AddColor() {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Name
+                  Nome
                 </label>
                 <div className="mt-1">
                   <input
@@ -71,31 +86,15 @@ export default function AddColor() {
                 </div>
               </div>
               <div>
-                {loading ? (
-                  <>
-                    <button
-                      type="submit"
-                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Criando nova cor
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      type="submit"
-                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Adicionar nova cor
-                    </button>
-                  </>
-                )}
+                <button
+                  type="submit"
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Adicionar nova cor
+                </button>
               </div>
-              <div>
-                {color && (
-                  <h3 className="text-green-600">Cor criada com sucesso!</h3>
-                )}
-              </div>
+
+              <div>{loading && <LoadingComponent />}</div>
             </form>
             <div className="mt-6">
               <div className="relative">
