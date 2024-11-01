@@ -17,7 +17,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           lineHeight: 1.3,
-          //paddingY: 5,
         },
       },
       variants: [
@@ -26,7 +25,7 @@ const theme = createTheme({
           style: {
             backgroundColor: "#00468c",
             color: "white",
-            borderRadius: "2rem",
+            borderRadius: "1rem",
             fontWeight: "none",
             "&:hover": {
               backgroundColor: "#e5e619",
@@ -51,10 +50,21 @@ const theme = createTheme({
           style: {
             backgroundColor: "black",
             color: "white",
-            borderRadius: 4,
-            fontWeight: "none",
+            borderRadius: 3,
             "&:hover": {
-              backgroundColor: "#e5e619",
+              backgroundColor: "#202533",
+              color: "white",
+              textDecoration: "none",
+            },
+            "&:active": {
+              backgroundColor: "#202533",
+              color: "white",
+              textDecoration: "none",
+            },
+            "&:visited": {
+              backgroundColor: "#202533",
+              color: "white",
+              textDecoration: "none",
             },
             textTransform: "capitalize",
             "@media (min-width:0px)": {
@@ -65,6 +75,7 @@ const theme = createTheme({
             },
             "@media (min-width:900px)": {
               fontSize: "1rem",
+              fontWeight: "200",
             },
             "@media (min-width:1200px)": {
               fontSize: "1rem",
@@ -184,7 +195,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiButtonBase: {},
   },
 
   palette: {

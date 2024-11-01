@@ -2,23 +2,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Navbar from "../Navbar/Navbar";
+import { Typography, Button } from "@mui/material";
+import FeaturedProductHome from "./FeaturedProduct";
 
 export default function NewHomePage() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <Grid
-        className="hero"
-        container
-        spacing={2}
-        sx={{ marginBottom: "2rem", height: "60vh", backgroundColor: "grey" }}
-      >
-        <Grid item xs={12}>
-          <Container fixed>Hello</Container>
-        </Grid>
-      </Grid>
-
-      <Container className="featured-products" fixed>
+      <FeaturedProductHome />
+      {/* <Container className="featured-products" fixed>
         <Grid
           container
           spacing={2}

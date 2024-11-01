@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, Container } from "@mui/material";
+import { Box, Button, Grid, Typography, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
@@ -30,91 +30,125 @@ export default function FeaturedProductHome() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ paddingRight: 0 }}>
+    <>
       <Grid
+        className="hero"
         container
-        spacing={1}
+        spacing={2}
         sx={{
-          backgroundColor: "withe",
-          height: {
-            xs: "auto", // Definindo a altura para ocupar toda a viewport em dispositivos móveis
-            sm: "auto",
-            md: "auto", // Altura menor para telas maiores
-            lg: " auto",
-            xl: "auto",
-          },
-          display: "flex", // Usando flexbox para alinhar verticalmente os itens
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "1rem",
-          padding: 0,
+          marginBottom: "2rem",
+          height: "60vh",
+          background: "linear-gradient(45deg, #F6F6F6, #E6E7E8)",
         }}
       >
         <Grid
           item
           xs={12}
-          sm={12}
-          md={6}
-          lg={6}
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: 1,
             justifyContent: "center",
-            alignItems: {
-              xs: "center",
-              sm: "center",
-              md: "flex-start",
-              lg: "flex-start",
-              xl: "flex-start",
-            },
-            order: { xs: 2, sm: 2, md: 1, lg: 1, xl: 1 },
-            height: "40vh",
           }}
         >
-          <Typography variant="h1">Nike Dunk Low 6</Typography>
-          <Typography variant="body1">
-            Uma nova forma de fechar seu look com o mais novo da Nike
-          </Typography>
-          <Button
-            variant="primary"
+          <Container
+            fixed
             sx={{
-              marginTop: "1rem",
-              paddingY: "0.5rem",
-              backgroundColor: "secondary.light",
-              color: "black",
-              fontWeight: 600,
-              textTransform: "uppercase",
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: "row",
+                lg: "row",
+              },
+              justifyContent: {
+                xs: "center",
+                md: "space-between",
+                lg: "space-between",
+              },
+              alignItems: {
+                xs: "center",
+                md: "space-between",
+                lg: "space-between",
+              },
             }}
-            href={`/products/${
-              productsList?.data ? productsList?.data[0]?.id : null
-            }`}
           >
-            Comprar agora
-          </Button>
+            <Box
+              className="hero-text"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: {
+                  xs: "center",
+                  md: "flex-start",
+                  lg: "flex-start",
+                },
+                gap: "1rem",
+                order: {
+                  xs: 2,
+                  md: 1,
+                },
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontWeight: "600",
+                    textAlign: {
+                      xs: "center",
+                      sm: "center",
+                      md: "start",
+                      lg: "start",
+                    },
+                  }}
+                >
+                  Novidades chegando
+                </Typography>
+                <Typography
+                  variant="body"
+                  sx={{
+                    display: "flex",
+                    justifyContent: {
+                      xs: "center",
+                      md: "flex-start",
+                      lg: "flex-start",
+                    },
+                  }}
+                >
+                  Descubra nossa coleção hoje
+                </Typography>
+              </Box>
+              <Box>
+                <Button variant="primary">Descobrir agora</Button>
+              </Box>
+            </Box>
+            <Box
+              className="hero-img"
+              sx={{
+                height: 333,
+                width: 450,
+                maxHeight: { xs: 233, md: 567 },
+                maxWidth: { xs: 350, md: 550 },
+                zIndex: 100,
+                order: {
+                  xs: 1,
+                  md: 2,
+                },
+              }}
+            >
+              <img
+                src="https://sneakersul.com.br/cdn/shop/files/nike-sb-dunk-low-ebay-1.webp?v=1711918943"
+                alt="The house from the offer."
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
+          </Container>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-          sx={{
-            height: "30rem",
-            textAlign: "center",
-            padding: 0,
-            margin: 0,
-            position: "relative",
-            order: { xs: 1, sm: 1, md: 2, lg: 2, xl: 2 },
-            backgroundImage:
-              productsList && productsList?.data
-                ? `url(${productsList?.data[0]?.images[0]})`
-                : "none",
-            backgroundSize: "cover", // ajusta o tamanho da imagem
-            backgroundPosition: "center", // centraliza a imagem
-          }}
-        ></Grid>
       </Grid>
-    </Container>
+    </>
   );
 }
