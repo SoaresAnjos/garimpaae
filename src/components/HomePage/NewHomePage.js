@@ -1,25 +1,13 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Navbar from "../Navbar/Navbar";
 
-export default function BasicGrid() {
+export default function NewHomePage() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid
-        className="navbar"
-        container
-        spacing={2}
-        sx={{ height: "10vh", backgroundColor: "yellow" }}
-      >
-        <Grid item xs={12}>
-          <Container fixed>Menu</Container>
-        </Grid>
-      </Grid>
-
-      <Grid
+      {/* <Grid
         className="hero"
         container
         spacing={2}
@@ -46,7 +34,7 @@ export default function BasicGrid() {
             Product
           </Grid>
         </Grid>
-      </Container>
+      </Container> */}
     </Box>
   );
 }

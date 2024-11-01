@@ -7,6 +7,10 @@ import baseURL from "../../utils/baseURL";
 export default function FeaturedProductHome() {
   let [productsList, setprodutcts] = useState(null);
 
+  // redux
+  // context
+  // state
+
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -190,30 +190,31 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#00468c",
-      dark: "#00468c",
-      light: "#bad1e8",
+      dark: "#0E1422",
+      light: "#fffff",
       contrastText: "white",
     },
     secondary: {
       main: "#ecec53",
-      dark: "#e5e619",
-      light: "#ffff00",
+      dark: "#202533",
+      light: "#ffffff",
     },
     background: {
       default: "#ededed",
     },
     text: {
       primary: "#121212",
+      secondary: "#71747E",
     },
   },
   typography: {
     fontFamily: ['"Open Sans"', "Helvetica", "Arial", "sans-serif"].join(","),
 
     h1: {
-      fontSize: "32px",
+      fontSize: "40px",
       lineHeight: 1.2,
       color: " #121212",
-      fontWeight: "bold",
+      fontWeight: "semibold",
     },
     h2: {
       fontSize: "28px",

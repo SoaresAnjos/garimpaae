@@ -6,7 +6,6 @@ import AddCoupon from "./components/Admin/Coupons/AddCoupon";
 import Login from "./components/Users/Forms/Login";
 import AddProduct from "./components/Admin/Products/AddProduct";
 import RegisterForm from "./components/Users/Forms/RegisterForm";
-import HomePage from "./components/HomePage/HomePage";
 import NewHomePage from "./components/HomePage/NewHomePage";
 import Navbar from "./components/Navbar/Navbar";
 import OrderPayment from "./components/Users/Products/OrderPayment";
