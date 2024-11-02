@@ -1,14 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import { Typography, Button } from "@mui/material";
 import FeaturedProductHome from "./FeaturedProduct";
+import Advantages from "./Advantages";
 
 export default function NewHomePage() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, backgroundColor: "white" }}>
       <FeaturedProductHome />
+      <Advantages />
+
       {/* <Container className="featured-products" fixed>
         <Grid
           container

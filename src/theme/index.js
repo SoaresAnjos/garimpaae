@@ -227,7 +227,7 @@ const theme = createTheme({
       fontWeight: "semibold",
     },
     h2: {
-      fontSize: "28px",
+      fontSize: "32px",
       lineHeight: 1.2,
       color: " #121212",
       fontWeight: "bold",
@@ -239,12 +239,14 @@ const theme = createTheme({
       fontWeight: "bold",
     },
     h4: {
-      fontSize: "20px",
+      fontSize: "18px",
       lineHeight: 1.2,
       color: " #121212",
       fontWeight: "bold",
     },
     h5: {
+      fontSize: "16px",
+
       color: " #121212",
       "@media (min-width:0px)": {
         fontSize: "18px",
@@ -263,29 +265,36 @@ const theme = createTheme({
         fontWeight: "bold",
       },
     },
+    h6: {
+      fontSize: "16px",
+      lineHeight: 1.2,
+      color: " #121212",
+      fontWeight: "bold",
+    },
     body1: {
       fontSize: "14px",
       lineHeight: 1.5,
-      color: " #121212",
+      color: "#202533",
+      fontWeight: "300",
     },
     body2: {
       lineHeight: 1.5,
-      color: " #121212",
+      color: "#202533",
       "@media (min-width:0px)": {
         fontSize: "14px",
-        fontWeight: "bold",
+        fontWeight: "500",
       },
       "@media (min-width:600px)": {
-        fontSize: "18px",
-        fontWeight: "bold",
+        fontSize: "14px",
+        fontWeight: "500",
       },
       "@media (min-width:900px)": {
-        fontSize: "18px",
-        fontWeight: "bold",
+        fontSize: "14px",
+        fontWeight: "500",
       },
       "@media (min-width:1200px)": {
-        fontSize: "18px",
-        fontWeight: "bold",
+        fontSize: "14px",
+        fontWeight: "500",
       },
     },
     overline: {
