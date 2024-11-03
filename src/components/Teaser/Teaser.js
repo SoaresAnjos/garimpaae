@@ -3,13 +3,20 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
 import baseURL from "../../utils/baseURL";
+import { Link } from "react-router-dom";
 
-export default function FeaturedProductHome() {
+export default function Teaser({
+  title,
+  text,
+  buttonText,
+  img,
+  blockHeight,
+  imgHeight,
+  imgWidth,
+  titleSize,
+  destination,
+}) {
   let [productsList, setprodutcts] = useState(null);
-
-  // redux
-  // context
-  // state
 
   const dispatch = useDispatch();
 
@@ -36,8 +43,7 @@ export default function FeaturedProductHome() {
         container
         spacing={2}
         sx={{
-          marginBottom: "2rem",
-          height: "60vh",
+          height: blockHeight,
           background: "linear-gradient(45deg, #F6F6F6, #E6E7E8)",
         }}
       >
@@ -82,7 +88,7 @@ export default function FeaturedProductHome() {
                   md: "flex-start",
                   lg: "flex-start",
                 },
-                gap: "1rem",
+                gap: "1.5rem",
                 order: {
                   xs: 2,
                   md: 1,
@@ -91,7 +97,7 @@ export default function FeaturedProductHome() {
             >
               <Box>
                 <Typography
-                  variant="h1"
+                  variant={titleSize}
                   sx={{
                     fontWeight: "600",
                     textAlign: {
@@ -102,7 +108,7 @@ export default function FeaturedProductHome() {
                     },
                   }}
                 >
-                  Novidades chegando
+                  {title}
                 </Typography>
                 <Typography
                   variant="body"
@@ -115,18 +121,20 @@ export default function FeaturedProductHome() {
                     },
                   }}
                 >
-                  Descubra nossa coleção hoje
+                  {text}
                 </Typography>
               </Box>
               <Box>
-                <Button variant="primary">Descobrir agora</Button>
+                <Link to={destination}>
+                  <Button variant="primary">{buttonText}</Button>
+                </Link>
               </Box>
             </Box>
             <Box
               className="hero-img"
               sx={{
-                height: 333,
-                width: 450,
+                height: imgHeight,
+                width: imgWidth,
                 maxHeight: { xs: 233, md: 567 },
                 maxWidth: { xs: 350, md: 550 },
                 zIndex: 100,
@@ -137,7 +145,7 @@ export default function FeaturedProductHome() {
               }}
             >
               <img
-                src="https://sneakersul.com.br/cdn/shop/files/nike-sb-dunk-low-ebay-1.webp?v=1711918943"
+                src={img}
                 alt="The house from the offer."
                 style={{
                   width: "100%",

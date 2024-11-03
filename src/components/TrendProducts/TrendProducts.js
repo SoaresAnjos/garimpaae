@@ -1,37 +1,21 @@
-// ProductCarousel.js
-import React, { useEffect } from "react";
-
 import { Typography, Grid, Container, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
-import baseURL from "../../utils/baseURL";
 
-export default function ProductCarousel() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
-  }, [dispatch]);
-
-  const { products } = useSelector((state) => state?.products);
-
-  const featuredProducts =
-    products.data && products.data.slice(products.data.length - 3);
-
+export default function TrendProducts({ title, array }) {
   return (
     <>
-      <Container fixed space={2} sx={{ marginBottom: "2rem" }}>
+      <Container fixed space={2} sx={{ marginBottom: "10rem" }}>
         <Grid
           container
           space={2}
           sx={{
-            marginBottom: { md: "2rem" },
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-around",
-            alignItems: "center",
+            alignItems: "flex-start",
             gap: 3,
+            marginTop: "5rem",
+            marginBottom: "5rem",
             //border: "1px solid black",
           }}
         >
@@ -41,15 +25,15 @@ export default function ProductCarousel() {
             sm={12}
             md={12}
             sx={{
-              marginBottom: { md: "2rem" },
+              marginBottom: { md: "1rem" },
               //border: "1px solid black",
               textAlign: "center",
             }}
           >
-            <Typography variant="h5">Destaques do mês</Typography>
+            <Typography variant="h5">{title}</Typography>
           </Grid>
 
-          {featuredProducts?.map((product) => {
+          {array?.map((product) => {
             return (
               <Grid
                 item

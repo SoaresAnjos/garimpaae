@@ -6,7 +6,6 @@ import AddCoupon from "./components/Admin/Coupons/AddCoupon";
 import Login from "./components/Users/Forms/Login";
 import AddProduct from "./components/Admin/Products/AddProduct";
 import RegisterForm from "./components/Users/Forms/RegisterForm";
-import NewHomePage from "./components/HomePage/NewHomePage";
 import Navbar from "./components/Navbar/Navbar";
 import OrderPayment from "./components/Users/Products/OrderPayment";
 import ManageCategories from "./components/Admin/Categories/ManageCategories";
@@ -15,7 +14,6 @@ import CategoryToAdd from "./components/Admin/Categories/CategoryToAdd";
 import AddCategory from "./components/Admin/Categories/AddCategory";
 import AddBrand from "./components/Admin/Categories/AddBrand";
 import AddColor from "./components/Admin/Categories/AddColor";
-import AllCategories from "./components/HomePage/AllCategories";
 import UpdateCoupon from "./components/Admin/Coupons/UpdateCoupon";
 import Product from "./components/Users/Products/Product";
 import ShoppingCart from "./components/Users/Products/ShoppingCart";
@@ -31,6 +29,8 @@ import AdminAuthRoute from "./components/AuthRoute/AdminAuthRoute";
 import ThanksForOrdering from "./components/Users/Products/ThanksForOrdering";
 import ProductUpdate from "./components/Admin/Products/ProductUpdate";
 import UpdateOrders from "./components/Admin/Orders/UpdateOrders";
+import LandingPage from "./pages/LP/LP";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -75,10 +75,10 @@ const App = () => {
         </Route>
         {/* public links */}
         {/* Products */}
-        <Route path="/" element={<NewHomePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/products-filters" element={<ProductsFilters />} />
         <Route path="/products/:id" element={<Product />} />
-        <Route path="/all-categories" element={<AllCategories />} />
+
         <Route path="success" element={<ThanksForOrdering />} />
 
         {/* review */}
@@ -92,6 +92,7 @@ const App = () => {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/customer-profile" element={<CustomerProfile />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
