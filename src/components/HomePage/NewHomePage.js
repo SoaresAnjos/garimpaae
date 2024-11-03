@@ -2,13 +2,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import FeaturedProductHome from "./FeaturedProduct";
 import Advantages from "./Advantages";
+import ProductCarousel from "./HomeProductTrending";
 
 export default function NewHomePage() {
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: "white" }}>
       <FeaturedProductHome />
       <Advantages />
-
+      <ProductCarousel />
       {/* <Container className="featured-products" fixed>
         <Grid
           container

@@ -1,96 +1,145 @@
 // ProductCarousel.js
-import React, { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa os estilos do carrossel
-import { CardMedia, Typography, Grid, Container, Box } from "@mui/material";
+import React, { useEffect } from "react";
+
+import { Typography, Grid, Container, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
+import baseURL from "../../utils/baseURL";
 
-// Função para agrupar produtos em conjuntos de três
-const chunkArray = (arr, size) => {
-  const results = [];
-  while (arr.length) {
-    results.push(arr.splice(0, size));
-  }
-  return results;
-};
-
-const ProductCarousel = () => {
+export default function ProductCarousel() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fecthProductsAction());
+    dispatch(fecthProductsAction({ url: `${baseURL}/products` }));
   }, [dispatch]);
-
-  const [listProducts, setListProducts] = useState([]);
 
   const { products } = useSelector((state) => state?.products);
 
-  useEffect(() => {
-    if (products && Array.isArray(products.data)) {
-      const filteredProducts = products.data.filter(
-        (product) => product.category === "men"
-      );
-      if (filteredProducts.length > 0) {
-        setListProducts(filteredProducts);
-      }
-    }
-  }, [products]);
-
-  const productChunks = listProducts ? chunkArray([...listProducts], 3) : [];
+  const featuredProducts =
+    products.data && products.data.slice(products.data.length - 3);
 
   return (
     <>
-      <Container sx={{ marginTop: "4rem", marginBottom: "2rem" }}>
-        <Typography variant="h1">Sneakers</Typography>
-      </Container>
-      <Container container space={2}>
-        <Carousel
-          showArrows={true}
-          showThumbs={false}
-          showStatus={false}
-          infiniteLoop={true}
+      <Container fixed space={2} sx={{ marginBottom: "2rem" }}>
+        <Grid
+          container
+          space={2}
+          sx={{
+            marginBottom: { md: "2rem" },
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+            gap: 3,
+            //border: "1px solid black",
+          }}
         >
-          {productChunks.map((chunk, index) => {
-            return (
-              <Grid container spacing={2} key={index}>
-                {chunk?.map((product) => {
-                  return (
-                    <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                      <Link to={`/products/${product?.id}`}>
-                        <CardMedia
-                          sx={{ height: 340 }}
-                          image={product?.images[0]}
-                          title="green iguana"
-                        />
-                      </Link>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            sx={{
+              marginBottom: { md: "2rem" },
+              //border: "1px solid black",
+              textAlign: "center",
+            }}
+          >
+            <Typography variant="h5">Destaques do mês</Typography>
+          </Grid>
 
-                      <Box sx={{ marginY: "2rem" }}>
-                        <Link to="/">
-                          <Typography variant="h4" sx={{ textAlign: "start" }}>
-                            {product?.name}
-                          </Typography>
-                          <Typography
-                            sx={{ textAlign: "start", marginTop: "1rem" }}
-                          >
-                            {product?.description}
-                          </Typography>
-                          <Typography sx={{ textAlign: "start" }}>
-                            R$ {product?.price}
-                          </Typography>
-                        </Link>
-                      </Box>
-                    </Grid>
-                  );
-                })}
+          {featuredProducts?.map((product) => {
+            return (
+              <Grid
+                item
+                md={3}
+                sm={6}
+                sx={{
+                  marginBottom: { md: "1rem" },
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+                key={product.id}
+              >
+                <Link to={`/products/${product?.id}`}>
+                  <Box
+                    className="product-card"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      gap: 2,
+                      width: "100%",
+                    }}
+                  >
+                    <Box
+                      className="product-card-image"
+                      sx={{
+                        height: 320,
+                        maxHeight: { xs: 233, md: 567 },
+                        maxWidth: { xs: 350, md: 550 },
+                        backgroundColor: "#F6F6F6",
+                        paddingX: "1rem",
+                        "&:hover": {
+                          opacity: "80%",
+                        },
+                      }}
+                    >
+                      <img
+                        src={
+                          product?.images[0] ||
+                          "https://sneakersul.com.br/cdn/shop/files/nike-sb-dunk-low-ebay-1.webp?v=1711918943"
+                        }
+                        alt={product?.name}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Box>
+                    <Box
+                      className="product-card-text"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <Typography className="product-card-title" variant="h6">
+                        {product?.name || "Nome do Produto"}
+                      </Typography>
+                      <Typography
+                        className="product-card-price"
+                        variant="body2"
+                        sx={{
+                          color: "#474B57",
+                        }}
+                      >
+                        R$ {product?.price || "Preço"}
+                      </Typography>
+                    </Box>
+
+                    <Box className="product-card-button">
+                      <Button
+                        variant="primary"
+                        sx={{
+                          width: "100%",
+                        }}
+                      >
+                        Comprar
+                      </Button>
+                    </Box>
+                  </Box>
+                </Link>
               </Grid>
             );
           })}
-        </Carousel>
+        </Grid>
       </Container>
     </>
   );
-};
-
-export default ProductCarousel;
+}

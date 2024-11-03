@@ -66,7 +66,7 @@ const theme = createTheme({
               color: "white",
               textDecoration: "none",
             },
-            textTransform: "capitalize",
+            textTransform: "none",
             "@media (min-width:0px)": {
               fontSize: "1rem",
             },
@@ -266,10 +266,10 @@ const theme = createTheme({
       },
     },
     h6: {
-      fontSize: "16px",
+      fontSize: "14px",
       lineHeight: 1.2,
       color: " #121212",
-      fontWeight: "bold",
+      fontWeight: 600,
     },
     body1: {
       fontSize: "14px",

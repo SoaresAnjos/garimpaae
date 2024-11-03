@@ -38,7 +38,8 @@ export default function Advantages() {
       fixed
       sx={{
         backgroundColor: "white",
-        height: { xs: "100vh", sm: "100vh" },
+        height: { xs: "100vh", sm: "100vh", md: "40vh", xl: "40vh" },
+        //border: "1px solid black",
       }}
     >
       <Grid
@@ -46,7 +47,7 @@ export default function Advantages() {
         spacing={2}
         sx={{
           marginTop: "2rem",
-          height: "60vh",
+          height: "30vh",
           backgroundColor: "white",
         }}
       >
@@ -57,7 +58,7 @@ export default function Advantages() {
             xs={12}
             md={4}
             sx={{
-              marginBottom: { xs: "0rem", sm: "0rem", md: "2rem" },
+              marginBottom: { md: "2rem" },
               height: "30vh",
               backgroundColor: "white",
               display: "flex",
