@@ -10,3 +10,7 @@ header,
 nav {
   font-family: "Inter", "Lato", sans-serif;
 }
+
+body {
+  background-color: "white";
+}

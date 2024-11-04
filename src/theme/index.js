@@ -93,8 +93,9 @@ const theme = createTheme({
             display: "none",
           },
           "&:not(:last-child)": {
-            borderBottom: 2,
+            borderBottom: 1,
           },
+          height: "0.5rem",
         },
       },
     },
@@ -103,11 +104,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "white",
-          height: "90px",
+          height: "0.5rem",
           paddingBottom: "2px",
           borderRadius: "4px",
-          boxShadow: "2px 2px 1px 0px rgba(0, 0, 9, .1);",
           marginBottom: "5px",
+          fontWeight: "600",
           flexDirection: "row-reverse",
           borderTop: "unset",
           border: `0.5px solid rgba(0, 0, 9, .1);`,
@@ -127,8 +128,6 @@ const theme = createTheme({
         root: {
           padding: "30px",
           backgroundColor: "white",
-          boxShadow: "2px 2px 1px 0px rgba(0, 0, 9, .1);",
-          borderTop: "1px solid rgba(0, 0, 0, .125)",
           marginBottom: "5px",
           borderRadius: "4px",
           border: "1px solid rgba(0, 0, 9, .1)",
@@ -210,7 +209,7 @@ const theme = createTheme({
       light: "#ffffff",
     },
     background: {
-      default: "#ededed",
+      default: "white",
     },
     text: {
       primary: "#121212",

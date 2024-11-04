@@ -17,7 +17,6 @@ import AddColor from "./components/Admin/Categories/AddColor";
 import UpdateCoupon from "./components/Admin/Coupons/UpdateCoupon";
 import Product from "./components/Users/Products/Product";
 import ShoppingCart from "./components/Users/Products/ShoppingCart";
-import ProductsFilters from "./components/Users/Products/ProductsFilters";
 import CustomerProfile from "./components/Users/Profile/CustomerProfile";
 import AddReview from "./components/Users/Reviews/AddReview";
 import UpdateCategory from "./components/Admin/Categories/UpdateCategory";
@@ -31,6 +30,7 @@ import ProductUpdate from "./components/Admin/Products/ProductUpdate";
 import UpdateOrders from "./components/Admin/Orders/UpdateOrders";
 import LandingPage from "./pages/LP/LP";
 import Footer from "./components/Footer/Footer";
+import PLP from "./pages/PLP/PLP";
 
 const App = () => {
   return (
@@ -76,7 +76,7 @@ const App = () => {
         {/* public links */}
         {/* Products */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/products-filters" element={<ProductsFilters />} />
+        <Route path="/products-filters" element={<PLP />} />
         <Route path="/products/:id" element={<Product />} />
 
         <Route path="success" element={<ThanksForOrdering />} />
