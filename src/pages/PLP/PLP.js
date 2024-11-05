@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import baseURL from "../../utils/baseURL";
-import { fecthProductsAction } from "../../redux/slices/products/productsSlice";
+import { fetchProductsAction } from "../../redux/slices/products/productsSlice";
 import LoadingComponent from "../../components/LoadingComp/LoadingComponent";
 import ErrorMsg from "../../components/ErrorMsg/ErrorMsg";
 import Products from "../../components/Users/Products/Products";
@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchBrandsAction } from "../../redux/slices/brands/brandsSlice";
+import debounce from "lodash.debounce";
 
 export default function PLP() {
   const [color, setColor] = useState("");
@@ -22,13 +23,14 @@ export default function PLP() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [page, setPage] = useState(1);
   const [loadingData, setLoadingData] = useState(false);
+  const [productsData, setProductsData] = useState([]);
+  const [hasMore, setHasMore] = useState(true); // Novo estado para controlar se há mais produtos
 
   const [params] = useSearchParams();
   const category = params.get("category");
 
   const dispatch = useDispatch();
 
-  // Carrega marcas ao carregar a página
   useEffect(() => {
     dispatch(fetchBrandsAction());
   }, [dispatch]);
@@ -38,7 +40,9 @@ export default function PLP() {
   const brandsData = brands?.data?.slice(3, 9);
 
   // Função para buscar produtos
-  const fetchProducts = () => {
+  const fetchProducts = async () => {
+    if (!hasMore) return; // Não carregar mais produtos se não houver mais páginas
+
     setLoadingData(true);
     const brandString = selectedBrands.join(",");
     const productUrl = `${baseURL}/products?category=${category || ""}&brand=${
@@ -46,7 +50,14 @@ export default function PLP() {
     }&color=${color || ""}&price=${price || ""}&page=${page}&limit=4`;
 
     try {
-      dispatch(fecthProductsAction({ url: productUrl }));
+      const data = await fetch(productUrl);
+      const res = await data.json();
+      setProductsData((prevData) =>
+        page === 1 ? res.data : [...prevData, ...res.data]
+      );
+
+      // Verificar se há próxima página
+      setHasMore(!!res.pagination.next); // Se `next` for null ou undefined, `hasMore` será false
     } catch (error) {
       console.error("Erro na requisição de produtos:", error);
     }
@@ -60,45 +71,30 @@ export default function PLP() {
     }
   }, [category, selectedBrands, color, price, page, dispatch]);
 
-  // Atualiza a lista de produtos
-  const [productData, setProductData] = useState([]);
-  useEffect(() => {
-    if (products) {
-      const uniqueNewProducts =
-        products.data?.filter(
-          (newProduct) => !productData.some((p) => p.id === newProduct.id)
-        ) || [];
-      setProductData((prevData) =>
-        page === 1 ? uniqueNewProducts : [...prevData, ...uniqueNewProducts]
-      );
-    }
-  }, [products, page]);
-
-  console.log("dados finai", productData);
-
   // Reinicia a página ao mudar qualquer filtro de busca
   useEffect(() => {
     setPage(1);
-    setProductData([]); // Limpa a lista de produtos quando qualquer filtro muda
+    setProductsData([]); // Limpa a lista de produtos quando qualquer filtro muda
+    setHasMore(true); // Redefine `hasMore` ao alterar os filtros
   }, [category, selectedBrands, color, price]);
 
-  // Função para gerenciar o scroll infinito
+  // Função de scroll infinito com debounce
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       if (
         window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 100
       ) {
         // Incrementa a página ao atingir o final da página
-        if (!loadingData) {
+        if (!loadingData && hasMore) {
           setPage((prevPage) => prevPage + 1);
         }
       }
-    };
+    }, 200); // Debounce de 200ms
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loadingData]);
+  }, [loadingData, hasMore]);
 
   return (
     <Container fixed>
@@ -151,9 +147,11 @@ export default function PLP() {
             height: products ? "auto" : "100vh",
           }}
         >
-          <Products products={productData} />
+          <Products products={productsData} />
           {loadingData && <LoadingComponent />}
           {error && <ErrorMsg message={error?.message} />}
+          {/* {!hasMore && <p>Não há mais produtos para carregar</p>} */}
+          {/* Mensagem quando não há mais produtos */}
         </Grid>
       </Grid>
     </Container>
