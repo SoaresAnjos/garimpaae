@@ -140,6 +140,8 @@ export const fecthProductsAction = createAsyncThunk(
       const { data } = await axios.get(`${url}`);
       return data;
     } catch (error) {
+      console.log(error);
+
       return rejectWithValue(error?.response?.data);
     }
   }
