@@ -14,3 +14,8 @@ nav {
 body {
   background-color: "white";
 }
+
+input[type="checkbox"]:checked {
+  background-color: rgba(6, 11, 6, 0.7); /* Cor de fundo quando selecionado */
+  border-color: rgba(9, 19, 9, 0.7); /* Cor da borda quando selecionado */
+}

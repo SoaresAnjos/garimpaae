@@ -105,9 +105,9 @@ const theme = createTheme({
         root: {
           backgroundColor: "white",
           height: "0.5rem",
-          paddingBottom: "2px",
-          borderRadius: "4px",
-          marginBottom: "5px",
+          paddingBottom: "0.5rem",
+          borderRadius: "0.5rem",
+          marginBottom: "0.5rem",
           fontWeight: "600",
           flexDirection: "row-reverse",
           borderTop: "unset",
@@ -117,7 +117,7 @@ const theme = createTheme({
             transform: "rotate(-180deg)",
           },
           "& .MuiAccordionSummary-content": {
-            marginLeft: "10px",
+            marginLeft: "1rem",
           },
         },
       },
@@ -126,14 +126,14 @@ const theme = createTheme({
     MuiAccordionDetails: {
       styleOverrides: {
         root: {
-          padding: "30px",
+          padding: "2rem",
           backgroundColor: "white",
-          marginBottom: "5px",
-          borderRadius: "4px",
+          marginBottom: "1rem",
+          borderRadius: "0.5rem",
           border: "1px solid rgba(0, 0, 9, .1)",
           "& ul": {
             margin: "0",
-            paddingLeft: "20px",
+            paddingLeft: "2rem",
           },
         },
       },

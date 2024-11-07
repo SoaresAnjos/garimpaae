@@ -16,10 +16,12 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { fetchBrandsAction } from "../../redux/slices/brands/brandsSlice";
 import debounce from "lodash.debounce";
+import FacetItem from "../../components/FacetItem/FacetItem";
 
 export default function PLP() {
   const [color, setColor] = useState("");
   const [price, setPrice] = useState("");
+  const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [page, setPage] = useState(1);
   const [loadingData, setLoadingData] = useState(false);
@@ -39,15 +41,32 @@ export default function PLP() {
   const { brands } = useSelector((state) => state?.brands);
   const brandsData = brands?.data?.slice(3, 9);
 
+  const sizeCategories = [
+    {
+      name: "XXS",
+    },
+    {
+      name: "XL",
+    },
+    {
+      name: "L",
+    },
+  ];
+
   // Função para buscar produtos
   const fetchProducts = async () => {
     if (!hasMore) return; // Não carregar mais produtos se não houver mais páginas
 
     setLoadingData(true);
     const brandString = selectedBrands.join(",");
+    const sizesString = selectedSizes.join(",");
+
     const productUrl = `${baseURL}/products?category=${category || ""}&brand=${
       brandString || ""
-    }&color=${color || ""}&price=${price || ""}&page=${page}&limit=4`;
+    }&color=${color || ""}&price=${
+      price || ""
+    }&size=${sizesString}&page=${page}&limit=4`;
+    console.log(productUrl);
 
     try {
       const data = await fetch(productUrl);
@@ -69,14 +88,14 @@ export default function PLP() {
     if (category || selectedBrands.length || color || price) {
       fetchProducts();
     }
-  }, [category, selectedBrands, color, price, page, dispatch]);
+  }, [category, selectedSizes, selectedBrands, color, price, page, dispatch]);
 
   // Reinicia a página ao mudar qualquer filtro de busca
   useEffect(() => {
     setPage(1);
     setProductsData([]); // Limpa a lista de produtos quando qualquer filtro muda
     setHasMore(true); // Redefine `hasMore` ao alterar os filtros
-  }, [category, selectedBrands, color, price]);
+  }, [category, selectedBrands, selectedSizes, color, price]);
 
   // Função de scroll infinito com debounce
   useEffect(() => {
@@ -99,40 +118,34 @@ export default function PLP() {
   return (
     <Container fixed>
       <Grid container spacing={2} direction="row" sx={{ marginY: "5rem" }}>
-        {/* Filtros de Marca */}
-        <Grid item xs={12} sm={12} md={3} lg={3} sx={{ height: "auto" }}>
-          <Accordion defaultExpanded>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Marca
-            </AccordionSummary>
-            <AccordionDetails>
-              <div className="space-y-2">
-                {brandsData?.map((brandItem) => (
-                  <div key={brandItem?._id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      checked={selectedBrands.includes(brandItem?.name)}
-                      onChange={() =>
-                        setSelectedBrands((prevSelected) =>
-                          prevSelected.includes(brandItem?.name)
-                            ? prevSelected.filter((b) => b !== brandItem?.name)
-                            : [...prevSelected, brandItem?.name]
-                        )
-                      }
-                    />
-                    <label className="ml-3 min-w-0 flex-1 text-gray-500">
-                      {brandItem?.name}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </AccordionDetails>
-          </Accordion>
+        {/* Filtros */}
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={3}
+          lg={3}
+          sx={{
+            height: "auto",
+            border: "0.01rem solid rgba(128, 128, 128, 0.3)",
+            borderRadius: "0.5rem",
+            paddingBottom: "10rem",
+          }}
+        >
+          <FacetItem
+            title="Marca"
+            type="checkbox"
+            arr={brandsData}
+            fn={setSelectedBrands}
+            selectedItems={selectedBrands}
+          />
+          <FacetItem
+            title="Tamanho"
+            type="checkbox"
+            arr={sizeCategories}
+            fn={setSelectedSizes}
+            selectedItems={selectedSizes}
+          />
         </Grid>
 
         {/* Produtos */}
