@@ -1,22 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import baseURL from "../../utils/baseURL";
-import { fetchProductsAction } from "../../redux/slices/products/productsSlice";
 import LoadingComponent from "../../components/LoadingComp/LoadingComponent";
 import ErrorMsg from "../../components/ErrorMsg/ErrorMsg";
 import Products from "../../components/Users/Products/Products";
 import { useSearchParams } from "react-router-dom";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Container,
-  Grid,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Box, Container, Grid } from "@mui/material";
 import { fetchBrandsAction } from "../../redux/slices/brands/brandsSlice";
 import debounce from "lodash.debounce";
 import FacetItem from "../../components/FacetItem/FacetItem";
+import Sorting from "../../components/Sorting/Sorting";
 
 export default function PLP() {
   const [color, setColor] = useState("");
@@ -27,10 +20,9 @@ export default function PLP() {
   const [loadingData, setLoadingData] = useState(false);
   const [productsData, setProductsData] = useState([]);
   const [hasMore, setHasMore] = useState(true); // Novo estado para controlar se há mais produtos
-
+  const [sort, setSort] = useState("");
   const [params] = useSearchParams();
   const category = params.get("category");
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,7 +31,7 @@ export default function PLP() {
 
   const { products, error } = useSelector((state) => state?.products);
   const { brands } = useSelector((state) => state?.brands);
-  const brandsData = brands?.data?.slice(3, 9);
+  const brandsData = brands?.data?.slice(3, 8);
 
   const sizeCategories = [
     {
@@ -65,8 +57,7 @@ export default function PLP() {
       brandString || ""
     }&color=${color || ""}&price=${
       price || ""
-    }&size=${sizesString}&page=${page}&limit=4`;
-    console.log(productUrl);
+    }&size=${sizesString}&page=${page}&sort=${sort}&limit=4`;
 
     try {
       const data = await fetch(productUrl);
@@ -85,17 +76,26 @@ export default function PLP() {
 
   // Carrega produtos ao alterar filtros ou página
   useEffect(() => {
-    if (category || selectedBrands.length || color || price) {
+    if (category || color || price || sort) {
       fetchProducts();
     }
-  }, [category, selectedSizes, selectedBrands, color, price, page, dispatch]);
+  }, [
+    category,
+    selectedSizes,
+    selectedBrands,
+    color,
+    price,
+    page,
+    sort,
+    dispatch,
+  ]);
 
   // Reinicia a página ao mudar qualquer filtro de busca
   useEffect(() => {
     setPage(1);
     setProductsData([]); // Limpa a lista de produtos quando qualquer filtro muda
     setHasMore(true); // Redefine `hasMore` ao alterar os filtros
-  }, [category, selectedBrands, selectedSizes, color, price]);
+  }, [category, selectedBrands, selectedSizes, color, sort]);
 
   // Função de scroll infinito com debounce
   useEffect(() => {
@@ -114,6 +114,13 @@ export default function PLP() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loadingData, hasMore]);
+
+  const handleSortOption = (e) => {
+    console.log(e.target.value);
+    setSort(e.target.value);
+    setPage(1);
+    setProductsData([]);
+  };
 
   return (
     <Container fixed>
@@ -158,8 +165,28 @@ export default function PLP() {
           lg={9}
           sx={{
             height: products ? "auto" : "100vh",
+            display: "block",
+            marginTop: -2,
           }}
         >
+          {/* Sorting */}
+          <Grid
+            item
+            xs={12}
+            sx={{
+              textAlign: "end",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              height: "2rem",
+              width: "100rem",
+            }}
+          >
+            <div style={{ color: "#71747E" }}>Resultados</div>
+            <Sorting fn={handleSortOption} sortValue={sort} />
+          </Grid>
+          {/* Products */}
           <Products products={productsData} />
           {loadingData && <LoadingComponent />}
           {error && <ErrorMsg message={error?.message} />}
