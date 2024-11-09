@@ -10,9 +10,26 @@ const Products = ({ products }) => {
         direction="row"
         container
         item
+        sm={12}
         xs={12}
         lg={12}
-        sx={{ alignItems: "flex-start" }}
+        sx={{
+          alignItems: {
+            xs: "center",
+            sm: "center",
+            md: "flex-start",
+            lg: "flex-start",
+          },
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "center",
+            lg: "flex-start",
+          },
+          gap: { xs: 5 },
+          marginY: { xs: 4 },
+          //border: "1px solid black",
+        }}
       >
         {products?.map((product) => (
           <>

@@ -5,11 +5,21 @@ import LoadingComponent from "../../components/LoadingComp/LoadingComponent";
 import ErrorMsg from "../../components/ErrorMsg/ErrorMsg";
 import Products from "../../components/Users/Products/Products";
 import { useSearchParams } from "react-router-dom";
-import { Box, Container, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Drawer,
+  Grid,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import { fetchBrandsAction } from "../../redux/slices/brands/brandsSlice";
 import debounce from "lodash.debounce";
 import FacetItem from "../../components/FacetItem/FacetItem";
 import Sorting from "../../components/Sorting/Sorting";
+import useIsMobile from "../../hooks/useIsMobile";
+import { List } from "lucide-react";
 
 export default function PLP() {
   const [color, setColor] = useState("");
@@ -24,6 +34,8 @@ export default function PLP() {
   const [params] = useSearchParams();
   const category = params.get("category");
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchBrandsAction());
@@ -125,35 +137,86 @@ export default function PLP() {
   return (
     <Container fixed>
       <Grid container spacing={2} direction="row" sx={{ marginY: "5rem" }}>
-        {/* Filtros */}
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={3}
-          lg={3}
-          sx={{
-            height: "auto",
-            border: "0.01rem solid rgba(128, 128, 128, 0.3)",
-            borderRadius: "0.5rem",
-            paddingBottom: "10rem",
-          }}
-        >
-          <FacetItem
-            title="Marca"
-            type="checkbox"
-            arr={brandsData}
-            fn={setSelectedBrands}
-            selectedItems={selectedBrands}
-          />
-          <FacetItem
-            title="Tamanho"
-            type="checkbox"
-            arr={sizeCategories}
-            fn={setSelectedSizes}
-            selectedItems={selectedSizes}
-          />
-        </Grid>
+        {!isMobile ? (
+          <>
+            {/* Filtros desktop */}
+            <Grid
+              item
+              md={3}
+              lg={3}
+              sx={{
+                height: "auto",
+                border: "0.01rem solid rgba(128, 128, 128, 0.3)",
+                borderRadius: "0.5rem",
+                paddingBottom: "10rem",
+              }}
+            >
+              <FacetItem
+                title="Marca"
+                type="checkbox"
+                arr={brandsData}
+                fn={setSelectedBrands}
+                selectedItems={selectedBrands}
+              />
+              <FacetItem
+                title="Tamanho"
+                type="checkbox"
+                arr={sizeCategories}
+                fn={setSelectedSizes}
+                selectedItems={selectedSizes}
+              />
+            </Grid>
+          </>
+        ) : (
+          <Grid item xs={12} sm={12} sx={{}}>
+            <Button
+              sx={{
+                border: "1px solid grey",
+                color: "black",
+                width: "100%",
+                marginY: "2rem",
+                //position: "sticky",
+                //top: 0,
+              }}
+              onClick={() => {
+                setModalIsOpen(true);
+              }}
+            >
+              Filtros
+            </Button>
+            <Drawer
+              anchor="bottom"
+              open={modalIsOpen}
+              onClose={() => setModalIsOpen(false)}
+              sx={{ margin: "20rem" }}
+            >
+              <Container>
+                <FacetItem
+                  title="Marca"
+                  type="checkbox"
+                  arr={brandsData}
+                  fn={setSelectedBrands}
+                  selectedItems={selectedBrands}
+                />
+                <FacetItem
+                  title="Tamanho"
+                  type="checkbox"
+                  arr={sizeCategories}
+                  fn={setSelectedSizes}
+                  selectedItems={selectedSizes}
+                />
+              </Container>
+
+              <Button
+                variant="primary"
+                onClick={() => setModalIsOpen(false)}
+                sx={{ margin: "2rem" }}
+              >
+                Ativar filtros
+              </Button>
+            </Drawer>
+          </Grid>
+        )}
 
         {/* Produtos */}
         <Grid
