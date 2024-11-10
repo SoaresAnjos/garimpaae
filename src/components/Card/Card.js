@@ -5,13 +5,18 @@ export default function Card({ id, image, name, price }) {
   return (
     <Grid
       item
-      md={3}
-      sm={6}
+      sm={12}
+      md={6}
+      lg={4}
       sx={{
-        marginBottom: { md: "1rem" },
+        marginBottom: { sm: "1rem", md: "1rem" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        //alignItems: "center",
+
+        //border: "1px solid black",
+        gap: 1,
       }}
       key={id}
     >
@@ -22,8 +27,8 @@ export default function Card({ id, image, name, price }) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            gap: 3,
-            width: "100%",
+            //alignItems: "center",
+            gap: 2,
           }}
         >
           <Box
@@ -31,7 +36,7 @@ export default function Card({ id, image, name, price }) {
             sx={{
               height: 320,
               maxHeight: { xs: 233, md: 567 },
-              maxWidth: { xs: 350, md: 550 },
+              maxWidth: { xs: 350, sm: 800, md: 850 },
               backgroundColor: "#F6F6F6",
               paddingX: "1rem",
               "&:hover": {
@@ -60,6 +65,7 @@ export default function Card({ id, image, name, price }) {
               justifyContent: "space-between",
               width: "100%",
               height: "3rem",
+              gap: 1,
             }}
           >
             <Typography className="product-card-title" variant="h6">

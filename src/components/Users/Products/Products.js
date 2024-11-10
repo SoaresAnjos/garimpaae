@@ -26,7 +26,7 @@ const Products = ({ products }) => {
             md: "center",
             lg: "flex-start",
           },
-          gap: { xs: 5 },
+          gap: { xs: 5, md: 0 },
           marginY: { xs: 4 },
           //border: "1px solid black",
         }}

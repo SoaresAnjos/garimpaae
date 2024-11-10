@@ -136,12 +136,18 @@ export default function PLP() {
 
   return (
     <Container fixed>
-      <Grid container spacing={2} direction="row" sx={{ marginY: "5rem" }}>
+      <Grid
+        container
+        spacing={2}
+        direction="row"
+        sx={{ marginY: "5rem", justifyContent: "center" }}
+      >
         {!isMobile ? (
           <>
             {/* Filtros desktop */}
             <Grid
               item
+              sm={4}
               md={3}
               lg={3}
               sx={{
@@ -223,13 +229,14 @@ export default function PLP() {
           container
           item
           xs={12}
-          sm={12}
+          sm={8}
           md={9}
           lg={9}
           sx={{
             height: products ? "auto" : "100vh",
             display: "block",
             marginTop: -2,
+            //border: "1px solid black",
           }}
         >
           {/* Sorting */}
