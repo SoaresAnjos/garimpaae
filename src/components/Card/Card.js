@@ -13,10 +13,7 @@ export default function Card({ id, image, name, price }) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        //alignItems: "center",
-
-        //border: "1px solid black",
-        gap: 1,
+        alignItems: "center",
       }}
       key={id}
     >
@@ -26,8 +23,8 @@ export default function Card({ id, image, name, price }) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            //alignItems: "center",
+            justifyContent: "space-beetwen",
+            //border: "1px solid black",
             gap: 2,
           }}
         >
