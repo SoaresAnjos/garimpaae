@@ -139,36 +139,37 @@ const theme = createTheme({
       },
     },
 
-    MuiFormControlLabel: {
-      styleOverrides: {
-        root: {
-          "& .MuiFormControlLabel-label": {
-            fontSize: {
-              xs: "14px",
-              sm: "14px",
-              md: "18px",
-              lg: "18px",
-              xl: "18px",
-            },
-            paddingLeft: 0,
-          },
-          "& .Mui-checked": {
-            color: "primary.main",
-            backgroundColor: "white",
-            width: "18px",
-            height: "18px",
-            marginLeft: "9px",
-            marginRight: "9px",
-            marginBottom: "9px",
-            marginTop: "9px",
-            "&:hover": {
-              backgroundColor: "white",
-            },
-          },
-          marginTop: "10px",
-        },
-      },
-    },
+    // MuiFormControlLabel: {
+    //   styleOverrides: {
+    //     root: {
+    //       "& .MuiFormControlLabel-label": {
+    //         fontSize: {
+    //           xs: "14px",
+    //           sm: "14px",
+    //           md: "18px",
+    //           lg: "18px",
+    //           xl: "18px",
+    //         },
+    //         border: "none",
+    //         paddingLeft: 0,
+    //       },
+    //       "& .Mui-checked": {
+    //         color: "primary.main",
+    //         backgroundColor: "white",
+    //         width: "18px",
+    //         height: "18px",
+    //         marginLeft: "9px",
+    //         marginRight: "9px",
+    //         marginBottom: "9px",
+    //         marginTop: "9px",
+    //         "&:hover": {
+    //           backgroundColor: "white",
+    //         },
+    //       },
+    //       marginTop: "10px",
+    //     },
+    //   },
+    // },
 
     MuiLink: {
       styleOverrides: {

@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Container } from "@mui/material";
+import { Typography, Box, Container, Grid } from "@mui/material";
 import { Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 

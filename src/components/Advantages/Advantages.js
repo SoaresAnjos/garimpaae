@@ -1,4 +1,4 @@
-import { Typography, Container, Grid, Box } from "@mui/material";
+import { Typography, Container, Box, Grid } from "@mui/material";
 import { Truck, ShieldCheck, Trophy } from "lucide-react";
 
 const advantages = [

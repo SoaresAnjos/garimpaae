@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function Card({ id, image, name, price }) {

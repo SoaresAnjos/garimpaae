@@ -1,4 +1,4 @@
-import { Typography, Grid, Container, Box, Button } from "@mui/material";
+import { Typography, Container, Box, Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function TrendProducts({ title, array }) {

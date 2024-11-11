@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "../../Card/Card";
-import { Grid } from "@mui/material";
+import Card from "../Card/Card";
+import Grid from "@mui/material/Grid";
 
 const Products = ({ products }) => {
   return (

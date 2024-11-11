@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Box } from "@mui/material";
 
 export default function Sorting({ fn, sort }) {
   return (

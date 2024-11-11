@@ -5,12 +5,12 @@ import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesS
 import { logoutUserAction } from "../../redux/slices/users/usersSlice";
 import {
   Container,
-  Grid,
   IconButton,
   Drawer,
   List,
   ListItem,
   ListItemText,
+  Grid,
 } from "@mui/material";
 import { ShoppingCart, User, Menu } from "lucide-react";
 import useIsMobile from "../../hooks/useIsMobile";

@@ -3,23 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import baseURL from "../../utils/baseURL";
 import LoadingComponent from "../../components/LoadingComp/LoadingComponent";
 import ErrorMsg from "../../components/ErrorMsg/ErrorMsg";
-import Products from "../../components/Users/Products/Products";
+import Products from "../../components/Products/Products";
 import { useSearchParams } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Container,
-  Drawer,
-  Grid,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Button, Container, Drawer, Grid } from "@mui/material";
 import { fetchBrandsAction } from "../../redux/slices/brands/brandsSlice";
 import debounce from "lodash.debounce";
 import FacetItem from "../../components/FacetItem/FacetItem";
 import Sorting from "../../components/Sorting/Sorting";
 import useIsMobile from "../../hooks/useIsMobile";
-import { List } from "lucide-react";
 
 export default function PLP() {
   const [color, setColor] = useState("");
