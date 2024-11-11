@@ -15,7 +15,7 @@ const photos = [
   },
 ];
 
-const GallerySlider = () => {
+const GallerySlider = ({ arr }) => {
   const [selectedIndex, setSelectedIndex] = useState(0); // Índice da imagem selecionada
   const isMobile = useIsMobile();
   // Navega para a próxima imagem
@@ -39,7 +39,7 @@ const GallerySlider = () => {
         justifyContent="center"
         position="relative"
         sx={{
-          width: "80%",
+          width: "100%",
           height: "auto",
           maxHeight: "80vh",
           margin: "auto",
@@ -63,16 +63,23 @@ const GallerySlider = () => {
         </IconButton>
 
         {/* Exibe a imagem selecionada */}
-        <Card sx={{ width: "100%", maxHeight: "40vh" }}>
+        <Card
+          sx={{
+            width: "100%",
+            height: arr.length > 1 || isMobile ? "20rem" : "29rem",
+            maxHeight: "auto",
+            boxShadow: "none",
+            borderRadius: "unset",
+            border: "none",
+          }}
+        >
           <CardMedia
             component="img"
-            image={photos[selectedIndex].src}
-            alt={photos[selectedIndex].alt}
+            image={arr.length > 1 ? arr[selectedIndex] : arr[0]}
+            alt={"photos[selectedIndex].alt"}
             sx={{
               objectFit: "contain",
               height: "100%",
-              borderRadius: "none",
-              boxShadow: "none",
               backgroundColor: "#F6F6F6",
             }}
           />
@@ -100,24 +107,33 @@ const GallerySlider = () => {
         container
         spacing={2}
         justifyContent="center"
-        style={{ marginTop: "0.5rem", display: isMobile && "none" }}
+        style={{ marginTop: "0.1rem", display: isMobile && "none" }}
       >
-        {photos.map((photo, index) => (
-          <Grid item xs={3} key={index}>
-            <Card
-              onClick={() => setSelectedIndex(index)}
-              style={{ cursor: "pointer" }}
-            >
-              <CardMedia
-                component="img"
-                height="100"
-                image={photo.src}
-                alt={photo.alt}
-                style={{ objectFit: "cover", backgroundColor: "#F6F6F6" }}
-              />
-            </Card>
-          </Grid>
-        ))}
+        {arr.length > 1 &&
+          arr?.map((photo, index) => (
+            <Grid item xs={3} key={index}>
+              <Card
+                onClick={() => setSelectedIndex(index)}
+                style={{
+                  cursor: "pointer",
+                  boxShadow: "none",
+                  borderRadius: "unset",
+                  border: "none",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="100"
+                  image={photo.src}
+                  alt={"photo.alt"}
+                  style={{
+                    objectFit: "cover",
+                    backgroundColor: "#F6F6F6",
+                  }}
+                />
+              </Card>
+            </Grid>
+          ))}
       </Grid>
     </div>
   );

@@ -110,7 +110,7 @@ export default function Product() {
           sx={{ height: "auto", gap: 0, marginBottom: 30 }}
         >
           <Grid item xs={12} sm={12} md={5} lg={6}>
-            <Gallery />
+            <Gallery arr={productData?.images} />
           </Grid>
           <Grid
             container
@@ -138,7 +138,7 @@ export default function Product() {
                 gap: 1,
               }}
             >
-              <Typography variant="h1">Nike Dunk Low</Typography>
+              <Typography variant="h1">{productData?.name}</Typography>
               <Typography
                 variant="body1"
                 sx={{
@@ -152,12 +152,8 @@ export default function Product() {
               >
                 Em estoque
               </Typography>
-              <Typography variant="h4">R$ 450</Typography>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                maximus cursus mi sed efficitur. Integer imperdiet eget massa
-                nec porttitor. Nulla facilisi. Pellentesque ut efficitur ante.
-              </Typography>
+              <Typography variant="h4">R$ {productData?.price}</Typography>
+              <Typography>{productData?.description}</Typography>
             </Box>
             <Box className="product-color">
               <FormControl>
@@ -280,6 +276,7 @@ export default function Product() {
               {/* add to cart */}
               <Button
                 onClick={() => addToCartHandler()}
+                variant="primary"
                 sx={{
                   backgroundColor: "black",
                   color: "white",
