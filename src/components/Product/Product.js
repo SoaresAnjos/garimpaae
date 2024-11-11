@@ -102,11 +102,12 @@ export default function Product() {
 
   return (
     <>
-      <Container sx={{ marginY: "3rem" }}>
+      <Container className="product" sx={{ marginY: "3rem" }}>
         <Grid
           container
+          sm={12}
           md={12}
-          sx={{ height: "60vh", gap: 0, marginBottom: 30 }}
+          sx={{ height: "auto", gap: 0, marginBottom: 30 }}
         >
           <Grid item xs={12} sm={12} md={5} lg={6}>
             <Gallery />

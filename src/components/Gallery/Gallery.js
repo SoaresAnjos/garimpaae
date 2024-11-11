@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Card, CardMedia, IconButton, Box } from "@mui/material";
 import { ArrowForward, ArrowBack } from "@mui/icons-material";
+import useIsMobile from "../../hooks/useIsMobile";
 
 // Dados das fotos
 const photos = [
@@ -16,7 +17,7 @@ const photos = [
 
 const GallerySlider = () => {
   const [selectedIndex, setSelectedIndex] = useState(0); // Índice da imagem selecionada
-
+  const isMobile = useIsMobile();
   // Navega para a próxima imagem
   const handleNext = () => {
     setSelectedIndex((prevIndex) => (prevIndex + 1) % photos.length);
@@ -62,7 +63,7 @@ const GallerySlider = () => {
         </IconButton>
 
         {/* Exibe a imagem selecionada */}
-        <Card sx={{ width: "100%", maxHeight: "80vh" }}>
+        <Card sx={{ width: "100%", maxHeight: "40vh" }}>
           <CardMedia
             component="img"
             image={photos[selectedIndex].src}
@@ -99,7 +100,7 @@ const GallerySlider = () => {
         container
         spacing={2}
         justifyContent="center"
-        style={{ marginTop: "0.5rem" }}
+        style={{ marginTop: "0.5rem", display: isMobile && "none" }}
       >
         {photos.map((photo, index) => (
           <Grid item xs={3} key={index}>
