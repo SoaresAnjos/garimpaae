@@ -6,7 +6,7 @@ import {
   changeCartQtyAction,
   getCartItemsAction,
   removeItemCartAction,
-} from "../../../redux/slices/cart/cartSlice";
+} from "../../redux/slices/cart/cartSlice";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
